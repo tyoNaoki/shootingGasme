@@ -42,6 +42,9 @@ public:
     void GameClear();
 
 private:
+    //領域四分木分割による衝突テスト
+    void testQuadTree();
+
     //ゲーム内時間更新
     void UpdateTimer(float deltaTime);
     //ボス登場イベント
@@ -101,9 +104,9 @@ private:
     const float mGameBossSpawnTime = 210.0f;
 
     //敵スポーン名
-    std::string mSpawnEnemyName = "NormalEnemyA";
-    std::string mSpawnEnemyNameB = "NormalEnemyB";
-    std::string mSpawnEnemyNameC = "NormalEnemyC";
+    const char* mSpawnEnemyName = "NormalEnemyA";
+    const char* mSpawnEnemyNameB = "NormalEnemyB";
+    const char* mSpawnEnemyNameC = "NormalEnemyC";
 
     //初期レベル
     const int mPlayerStartLevel = 1;
@@ -115,4 +118,6 @@ private:
     //フラグ
     bool mGameOver = false;
     bool mGameClear = false;
+
+    
 };

@@ -97,7 +97,7 @@ void NormalEnemyBase::Update(const float deltaTime)
 
     //死んでいる場合
     if (mIsDead) {
-        DEBUG_HELPER.DrawCollision(GetCollision());
+        //DEBUG_HELPER.DrawCollision(GetCollision());
         SetLocalPosition2D(GetLocalFromWorldPosi(GetWorldPosition2D()));
         //アニメーション更新
         ANIM_M.Update(this);
@@ -157,6 +157,7 @@ void NormalEnemyBase::Update(const float deltaTime)
         DEBUG_HELPER.Add(message);
     }
 
+    
     //コリジョンの一番長い状態を距離に設定
     float dis = newCollisionPosi.mSize.x >= newCollisionPosi.mSize.y ? newCollisionPosi.mSize.x : newCollisionPosi.mSize.y;
     auto nearActors = COLLISION_M.DetectionNearCharacters(newPosi, newCollisionPosi, dis, mCharaToIgnores);
@@ -179,7 +180,7 @@ void NormalEnemyBase::Update(const float deltaTime)
 
     std::string preActionName = GetCurrentAnimState()->GetActionName();
 
-    DEBUG_HELPER.DrawCollision(GetCollision());
+    //DEBUG_HELPER.DrawCollision(GetCollision());
 
     //アニメーション遷移更新
     ANIM_M.Update(this);

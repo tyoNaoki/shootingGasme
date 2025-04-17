@@ -8,8 +8,6 @@ class Bullet :
     public Actor
 {
 public:
-    
-
     Bullet(Collision::Circle collision,Vector2D<float>drawOffset,Vector2D<float>extendSize);
 
     Bullet() = delete;

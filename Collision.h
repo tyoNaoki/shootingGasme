@@ -82,6 +82,8 @@ namespace Collision{
 	//lŠpŒ`‚Æü•ª‚Ì“–‚½‚è”»’èŠÖ”
 	bool IsLineIntersectingRect(const Line& line, const Rect& rect);
 
+	bool IsColliding(Actor* actor,Actor* actor2);
+
 	//‰~‚Ì“–‚½‚è”»’èŠÖ”
 	bool IsColliding(const Circle& c1, const Circle& c2);
 

@@ -61,9 +61,9 @@ void PlayerGunComponent::Update(const float deltaTime)
 	//自分と狙う対象までの角度を取得
 	float targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), target->GetWorldPosition2D());
 	//弾スポーン
-	auto bullet = ACTOR_M.GetBullet(mBulletName,owner->GetActorType(),owner->GetLocalPosition2D(),owner->GetWorldPosition2D(),targetRot,true);
+	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(),owner->GetActorType(),owner->GetLocalPosition2D(),owner->GetWorldPosition2D(),targetRot,true);
 	//弾をアクティブにする
-	if(!ACTOR_M.RegistObject(bullet)){
+	if(!bullet){
 		DEBUG_HELPER.Add("Bullet is generate error",1.0f);
 		return;
 	}

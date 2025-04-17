@@ -170,6 +170,11 @@ namespace Collision{
 		return false;
 	}
 
+	bool IsColliding(Actor* actor, Actor* actor2)
+	{
+		return false;
+	}
+
 	bool IsColliding(const Circle& c1, const Circle& c2) {
 		float dx = c1.mCenter.x - c2.mCenter.x; 
 		float dy = c1.mCenter.y - c2.mCenter.y;

@@ -73,7 +73,7 @@ void BossGunComponent::FireBullet(std::shared_ptr<Actor>owner, std::shared_ptr<C
 	//非アクティブの弾を取得、スポーン
 	auto bullet = ACTOR_M.GetBullet("BossBullet", owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
 	//アクティブ状態に設定
-	if (!ACTOR_M.RegistObject(bullet)) {
+	if (!bullet) {
 		DEBUG_HELPER.Add("BossBullet is generate error", 1.0f);
 	}
 	//弾のステータス設定

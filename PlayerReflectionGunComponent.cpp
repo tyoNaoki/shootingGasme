@@ -62,13 +62,14 @@ void PlayerReflectionGunComponent::Update(const float deltaTime)
 	//対象までの角度を発射角度として取得
 	float targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), target->GetWorldPosition2D());
 	//弾を発射
-	auto bullet = ACTOR_M.GetBullet(mBulletName, owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
-
 	//弾をアクティブにする
-	if (!ACTOR_M.RegistObject(bullet)) {
+	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(), owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
+
+	if(!bullet) {
 		DEBUG_HELPER.Add("Bullet is generate error", 1.0f);
 		return;
 	}
+	
 	//ステータス設定
 	bullet->SetStatus(mBulletSpeed, mAttack, mBulletLifeTime, mReflectionCount);
 	//音を鳴らす

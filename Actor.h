@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Vector2D.h"
 #include "Game.h"
 #include "DebugHelper.h"
@@ -11,7 +12,7 @@
 class AnimationState;
 class Collision::Rect;
 
-enum class CharacterType { PLAYER, ENEMY, BULLET,LASER,BOMB, ITEM,BOSS, EMPTY };
+enum class CharacterType { PLAYER, ENEMY, BULLET,LASER,BOMB, ITEM,BOSS,EMPTY };
 
 class Actor
 {

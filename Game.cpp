@@ -40,7 +40,8 @@ void Game::GameLoop(){
 
 	while (mIsRunning)
 	{
-		if(ProcessMessage()!=0){
+		if(ProcessMessage()!=0)
+		{
 			mIsRunning = false;
 			continue;
 		}
@@ -53,7 +54,8 @@ void Game::GameLoop(){
 
 		float deltaTime = g_sm.GetDeltaTime();
 		
-		if(mIsDebug){
+		if(mIsDebug)
+		{
 			DEBUG_HELPER.Update(deltaTime); //コリジョンやデバッグメッセージを更新、描画
 		}
 

@@ -181,7 +181,7 @@ void BossLaserComponent::FireLaser(std::shared_ptr<CharacterBase> owner, float t
 		//レーザーのステータス設定
 		laser->SetStatus(mLaserWidthSize, mLaserSpeed,mLaserDamage,mLaserKnockBack,mLaserKnockBackTime);
 		//レーザーをアクティブにする
-		if (!ACTOR_M.RegistObject(laser)) {
+		if (!laser) {
 			DEBUG_HELPER.Add("EnemyLaser is generate error", 1.0f);
 			return;
 		}

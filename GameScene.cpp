@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "Actor.h"
 #include "BossEnemyA.h"
+#include "QuadTree.h"
 
 GameScene::GameScene(Vector2D<int>mapWorldSize,Vector2D<float>cell) : mCellSize(cell)
 {
@@ -77,39 +78,26 @@ bool GameScene::Initialize()
 
 	//プレイヤーの初期化処理
 	auto localStart = Vector2D<float>(static_cast<float>(width / 2), static_cast<float>(height / 2));
-	auto player = ACTOR_M.GetPlayer("PlayerCharacter", localStart, startCenter, 90, true);
-	//ActorManagerにプレイヤーを追加
-	if (!ACTOR_M.RegistObject(player)) {
-		return false;
-	}
+
+	if(!ACTOR_M.GetPlayer("PlayerCharacter", localStart, startCenter, 90, true)) return false;
+	
 
 	auto& dh = DEBUG_HELPER;
 
 	//std::string message = "spawnPosition is " + enemyStart.ToString();
 	//dh.Add(message, 5.0f);
 	
-	//敵のスポーン & 登録
+	//敵のスポーン
 	//NormaLEnemyA
 	for(int i = 0;i<10;i++){
 		Vector2D<float>enemyStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-		auto enemy = ACTOR_M.GetEnemy(mSpawnEnemyName, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true);
-		
-		if (!ACTOR_M.RegistObject(enemy)) {
+		if(!ACTOR_M.GetEnemy(mSpawnEnemyName, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true))
+		{
 			return false;
 		}
 	}
 
-	//debug
-	Vector2D<float>enemyCStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-	auto enemyC = Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyNameC, mGameMap->GetLocalFromWorldPosition(enemyCStart), enemyCStart, 90, true);
-
-	if (!Singleton<ActorManager>::get_instance().RegistObject(enemyC)) {
-		return false;
-	}
-
-	//デバック用のマップ設定
 	Singleton<DebugHelper>::get_instance().SetMap(mGameMap);
-
 	Singleton<EffectManager>::get_instance().Initialize();
 
 	//UI設定
@@ -145,9 +133,6 @@ bool GameScene::Initialize()
 	//レベルアップ画面
 	auto levelUpCanvas = std::make_shared<Canvas>();
 	auto levelUpPanel = std::make_shared<LevelUpPanel>(width, height,STATUS.GetRewardMaxCount());
-
-	//一旦確認用に報酬セット
-	//levelUpPanel->SetLevelUpReward(STATUS.GetRandomSelectRewards());
 
 	levelUpCanvas->AddElement(levelUpPanel);
 	levelUpCanvas->SetVisibilty(false);
@@ -190,18 +175,21 @@ bool GameScene::Initialize()
 	EVENT_M.addEvent([this]() {
 		if (mEnemyCspawnIndex <= 2) {
 			Vector2D<float>enemyStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-			auto enemy = Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyNameC, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true);
-
-			if (!Singleton<ActorManager>::get_instance().RegistObject(enemy)) {
-				return;
-			}
+			if(!Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyNameC, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true))
+			{return;}
 		}else{
 			for(int i =0;i<3;i++){
 				Vector2D<float>enemyStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-				auto enemy = Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyNameC, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true);
 
-				if (!Singleton<ActorManager>::get_instance().RegistObject(enemy)) {
-					return;
+				//スポーン
+				if(!Singleton<ActorManager>::get_instance().GetEnemy(
+				mSpawnEnemyNameC,
+				mGameMap->GetLocalFromWorldPosition(enemyStart),
+				enemyStart,
+				90,
+				true
+				)){
+					break;
 				}
 			}
 		}
@@ -283,6 +271,9 @@ void GameScene::Update(const float deltaTime)
 		return;
 	}
 
+	//領域四分木分割
+	//testQuadTree();
+
 	//ポーズ
 	if (IsPaused()) {
 		UI_M.SetVisibiltyToCanvas("PauseMenu", true);
@@ -309,9 +300,15 @@ void GameScene::Update(const float deltaTime)
 
 			//敵Aのスポーン
 			Vector2D<float>enemyStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(20, mGameMap);
-			auto enemy = Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyName, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true);
 
-			if (!Singleton<ActorManager>::get_instance().RegistObject(enemy)) {
+			//スポーン失敗なら
+			if(!ACTOR_M.GetEnemy(
+			mSpawnEnemyName,
+			mGameMap->GetLocalFromWorldPosition(enemyStart),
+			enemyStart,
+			90,
+			true))
+			{
 				DEBUG_HELPER.Add("enemyA spawn faild", 1.0f, GetColor(200, 0, 0));
 			}
 
@@ -324,9 +321,13 @@ void GameScene::Update(const float deltaTime)
 			for(int j = 0;j<mMaxSpawnEnemyBCount;j++){
 				//敵Bのスポーン
 				enemyStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-				enemy = Singleton<ActorManager>::get_instance().GetEnemy(mSpawnEnemyNameB, mGameMap->GetLocalFromWorldPosition(enemyStart), enemyStart, 90, true);
 
-				if (!Singleton<ActorManager>::get_instance().RegistObject(enemy)) {
+				//スポーン失敗
+				if (!ACTOR_M.GetEnemy(mSpawnEnemyNameB,
+				mGameMap->GetLocalFromWorldPosition(enemyStart),
+				enemyStart,
+				90,
+				true)) {
 					DEBUG_HELPER.Add("enemyB spawn faild", 1.0f, GetColor(200, 0, 0));
 				}
 			}
@@ -441,17 +442,30 @@ void GameScene::SpawnBoss()
 {
 	//ボスをプレイヤーの画面の隅でスポーンさせる
 	Vector2D<float>bossStart = Singleton<EnemyFactory>::get_instance().GetRandomSpawnPosition(0, mGameMap);
-	auto boss = ACTOR_M.GetBossEnemy("BossEnemyA", mGameMap->GetLocalFromWorldPosition(bossStart), bossStart, 90, true);
 
-	if (!ACTOR_M.RegistObject(boss)) {//ボス登録
+	//スポーン失敗なら
+	if (!ACTOR_M.GetBossEnemy("BossEnemyA", mGameMap->GetLocalFromWorldPosition(bossStart), bossStart, 90, true)) {
 		return;
 	}
+
 	//ボスのHPを表示
 	auto hudCanvas = UI_M.GetCanvas("HUD");
 	auto hud = std::dynamic_pointer_cast<HUD>(hudCanvas->GetElements()[0]);
 	if(hud){
 		hud->SpawnBossHUD();
 	}
+}
+
+void GameScene::testQuadTree()
+{
+	auto quad = QuadTree<3>();
+	quad.Cleanup();
+	for(auto actor : ACTOR_M.GetActiveEnemies())
+	{
+		quad.Push(actor.get());
+	}
+
+	quad.HitTest();
 }
 
 void GameScene::End()

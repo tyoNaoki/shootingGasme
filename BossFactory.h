@@ -15,4 +15,3 @@ private:
 
     int mChara_Index = 0;
 };
-

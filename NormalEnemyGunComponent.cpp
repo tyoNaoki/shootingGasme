@@ -60,9 +60,9 @@ void NormalEnemyGunComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
 void NormalEnemyGunComponent::FireBullet(std::shared_ptr<Actor> owner, float targetRot)
 {
 	//弾スポーン
-	auto bullet = ACTOR_M.GetBullet(mBulletName, owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
+	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(), owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
 	//弾をアクティブに
-	if (!ACTOR_M.RegistObject(bullet)) {
+	if (!bullet) {
 		DEBUG_HELPER.Add("EnemyBullet is generate error", 1.0f);
 		return;
 	}

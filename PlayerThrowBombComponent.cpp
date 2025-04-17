@@ -36,10 +36,10 @@ void PlayerThrowBombComponent::Update(const float deltaTime)
     float angle = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), throwPosi);
 
     //爆弾スポーン
-    auto bomb = ACTOR_M.GetBomb(mBombName,CharacterType::PLAYER,map->GetLocalFromWorldPosition(throwPosi), throwPosi,angle,true);
+    auto bomb = ACTOR_M.GetBomb(mBombName.c_str(),CharacterType::PLAYER,map->GetLocalFromWorldPosition(throwPosi), throwPosi,angle,true);
 
     //爆弾をアクティブにする
-    if (!ACTOR_M.RegistObject(bomb)) {
+    if (!bomb) {
         DEBUG_HELPER.Add("Bomb is generate error", 1.0f);
         return;
     }
