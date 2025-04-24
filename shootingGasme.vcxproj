@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{53933817-37aa-4297-ab9b-053adf4d5b8e}</ProjectGuid>
+    <RootNamespace>shootingGasme</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorFactory.cpp" />
+    <ClCompile Include="ActorManager.cpp" />
+    <ClCompile Include="AnimationState.cpp" />
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombFactory.cpp" />
+    <ClCompile Include="BombObjectPool.cpp" />
+    <ClCompile Include="BossBase.cpp" />
+    <ClCompile Include="BossEnemyA.cpp" />
+    <ClCompile Include="BossFactory.cpp" />
+    <ClCompile Include="BossGunComponent.cpp" />
+    <ClCompile Include="BossHPBase.cpp" />
+    <ClCompile Include="BossLaserComponent.cpp" />
+    <ClCompile Include="BossMoveComponent.cpp" />
+    <ClCompile Include="BossTackleComponent.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletFactory.cpp" />
+    <ClCompile Include="BulletObjectPool.cpp" />
+    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="CharacterFactory.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="EnemyObjectPool.cpp" />
+    <ClCompile Include="ItemObjectPool.cpp" />
+    <ClCompile Include="LaserObjectPool.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
+    <ClCompile Include="ObjectPoolManager.cpp" />
+    <ClCompile Include="EffectBase.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EnemyChaseMoveComponent.cpp" />
+    <ClCompile Include="EnemyFactory.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="FpsControll.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameClearPanel.cpp" />
+    <ClCompile Include="GameOverPanel.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSystemManager.cpp" />
+    <ClCompile Include="GraphicBase.cpp" />
+    <ClCompile Include="GraphicManager.cpp" />
+    <ClCompile Include="HealItem.cpp" />
+    <ClCompile Include="HPBase.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="ItemBase.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="LaserFactory.cpp" />
+    <ClCompile Include="LevelUpBombAddContinuous.cpp" />
+    <ClCompile Include="LevelUpBombAttack.cpp" />
+    <ClCompile Include="LevelUpBombExplosionRange.cpp" />
+    <ClCompile Include="LevelUpBonus.cpp" />
+    <ClCompile Include="LevelUpGetReflectionGun.cpp" />
+    <ClCompile Include="LevelUpGetThrowBomb.cpp" />
+    <ClCompile Include="LevelUpGunAttack.cpp" />
+    <ClCompile Include="LevelUpGunBulletSpeed.cpp" />
+    <ClCompile Include="LevelUpGunShotRate.cpp" />
+    <ClCompile Include="LevelUpHP.cpp" />
+    <ClCompile Include="LevelUpItem.cpp" />
+    <ClCompile Include="LevelUpPanel.cpp" />
+    <ClCompile Include="LevelUpGunAddPenetration.cpp" />
+    <ClCompile Include="LevelUpPlayerMelee.cpp" />
+    <ClCompile Include="LevelUpPlayerMeleeSpeed.cpp" />
+    <ClCompile Include="LevelUpPlayerMeleeWidthRange.cpp" />
+    <ClCompile Include="LevelUpReflectionBulletSpeedUp.cpp" />
+    <ClCompile Include="LevelUpReflectionCountUp.cpp" />
+    <ClCompile Include="LevelUpReflectionShotRateUp.cpp" />
+    <ClCompile Include="LevelUpThrowBombRate.cpp" />
+    <ClCompile Include="MenuPanel.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="MenuScenePanel.cpp" />
+    <ClCompile Include="NormalEnemyA.cpp" />
+    <ClCompile Include="NormalEnemyAttackComponent.cpp" />
+    <ClCompile Include="NormalEnemyB.cpp" />
+    <ClCompile Include="NormalEnemyBase.cpp" />
+    <ClCompile Include="NormalEnemyC.cpp" />
+    <ClCompile Include="NormalEnemyGunComponent.cpp" />
+    <ClCompile Include="NormalEnemyMeleeComponent.cpp" />
+    <ClCompile Include="PlayerGunComponent.cpp" />
+    <ClCompile Include="PlayerMeleeComponent.cpp" />
+    <ClCompile Include="PlayerMovementComponent.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="PlayerFactory.cpp" />
+    <ClCompile Include="PlayerReflectionGunComponent.cpp" />
+    <ClCompile Include="PlayerThrowBombComponent.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SelectUIRect.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="StatusInfoPanel.cpp" />
+    <ClCompile Include="StatusManager.cpp" />
+    <ClCompile Include="TitlePanel.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIBar.cpp" />
+    <ClCompile Include="UIBossHPBar.cpp" />
+    <ClCompile Include="UIControllDescription.cpp" />
+    <ClCompile Include="UICredit.cpp" />
+    <ClCompile Include="UIExperienceBar.cpp" />
+    <ClCompile Include="UILevelText.cpp" />
+    <ClCompile Include="UILevelUpReward.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIScoreText.cpp" />
+    <ClCompile Include="UISoundSetting.cpp" />
+    <ClCompile Include="UIText.cpp" />
+    <ClCompile Include="UITime.cpp" />
+    <ClCompile Include="WeaponComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorFactory.h" />
+    <ClInclude Include="ActorManager.h" />
+    <ClInclude Include="AnimationState.h" />
+    <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombFactory.h" />
+    <ClInclude Include="BombObjectPool.h" />
+    <ClInclude Include="BossBase.h" />
+    <ClInclude Include="BossEnemyA.h" />
+    <ClInclude Include="BossFactory.h" />
+    <ClInclude Include="BossGunComponent.h" />
+    <ClInclude Include="BossHPBase.h" />
+    <ClInclude Include="BossLaserComponent.h" />
+    <ClInclude Include="BossMoveComponent.h" />
+    <ClInclude Include="BossTackleComponent.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletFactory.h" />
+    <ClInclude Include="BulletObjectPool.h" />
+    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="CharacterFactory.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="EnemyObjectPool.h" />
+    <ClInclude Include="ItemObjectPool.h" />
+    <ClInclude Include="LaserObjectPool.h" />
+    <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="ObjectPoolManager.h" />
+    <ClInclude Include="DebugHelper.h" />
+    <ClInclude Include="EffectBase.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EnemyChaseMoveComponent.h" />
+    <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="FpsControll.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameClearPanel.h" />
+    <ClInclude Include="GameOverPanel.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameSystemManager.h" />
+    <ClInclude Include="GraphicBase.h" />
+    <ClInclude Include="GraphicManager.h" />
+    <ClInclude Include="HealItem.h" />
+    <ClInclude Include="HPBase.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="ItemBase.h" />
+    <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="Laser.h" />
+    <ClInclude Include="LaserFactory.h" />
+    <ClInclude Include="LevelUpBombAddContinuous.h" />
+    <ClInclude Include="LevelUpBombAttack.h" />
+    <ClInclude Include="LevelUpBombExplosionRange.h" />
+    <ClInclude Include="LevelUpBonus.h" />
+    <ClInclude Include="LevelUpGetReflectionGun.h" />
+    <ClInclude Include="LevelUpGetThrowBomb.h" />
+    <ClInclude Include="LevelUpGunAttack.h" />
+    <ClInclude Include="LevelUpGunBulletSpeed.h" />
+    <ClInclude Include="LevelUpGunShotRate.h" />
+    <ClInclude Include="LevelUpHP.h" />
+    <ClInclude Include="LevelUpItem.h" />
+    <ClInclude Include="LevelUpPanel.h" />
+    <ClInclude Include="LevelUpGunAddPenetration.h" />
+    <ClInclude Include="LevelUpPlayerMelee.h" />
+    <ClInclude Include="LevelUpPlayerMeleeSpeed.h" />
+    <ClInclude Include="LevelUpPlayerMeleeWidthRange.h" />
+    <ClInclude Include="LevelUpReflectionBulletSpeedUp.h" />
+    <ClInclude Include="LevelUpReflectionCountUp.h" />
+    <ClInclude Include="LevelUpReflectionShotRateUp.h" />
+    <ClInclude Include="LevelUpThrowBombRate.h" />
+    <ClInclude Include="MenuPanel.h" />
+    <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="MenuScenePanel.h" />
+    <ClInclude Include="NormalEnemyA.h" />
+    <ClInclude Include="NormalEnemyAttackComponent.h" />
+    <ClInclude Include="NormalEnemyB.h" />
+    <ClInclude Include="NormalEnemyBase.h" />
+    <ClInclude Include="NormalEnemyC.h" />
+    <ClInclude Include="NormalEnemyGunComponent.h" />
+    <ClInclude Include="NormalEnemyMeleeComponent.h" />
+    <ClInclude Include="PlayerGunComponent.h" />
+    <ClInclude Include="PlayerMeleeComponent.h" />
+    <ClInclude Include="PlayerMovementComponent.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="PlayerCharacter.h" />
+    <ClInclude Include="PlayerFactory.h" />
+    <ClInclude Include="PlayerReflectionGunComponent.h" />
+    <ClInclude Include="PlayerThrowBombComponent.h" />
+    <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SelectUIRect.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="StatusInfoPanel.h" />
+    <ClInclude Include="StatusManager.h" />
+    <ClInclude Include="TitlePanel.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIBar.h" />
+    <ClInclude Include="UIBossHPBar.h" />
+    <ClInclude Include="UIControllDescription.h" />
+    <ClInclude Include="UICredit.h" />
+    <ClInclude Include="UIExperienceBar.h" />
+    <ClInclude Include="UILevelText.h" />
+    <ClInclude Include="UILevelUpReward.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIScoreText.h" />
+    <ClInclude Include="UISoundSetting.h" />
+    <ClInclude Include="UIText.h" />
+    <ClInclude Include="UITime.h" />
+    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="WeaponComponent.h" />
+    <ClInclude Include="WeaponStatus.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
