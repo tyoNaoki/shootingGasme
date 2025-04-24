@@ -6,7 +6,11 @@
 #include "GraphicManager.h"
 #include <random>
 
+<<<<<<< HEAD
 BossEnemyA::BossEnemyA():BossBase()
+=======
+BossEnemyA::BossEnemyA(Collision::Rect rect):BossBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     mDrawOffset = Vector2D<float>(-240, -240);
     mDrawExtendSize = Vector2D<float>(5,5);
@@ -19,10 +23,17 @@ void BossEnemyA::Init(CharacterType ct, std::string name, int id, Vector2D<float
     //衝突判定除外用
     std::shared_ptr<CharacterBase> self = std::static_pointer_cast<CharacterBase>(shared_from_this());
     //コンポーネント追加
+<<<<<<< HEAD
     GetComponentManager().AddComponent<BossMoveComponent>(0,self);
     GetComponentManager().AddComponent<BossTackleComponent>(1,self);
     GetComponentManager().AddComponent<BossLaserComponent>(2,self);
     GetComponentManager().AddComponent<BossGunComponent>(3, self);
+=======
+    AddComponent(std::make_shared<BossMoveComponent>(self), 0 );
+    AddComponent(std::make_shared<BossTackleComponent>(self), 1);
+    AddComponent(std::make_shared<BossLaserComponent>(self),2);
+    AddComponent(std::make_shared<BossGunComponent>(self), 3);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void BossEnemyA::Update(float deltaTime)
@@ -39,9 +50,15 @@ void BossEnemyA::Update(float deltaTime)
     switch (GetCurrentState())
     {
     case BossState::Move://移動
+<<<<<<< HEAD
         GetComponentManager().GetComponent<BossMoveComponent>()->Update(deltaTime);
         //移動時に自分に触れたプレイヤーにタックルダメージを与える
         GetComponentManager().GetComponent<BossTackleComponent>()->Update(deltaTime);
+=======
+        GetComponent("BossMoveComponent")->Update(deltaTime);
+        //移動時に自分に触れたプレイヤーにタックルダメージを与える
+        GetComponent("BossTackleComponent")->Update(deltaTime);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         break;
     case BossState::Attack://攻撃
         mAttackComponent->Update(deltaTime);
@@ -50,10 +67,17 @@ void BossEnemyA::Update(float deltaTime)
 
         //70%で弾発射
         if(IsChooseLeft(0.7f)){
+<<<<<<< HEAD
             mAttackComponent = GetComponentManager().GetComponent<BossGunComponent>();
             
         }else{//30%でレーザー
             mAttackComponent = GetComponentManager().GetComponent<BossLaserComponent>();
+=======
+            mAttackComponent = GetComponent("BossGunComponent");
+            
+        }else{//30%でレーザー
+            mAttackComponent = GetComponent("BossLaserComponent");
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         }
         //現在の攻撃の名前取得
         mWeaponName = mAttackComponent->GetName();
@@ -95,7 +119,11 @@ void BossEnemyA::Update(float deltaTime)
     SetLocalPosition2D(localPosi);
     SetWorldPosition2D(newPosi);
 
+<<<<<<< HEAD
     //DEBUG_HELPER.DrawCollision(GetCollision());
+=======
+    DEBUG_HELPER.DrawCollision(GetCollision());
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     std::string preAction = GetCurrentAnimState()->GetActionName();
     ANIM_M.Update(this);

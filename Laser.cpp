@@ -79,8 +79,12 @@ void Laser::Update(const float deltaTime)
         auto player = ACTOR_M.GetCurrentPlayer();
         if(!player){return;}
         //Hit
+<<<<<<< HEAD
         auto collision = player->GetCollision<Collision::Rect>();
         if(mCurrentTime <= 0.0f&&Collision::IsColliding(mRotRect,*collision)){
+=======
+        if(mCurrentTime <= 0.0f&&Collision::IsColliding(mRotRect,player->GetCollision())){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
             //レーザーのノックバック角度をレーザーの照射位置からプレイヤーまでの角度とレーザーの照射角度との差分で計算、設定する
             float laserRot = GetRotation();
             float targetRot = (float)Vector2D<float>::GetLookAtAngle(GetWorldPosition2D(),player->GetWorldPosition2D());

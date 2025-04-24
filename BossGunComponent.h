@@ -1,12 +1,20 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
+=======
+#include "Component.h"
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
 class Bullet;
 class PlayerCharacter;
 class BossBase;
 
 class BossGunComponent :
+<<<<<<< HEAD
     public WeaponComponent
+=======
+    public Component
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 public:
     BossGunComponent(std::shared_ptr<CharacterBase>owner);

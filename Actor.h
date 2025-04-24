@@ -1,5 +1,8 @@
 #pragma once
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 #include "Vector2D.h"
 #include "Game.h"
 #include "DebugHelper.h"
@@ -8,12 +11,19 @@
 #include "Map.h"
 #include "DxLib.h"
 #include "AnimationState.h"
+<<<<<<< HEAD
 #include "ComponentManager.h"
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
 class AnimationState;
 class Collision::Rect;
 
+<<<<<<< HEAD
 enum class CharacterType { PLAYER, ENEMY, BULLET,LASER,BOMB, ITEM,BOSS,EMPTY };
+=======
+enum class CharacterType { PLAYER, ENEMY, BULLET,LASER,BOMB, ITEM,BOSS, EMPTY };
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
 class Actor
 {
@@ -27,12 +37,17 @@ public:
 	virtual void Draw(const float deltaTime) = 0;
 
 	//ローカル座標設定
+<<<<<<< HEAD
 	virtual void SetLocalPosition2D(Vector2D<float> newPosition);
+=======
+	virtual void SetLocalPosition2D(Vector2D<float> newPosition); 
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	//ワールド座標設定
 	virtual void SetWorldPosition2D(Vector2D<float> worldPosition);
 	//更新前のワールド座標設定
 	virtual void SetOldWorldPosition2D(Vector2D<float> worldPosition);
 
+<<<<<<< HEAD
 	void SetCollision(std::shared_ptr<Collision::Shape> collision);
 
 	std::shared_ptr<Collision::Shape>&GetCollision()
@@ -46,6 +61,8 @@ public:
 		return std::dynamic_pointer_cast<colType>(mActorCollision);
 	}
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	//現在のコリジョンの所属グリッド取得、更新
 	void SetGridIndex(int index);
 	int GetGridIndex();
@@ -98,8 +115,11 @@ public:
 
 	void SetActive(bool active);
 
+<<<<<<< HEAD
 	ComponentManager& GetComponentManager();
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 protected:
 	Vector2D<float> mLocalPosition; //ローカル座標
 	Vector2D<float> mWorldPosition; //ワールド座標
@@ -142,9 +162,12 @@ private:
 
 	//アクティブはゲーム内で動いていることを示す。非アクティブは、アクターマネージャーの専用データに格納される
 	bool mActive = false;
+<<<<<<< HEAD
 
 	ComponentManager mComponentManager;
 
 	std::shared_ptr<Collision::Shape> mActorCollision;
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 };
 

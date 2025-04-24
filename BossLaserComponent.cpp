@@ -6,7 +6,11 @@
 #include "CollisionManager.h"
 #include "SoundManager.h"
 
+<<<<<<< HEAD
 BossLaserComponent::BossLaserComponent(std::shared_ptr<CharacterBase> owner) : WeaponComponent(owner)
+=======
+BossLaserComponent::BossLaserComponent(std::shared_ptr<CharacterBase> owner):Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	mComponentName = "BossLaserComponent";
 	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
@@ -181,7 +185,11 @@ void BossLaserComponent::FireLaser(std::shared_ptr<CharacterBase> owner, float t
 		//レーザーのステータス設定
 		laser->SetStatus(mLaserWidthSize, mLaserSpeed,mLaserDamage,mLaserKnockBack,mLaserKnockBackTime);
 		//レーザーをアクティブにする
+<<<<<<< HEAD
 		if (!laser) {
+=======
+		if (!ACTOR_M.RegistObject(laser)) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			DEBUG_HELPER.Add("EnemyLaser is generate error", 1.0f);
 			return;
 		}

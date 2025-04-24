@@ -1,8 +1,15 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
 
 // 爆弾を投げるプレイヤーのコンポーネントクラス
 class PlayerThrowBombComponent : public WeaponComponent {
+=======
+#include "Component.h"
+
+// 爆弾を投げるプレイヤーのコンポーネントクラス
+class PlayerThrowBombComponent : public Component {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 public:
     // コンストラクタ：キャラクターの所有者を初期化
     PlayerThrowBombComponent(std::shared_ptr<CharacterBase> owner);

@@ -1,5 +1,10 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
+=======
+#include "Component.h"
+#include "WeaponStatus.h"
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 #include <vector>
 #include "Laser.h"
 
@@ -11,7 +16,11 @@ class PlayerCharacter;
 class BossBase;
 
 class BossLaserComponent :
+<<<<<<< HEAD
     public WeaponComponent
+=======
+    public Component
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 public:
     BossLaserComponent(std::shared_ptr<CharacterBase>owner);

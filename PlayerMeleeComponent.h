@@ -1,5 +1,9 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
+=======
+#include "Component.h"
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 #include "CollisionManager.h"
 #include "StatusManager.h"
 #include "Collision.h"
@@ -8,7 +12,11 @@
 class PlayerCharacter;
 
 // プレイヤーの近接攻撃を制御するコンポーネントクラス
+<<<<<<< HEAD
 class PlayerMeleeComponent : public WeaponComponent {
+=======
+class PlayerMeleeComponent : public Component {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 public:
     // コンストラクタ：キャラクターの所有者を初期化
     PlayerMeleeComponent(std::shared_ptr<CharacterBase> owner);

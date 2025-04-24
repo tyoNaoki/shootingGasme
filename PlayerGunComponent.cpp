@@ -4,7 +4,11 @@
 #include "SoundManager.h"
 #include "ActorManager.h"
 
+<<<<<<< HEAD
 PlayerGunComponent::PlayerGunComponent(std::shared_ptr<CharacterBase> owner):WeaponComponent(owner)
+=======
+PlayerGunComponent::PlayerGunComponent(std::shared_ptr<CharacterBase> owner):Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//初期化
 	mComponentName = "PlayerGunComponent";
@@ -50,7 +54,11 @@ void PlayerGunComponent::Update(const float deltaTime)
 	if(ACTOR_M.IsSpawnBoss()){
 		auto boss = ACTOR_M.GetCurrentBossEnemy();
 		//ボスとの距離取得
+<<<<<<< HEAD
 		float distance = (float)(boss->GetWorldPosition2D() - owner->GetWorldPosition2D()).Length_Square();
+=======
+		float distance = (boss->GetWorldPosition2D() - owner->GetWorldPosition2D()).Length_Square();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		//ボスが一番近い場合
 		if(minDistance > distance || minDistance == -1.0f){
 			target = boss;
@@ -61,9 +69,15 @@ void PlayerGunComponent::Update(const float deltaTime)
 	//自分と狙う対象までの角度を取得
 	float targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), target->GetWorldPosition2D());
 	//弾スポーン
+<<<<<<< HEAD
 	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(),owner->GetActorType(),owner->GetLocalPosition2D(),owner->GetWorldPosition2D(),targetRot,true);
 	//弾をアクティブにする
 	if(!bullet){
+=======
+	auto bullet = ACTOR_M.GetBullet(mBulletName,owner->GetActorType(),owner->GetLocalPosition2D(),owner->GetWorldPosition2D(),targetRot,true);
+	//弾をアクティブにする
+	if(!ACTOR_M.RegistObject(bullet)){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		DEBUG_HELPER.Add("Bullet is generate error",1.0f);
 		return;
 	}

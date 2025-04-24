@@ -147,7 +147,11 @@ public:
 		}
 	}
 
+<<<<<<< HEAD
 	void DrawCollision(Collision::Rect rect){
+=======
+	void DrawCollision(Collision::Rect rect) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		if (debugMap) {
 			drawRectList.emplace_back(rect,0.0f,false);
 		}
@@ -218,7 +222,11 @@ public:
 			}
 			int x, y, l;
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 127); //背景の矩形を半透明にする
+<<<<<<< HEAD
 			GetDrawStringSizeToHandle(&x, &y, &l, t.message.c_str(), (int)t.message.length(), FontHandle); //各行の大きさを取得
+=======
+			GetDrawStringSizeToHandle(&x, &y, &l, t.message.c_str(), t.message.length(), FontHandle); //各行の大きさを取得
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			DrawBox(0, i * y, x, i * y + y, 0x000000, TRUE); //背景の矩形を描画
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //半透明から通常に戻す
 			DrawStringToHandle(0, i * y, t.message.c_str(),t.color, FontHandle); //文字列をフォントを使って描画

@@ -3,8 +3,15 @@
 
 class PlayerCharacter : public CharacterBase {
 public:
+<<<<<<< HEAD
     // デフォルトコンストラクタ
     PlayerCharacter();
+=======
+    // デフォルトコンストラクタを削除
+    PlayerCharacter() = delete;
+    // 矩形を引数とするコンストラクタ
+    PlayerCharacter(Collision::Rect rect);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     // デフォルトデストラクタ
     ~PlayerCharacter() = default;

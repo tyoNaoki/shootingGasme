@@ -157,7 +157,10 @@
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BombFactory.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="BombObjectPool.cpp" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClCompile Include="BossBase.cpp" />
     <ClCompile Include="BossEnemyA.cpp" />
     <ClCompile Include="BossFactory.cpp" />
@@ -168,19 +171,25 @@
     <ClCompile Include="BossTackleComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="BulletObjectPool.cpp" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="CharacterFactory.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="EnemyObjectPool.cpp" />
     <ClCompile Include="ItemObjectPool.cpp" />
     <ClCompile Include="LaserObjectPool.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="ObjectPoolManager.cpp" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyChaseMoveComponent.cpp" />
@@ -241,7 +250,10 @@
     <ClCompile Include="PlayerFactory.cpp" />
     <ClCompile Include="PlayerReflectionGunComponent.cpp" />
     <ClCompile Include="PlayerThrowBombComponent.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="QuadTree.cpp" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SelectUIRect.cpp" />
@@ -264,7 +276,10 @@
     <ClCompile Include="UISoundSetting.cpp" />
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UITime.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="WeaponComponent.cpp" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -273,7 +288,10 @@
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BombFactory.h" />
+<<<<<<< HEAD
     <ClInclude Include="BombObjectPool.h" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClInclude Include="BossBase.h" />
     <ClInclude Include="BossEnemyA.h" />
     <ClInclude Include="BossFactory.h" />
@@ -284,19 +302,25 @@
     <ClInclude Include="BossTackleComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletFactory.h" />
+<<<<<<< HEAD
     <ClInclude Include="BulletObjectPool.h" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="CharacterFactory.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
+<<<<<<< HEAD
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="EnemyObjectPool.h" />
     <ClInclude Include="ItemObjectPool.h" />
     <ClInclude Include="LaserObjectPool.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ObjectPoolManager.h" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="EffectManager.h" />
@@ -357,7 +381,10 @@
     <ClInclude Include="PlayerFactory.h" />
     <ClInclude Include="PlayerReflectionGunComponent.h" />
     <ClInclude Include="PlayerThrowBombComponent.h" />
+<<<<<<< HEAD
     <ClInclude Include="QuadTree.h" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SelectUIRect.h" />
@@ -381,7 +408,10 @@
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UITime.h" />
     <ClInclude Include="Vector2D.h" />
+<<<<<<< HEAD
     <ClInclude Include="WeaponComponent.h" />
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     <ClInclude Include="WeaponStatus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

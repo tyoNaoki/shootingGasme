@@ -5,7 +5,11 @@
 #include "StatusManager.h"
 #include "CollisionManager.h"
 
+<<<<<<< HEAD
 BossTackleComponent::BossTackleComponent(std::shared_ptr<CharacterBase> owner):WeaponComponent(owner)
+=======
+BossTackleComponent::BossTackleComponent(std::shared_ptr<CharacterBase> owner):Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	mComponentName = "BossTackleComponent";
 	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);

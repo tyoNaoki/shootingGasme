@@ -12,7 +12,11 @@
 #include "ActorManager.h"
 #include "CollisionManager.h"
 
+<<<<<<< HEAD
 NormalEnemyBase::NormalEnemyBase() : CharacterBase()
+=======
+NormalEnemyBase::NormalEnemyBase(Collision::Rect rect) : CharacterBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 }
 
@@ -42,8 +46,13 @@ void NormalEnemyBase::Init(CharacterType ct, std::string name, int id, Vector2D<
     mCharaToIgnores = { self,ACTOR_M.GetCurrentPlayer()};
 
     //コンポーネント追加
+<<<<<<< HEAD
     GetComponentManager().AddComponent<EnemyChaseMoveComponent>(0,self);
     GetComponentManager().AddComponent<NormalEnemyAttackComponent>(1,self);
+=======
+    AddComponent(std::make_shared<EnemyChaseMoveComponent>(self), 0);
+    AddComponent(std::make_shared<NormalEnemyAttackComponent>(self), 1);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //コリジョン座標更新
     SetWorldPosition2D(worldPosition);
@@ -75,7 +84,11 @@ void NormalEnemyBase::Reset(int id, Vector2D<float> localPosition, Vector2D<floa
     mScore = status.score;
 
     //コンポーネント初期化
+<<<<<<< HEAD
     GetComponentManager().InitComponents();
+=======
+    InitComponents();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //コリジョン座標更新
     SetWorldPosition2D(worldPosition);
@@ -97,7 +110,11 @@ void NormalEnemyBase::Update(const float deltaTime)
 
     //死んでいる場合
     if (mIsDead) {
+<<<<<<< HEAD
         //DEBUG_HELPER.DrawCollision(GetCollision());
+=======
+        DEBUG_HELPER.DrawCollision(GetCollision());
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         SetLocalPosition2D(GetLocalFromWorldPosi(GetWorldPosition2D()));
         //アニメーション更新
         ANIM_M.Update(this);
@@ -146,6 +163,7 @@ void NormalEnemyBase::Update(const float deltaTime)
 
     //衝突検知//
     auto newPosi = GetWorldPosition2D();
+<<<<<<< HEAD
     auto newCollisionPosi = GetCollision<Collision::Rect>();
 
     //マップとの当たり判定管理
@@ -153,10 +171,20 @@ void NormalEnemyBase::Update(const float deltaTime)
     
     //マップ外にいた場合、中に戻す
     if (COLLISION_M.PushBackFromOut(newPosi, *newCollisionPosi, map)) {
+=======
+    auto newCollisionPosi = GetCollision();
+
+    //マップとの当たり判定管理
+    auto map = scene->GetMap();
+
+    //マップ外にいた場合、中に戻す
+    if (COLLISION_M.PushBackFromOut(newPosi, newCollisionPosi, map)) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         std::string message = "Enemy is out";
         DEBUG_HELPER.Add(message);
     }
 
+<<<<<<< HEAD
     
     //コリジョンの一番長い状態を距離に設定
     float dis = newCollisionPosi->mSize.x >= newCollisionPosi->mSize.y ? newCollisionPosi->mSize.x : newCollisionPosi->mSize.y;
@@ -168,6 +196,18 @@ void NormalEnemyBase::Update(const float deltaTime)
                 auto rect2 = x->GetCollision<Collision::Rect>();
                 Collision::PushBackRect(*newCollisionPosi, *rect2);
                 newPosi = newCollisionPosi->mLeftTop + (newCollisionPosi->mSize / 2);
+=======
+    //コリジョンの一番長い状態を距離に設定
+    float dis = newCollisionPosi.mSize.x >= newCollisionPosi.mSize.y ? newCollisionPosi.mSize.x : newCollisionPosi.mSize.y;
+    auto nearActors = COLLISION_M.DetectionNearCharacters(newPosi, newCollisionPosi, dis, mCharaToIgnores);
+    if (nearActors.size() > 0) {
+        for (auto& x : nearActors) {
+            //衝突時、更新前の座標への方向に衝突分、新しい座標を戻して返す
+            if (Collision::IsColliding(newCollisionPosi, x->GetCollision())) {
+                auto rect2 = x->GetCollision();
+                Collision::PushBackRect(newCollisionPosi, rect2);
+                newPosi = newCollisionPosi.mLeftTop + (newCollisionPosi.mSize / 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
             }
         }
     }
@@ -180,7 +220,11 @@ void NormalEnemyBase::Update(const float deltaTime)
 
     std::string preActionName = GetCurrentAnimState()->GetActionName();
 
+<<<<<<< HEAD
     //DEBUG_HELPER.DrawCollision(GetCollision());
+=======
+    DEBUG_HELPER.DrawCollision(GetCollision());
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //アニメーション遷移更新
     ANIM_M.Update(this);

@@ -12,6 +12,7 @@ std::shared_ptr<CharacterBase> EnemyFactory::CreateObject(std::string name)
 {
     //32*32‚ÌqƒŠƒWƒ‡ƒ“İ’è
 
+<<<<<<< HEAD
     if(mChara_Index.find(name) == mChara_Index.end())return nullptr;
 
     Singleton<GraphicManager>::get_instance().CreateGraphic(name);
@@ -31,6 +32,23 @@ std::shared_ptr<CharacterBase> EnemyFactory::CreateObject(std::string name)
         auto enemy = std::make_shared<NormalEnemyC>();
         enemy->SetCollision(std::make_shared<Collision::Rect>(Vector2D<float>(0, 0), Vector2D<float>(96, 96)));
         return enemy;
+=======
+    if(name == "NormalEnemyA"){
+        Collision::Rect rect(Vector2D<float>(0, 0), Vector2D<float>(48, 48));
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<NormalEnemyA>(rect);
+    }
+    if (name == "NormalEnemyB") {
+        Collision::Rect rect(Vector2D<float>(0, 0), Vector2D<float>(48, 48));
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<NormalEnemyB>(rect);
+    }
+
+    if (name == "NormalEnemyC") {
+        Collision::Rect rect(Vector2D<float>(0, 0), Vector2D<float>(96, 96));
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<NormalEnemyC>(rect);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     }
 
     return nullptr;

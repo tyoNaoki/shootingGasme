@@ -170,11 +170,14 @@ namespace Collision{
 		return false;
 	}
 
+<<<<<<< HEAD
 	bool IsColliding(Actor* actor, Actor* actor2)
 	{
 		return false;
 	}
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	bool IsColliding(const Circle& c1, const Circle& c2) {
 		float dx = c1.mCenter.x - c2.mCenter.x; 
 		float dy = c1.mCenter.y - c2.mCenter.y;
@@ -338,8 +341,11 @@ namespace Collision{
 		return vertices; 
 	}
 
+<<<<<<< HEAD
 	
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	/*
 	Vector2D<float> RotatedRect::GetTopMiddle()
 	{
@@ -373,6 +379,7 @@ namespace Collision{
 		return bottomMiddle;
 	}
 	*/
+<<<<<<< HEAD
 	bool Line::HandleCollision(Collision::Shape& shape)
 	{
 		if (auto rect = dynamic_cast<Collision::Rect*>(&shape))
@@ -423,4 +430,6 @@ namespace Collision{
 
 		return false;
 	}
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }

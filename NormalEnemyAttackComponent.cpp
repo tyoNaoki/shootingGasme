@@ -6,7 +6,11 @@
 #include "PlayerCharacter.h"
 #include "CollisionManager.h"
 
+<<<<<<< HEAD
 NormalEnemyAttackComponent::NormalEnemyAttackComponent(std::shared_ptr<CharacterBase> owner) :WeaponComponent(owner)
+=======
+NormalEnemyAttackComponent::NormalEnemyAttackComponent(std::shared_ptr<CharacterBase> owner) :Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//‰Šú‰»
 	Init();

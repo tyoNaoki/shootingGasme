@@ -1,11 +1,19 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
+=======
+#include "Component.h"
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 #include <chrono>
 #include <thread>
 #include <random>
 
 //雑魚敵の銃を扱うコンポーネントクラス
+<<<<<<< HEAD
 class NormalEnemyGunComponent : public WeaponComponent {
+=======
+class NormalEnemyGunComponent : public Component {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 public:
     // キャラクターの所有者を初期化
     NormalEnemyGunComponent(std::shared_ptr<CharacterBase> owner);

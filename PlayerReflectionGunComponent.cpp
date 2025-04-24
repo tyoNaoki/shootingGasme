@@ -3,7 +3,11 @@
 #include "StatusManager.h"
 #include "ActorManager.h"
 
+<<<<<<< HEAD
 PlayerReflectionGunComponent::PlayerReflectionGunComponent(std::shared_ptr<CharacterBase> owner) :WeaponComponent(owner)
+=======
+PlayerReflectionGunComponent::PlayerReflectionGunComponent(std::shared_ptr<CharacterBase> owner) :Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//初期化
 	mComponentName = "PlayerReflectionGunComponent";
@@ -62,6 +66,7 @@ void PlayerReflectionGunComponent::Update(const float deltaTime)
 	//対象までの角度を発射角度として取得
 	float targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), target->GetWorldPosition2D());
 	//弾を発射
+<<<<<<< HEAD
 	//弾をアクティブにする
 	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(), owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
 
@@ -70,6 +75,15 @@ void PlayerReflectionGunComponent::Update(const float deltaTime)
 		return;
 	}
 	
+=======
+	auto bullet = ACTOR_M.GetBullet(mBulletName, owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
+
+	//弾をアクティブにする
+	if (!ACTOR_M.RegistObject(bullet)) {
+		DEBUG_HELPER.Add("Bullet is generate error", 1.0f);
+		return;
+	}
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	//ステータス設定
 	bullet->SetStatus(mBulletSpeed, mAttack, mBulletLifeTime, mReflectionCount);
 	//音を鳴らす

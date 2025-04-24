@@ -5,7 +5,11 @@
 #include "SceneManager.h"
 #include "CollisionManager.h"
 
+<<<<<<< HEAD
 BossBase::BossBase() : CharacterBase()
+=======
+BossBase::BossBase(Collision::Rect rect) : CharacterBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     mStartAnimStateName = "BossIdle";
 }
@@ -59,7 +63,11 @@ void BossBase::Reset(int id, Vector2D<float> localPosition, Vector2D<float> worl
     mScore = status.score;
 
     //コンポーネント初期化
+<<<<<<< HEAD
     GetComponentManager().InitComponents();
+=======
+    InitComponents();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //コリジョン座標更新
     SetWorldPosition2D(worldPosition);
@@ -105,7 +113,11 @@ void BossBase::Update(const float deltaTime)
     SetLocalPosition2D(localPosi);
     SetWorldPosition2D(newPosi);
 
+<<<<<<< HEAD
     //DEBUG_HELPER.DrawCollision(GetCollision());
+=======
+    DEBUG_HELPER.DrawCollision(GetCollision());
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     std::string preAction = GetCurrentAnimState()->GetActionName();
     ANIM_M.Update(this);
@@ -138,8 +150,12 @@ void BossBase::Draw(const float deltaTime)
 
     //ダミー画像の場合
     if (mVisible && mCurrent_gHandle == -2) {
+<<<<<<< HEAD
         auto collision = GetCollision<Collision::Rect>();
         Vector2D<float> size = collision->mSize / 2;
+=======
+        Vector2D<float> size = GetCollision().mSize / 2;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         auto map = scene->GetMap();
 
         auto localPosi = map->GetLocalFromWorldPosition(GetWorldPosition2D());

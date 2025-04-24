@@ -2,7 +2,10 @@
 #include "CharacterFactory.h"
 #include <unordered_map>
 
+<<<<<<< HEAD
 #define ENEMY_M Singleton<EnemyFactory>::get_instance()
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 class Map;
 
 class EnemyFactory :

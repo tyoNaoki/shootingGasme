@@ -15,3 +15,7 @@ private:
 
     int mChara_Index = 0;
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420

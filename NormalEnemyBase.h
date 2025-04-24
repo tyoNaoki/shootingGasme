@@ -4,8 +4,16 @@
 //雑魚敵の基本クラス
 class NormalEnemyBase : public CharacterBase {
 public:
+<<<<<<< HEAD
     
     NormalEnemyBase();
+=======
+    // デフォルトコンストラクタを削除
+    NormalEnemyBase() = delete;
+
+    // コリジョンを矩形で初期化
+    NormalEnemyBase(Collision::Rect rect);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     // デストラクタ
     ~NormalEnemyBase();
 

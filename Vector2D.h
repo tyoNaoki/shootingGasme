@@ -217,14 +217,22 @@ public:
 		if(radians == 0){
 			return 0.0;
 		}
+<<<<<<< HEAD
 		return (T)(radians * 180.0 / M_PI);
+=======
+		return radians * 180.0 / M_PI;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	}
 
 	static T GetRadiansFromDegrees(T degrees) {
 		if (degrees == 0) {
 			return 0.0;
 		}
+<<<<<<< HEAD
 		return (T)(degrees / 180.0 * M_PI);
+=======
+		return degrees / 180.0 * M_PI;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	}
 
 	static T GetDegreeFromOrigin(Vector2D<T>v){
@@ -239,7 +247,11 @@ public:
 
 	template<typename T>
 	static T Cross(Vector2D<T> v1, Vector2D<T> v2) {
+<<<<<<< HEAD
 		return (T)(v1.x * v2.y - v2.x * v1.y);
+=======
+		return v1.x * v2.y - v2.x * v1.y;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	}
 
 	//v2がv1となす角のコサイン値を求める(時計周りが正)

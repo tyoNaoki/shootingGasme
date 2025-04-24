@@ -327,6 +327,7 @@
     <ClCompile Include="UISoundSetting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="ObjectPoolManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -357,6 +358,8 @@
     <ClCompile Include="ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -677,6 +680,7 @@
     <ClInclude Include="UISoundSetting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="ObjectPoolManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -707,5 +711,7 @@
     <ClInclude Include="ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
   </ItemGroup>
 </Project>

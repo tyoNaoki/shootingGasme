@@ -3,7 +3,11 @@
 #include "PlayerCharacter.h"
 #include "ActorManager.h"
 
+<<<<<<< HEAD
 NormalEnemyA::NormalEnemyA() : NormalEnemyBase()
+=======
+NormalEnemyA::NormalEnemyA(Collision::Rect rect) : NormalEnemyBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     //•`‰æˆÊ’u”÷’²®
     mDrawOffset = Vector2D<float>(-100, -110);

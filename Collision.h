@@ -9,6 +9,7 @@
 class Actor;
 
 namespace Collision{
+<<<<<<< HEAD
 	class Shape {
 	public:
 		virtual ~Shape() = default;
@@ -17,17 +18,26 @@ namespace Collision{
 	};
 
 	class Line : public Shape{
+=======
+	class Line {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	public:
 		Vector2D<float> mStart;
 		Vector2D<float> mEnd;
 
 		Line(Vector2D<float>start, Vector2D<float>end) : mStart(start), mEnd(end) {}
 		Line() : mStart(Vector2D<float>()), mEnd(Vector2D<float>()) {}
+<<<<<<< HEAD
 
 		bool HandleCollision(Collision::Shape& shape)override;
 	};
 
 	class Rect : public Shape{
+=======
+	};
+
+	class Rect {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	public:
 		Vector2D<float>mLeftTop; // 左上の座標 
 		Vector2D<float>mSize; // 矩形の幅と高さ 
@@ -46,11 +56,17 @@ namespace Collision{
 				{mLeftTop.x, mLeftTop.y + mSize.y}
 			};
 		}
+<<<<<<< HEAD
 
 		bool HandleCollision(Collision::Shape& shape) override;
 	};
 
 	class RotatedRect : public Shape{
+=======
+	};
+
+	class RotatedRect {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	public:
 		Vector2D<float> center;
 		Vector2D<float> halfExtend;
@@ -60,20 +76,30 @@ namespace Collision{
 
 		std::vector<Vector2D<float>> GetVertices();
 
+<<<<<<< HEAD
 		bool HandleCollision(Collision::Shape& shape)override;
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		//Vector2D<float>GetTopMiddle();
 		//Vector2D<float>GetBottomMiddle();
 	};
 
+<<<<<<< HEAD
 	class Circle :public Shape{
+=======
+	class Circle {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	public:
 		Vector2D<float> mCenter; // 中心座標 
 		float mRadius; // 半径 
 		Circle(Vector2D<float>center, float radius) : mCenter(center), mRadius(radius) {}
 		Circle() :mCenter(), mRadius() {}
+<<<<<<< HEAD
 
 		bool HandleCollision(Collision::Shape& shape)override;
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	};
 
 	RotatedRect CalculateAttackRange(const Vector2D<float>& position, float attackWidth, float attackHeight, float angle);
@@ -97,8 +123,11 @@ namespace Collision{
 	//四角形と線分の当たり判定関数
 	bool IsLineIntersectingRect(const Line& line, const Rect& rect);
 
+<<<<<<< HEAD
 	bool IsColliding(Actor* actor,Actor* actor2);
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	//円の当たり判定関数
 	bool IsColliding(const Circle& c1, const Circle& c2);
 

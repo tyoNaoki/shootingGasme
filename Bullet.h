@@ -8,7 +8,13 @@ class Bullet :
     public Actor
 {
 public:
+<<<<<<< HEAD
     Bullet(Vector2D<float>drawOffset,Vector2D<float>extendSize);
+=======
+    
+
+    Bullet(Collision::Circle collision,Vector2D<float>drawOffset,Vector2D<float>extendSize);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     Bullet() = delete;
     ~Bullet();
@@ -53,6 +59,11 @@ private:
 
     bool CanPenetratingOnCurrentCount();
 
+<<<<<<< HEAD
+=======
+    Collision::Circle mCollision;
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     CharacterType mOwnerType = CharacterType::EMPTY;
 
     std::vector<std::weak_ptr<CharacterBase>>mIgnoreCharas;

@@ -4,7 +4,11 @@
 #include "WeaponStatus.h"
 #include "BossBase.h"
 
+<<<<<<< HEAD
 BossGunComponent::BossGunComponent(std::shared_ptr<CharacterBase> owner) : WeaponComponent(owner)
+=======
+BossGunComponent::BossGunComponent(std::shared_ptr<CharacterBase> owner):Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	mComponentName = "BossGunComponent";
 	mBossOwner = std::dynamic_pointer_cast<BossBase>(GetOwner());
@@ -73,7 +77,11 @@ void BossGunComponent::FireBullet(std::shared_ptr<Actor>owner, std::shared_ptr<C
 	//非アクティブの弾を取得、スポーン
 	auto bullet = ACTOR_M.GetBullet("BossBullet", owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
 	//アクティブ状態に設定
+<<<<<<< HEAD
 	if (!bullet) {
+=======
+	if (!ACTOR_M.RegistObject(bullet)) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		DEBUG_HELPER.Add("BossBullet is generate error", 1.0f);
 	}
 	//弾のステータス設定

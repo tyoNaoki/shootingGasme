@@ -1,7 +1,11 @@
 #include "NormalEnemyC.h"
 #include "NormalEnemyMeleeComponent.h"
 
+<<<<<<< HEAD
 NormalEnemyC::NormalEnemyC() : NormalEnemyBase()
+=======
+NormalEnemyC::NormalEnemyC(Collision::Rect rect) : NormalEnemyBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     //•`‰æˆÊ’u”÷’²®
     mDrawOffset = Vector2D<float>(-220, -240);
@@ -19,7 +23,11 @@ void NormalEnemyC::Init(CharacterType ct, std::string name, int id, Vector2D<flo
 
     std::shared_ptr<NormalEnemyBase> self = std::static_pointer_cast<NormalEnemyBase>(shared_from_this());
     //ËŒ‚’Ç‰Á
+<<<<<<< HEAD
     GetComponentManager().AddComponent<NormalEnemyMeleeComponent>(2,self);
+=======
+    AddComponent(std::make_shared<NormalEnemyMeleeComponent>(self), 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void NormalEnemyC::Update(const float deltaTime)

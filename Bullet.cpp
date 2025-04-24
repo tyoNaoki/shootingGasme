@@ -5,7 +5,11 @@
 #include "GraphicManager.h"
 #include "PlayerCharacter.h"
 
+<<<<<<< HEAD
 Bullet::Bullet(Vector2D<float>drawOffset, Vector2D<float>extendSize):Actor()
+=======
+Bullet::Bullet(Collision::Circle collision, Vector2D<float>drawOffset, Vector2D<float>extendSize):mCollision(collision),Actor()
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     mStartAnimStateName = "Flight";
     mDrawOffset = drawOffset;
@@ -85,13 +89,20 @@ void Bullet::Update(const float deltaTime)
 
     //消失アニメーション更新
     if(mIsFinish){
+<<<<<<< HEAD
         //DEBUG_HELPER.DrawCollision(&GetCollision());
+=======
+        DEBUG_HELPER.DrawCollision(mCollision);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         SetLocalPosition2D(GetLocalFromWorldPosi(GetWorldPosition2D()));
         ANIM_M.Update(this);
         //現在のアニメーション画像更新
         Singleton<GraphicManager>::get_instance().updateHandle(deltaTime, mCurrent_gHandle, mCurrent_AnimFrame, mCurrent_AnimFrame_adjust, GetTypeName(), GetCurrentAnimState()->GetActionName());
         return;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     }
 
     //生存時間が０秒以下
@@ -115,8 +126,11 @@ void Bullet::Update(const float deltaTime)
     //座標計算
     auto newPosi = moveVel + GetWorldPosition2D();
 
+<<<<<<< HEAD
     auto collision = GetCollision<Collision::Circle>();
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     //反射弾専用処理
     if (mIsReflection) {
         int width, height;
@@ -124,6 +138,7 @@ void Bullet::Update(const float deltaTime)
 
         auto localPosi = GetLocalFromWorldPosi(newPosi);
         bool refrection = false;
+<<<<<<< HEAD
         
         //プレイヤーの画面外の場合、移動ベクトルを反転させる
         if (localPosi.x < collision->mRadius|| localPosi.x > width - collision->mRadius){
@@ -131,6 +146,15 @@ void Bullet::Update(const float deltaTime)
             refrection = true;
         }
         if (localPosi.y < collision->mRadius|| localPosi.y > height - collision->mRadius){
+=======
+
+        //プレイヤーの画面外の場合、移動ベクトルを反転させる
+        if (localPosi.x < mCollision.mRadius|| localPosi.x > width - mCollision.mRadius){
+            moveVel.x *= -1;
+            refrection = true;
+        }
+        if (localPosi.y < mCollision.mRadius|| localPosi.y > height - mCollision.mRadius){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
             moveVel.y *= -1;
             refrection = true;
         }
@@ -164,11 +188,19 @@ void Bullet::Update(const float deltaTime)
     //プレイヤーが主
     if(mOwnerType == CharacterType::PLAYER){
         //周囲の敵検索
+<<<<<<< HEAD
         auto enemies = COLLISION_M.GetNearCharacters(newPosi, collision->mRadius, mIgnoreCharas);
         if(enemies.size()!=0 || ACTOR_M.IsSpawnBoss()){
             for (auto& x : enemies) {
                 //衝突しない
                 if (!collision->HandleCollision(*x->GetCollision())) {
+=======
+        auto enemies = COLLISION_M.GetNearCharacters(newPosi, mCollision.mRadius, mIgnoreCharas);
+        if(enemies.size()!=0 || ACTOR_M.IsSpawnBoss()){
+            for (auto& x : enemies) {
+                //衝突しない
+                if (!Collision::IsColliding(mCollision, x->GetCollision())) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
                     continue;
                 }
 
@@ -199,7 +231,11 @@ void Bullet::Update(const float deltaTime)
             //ボス用処理
             if (ACTOR_M.IsSpawnBoss()) {
                 auto boss = ACTOR_M.GetCurrentBossEnemy();
+<<<<<<< HEAD
                 if(collision->HandleCollision(*boss->GetCollision())){
+=======
+                if(Collision::IsColliding(mCollision,boss->GetCollision())){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
                     if (IsFinish(boss)) {
                         boss->TakeDamage(mAttack);
                         //SetActive(false);
@@ -224,7 +260,11 @@ void Bullet::Update(const float deltaTime)
         //他キャラの処理
         auto player = ACTOR_M.GetCurrentPlayer();
         if(player&&player->IsActive()){
+<<<<<<< HEAD
             if (collision->HandleCollision(*player->GetCollision())) {
+=======
+            if (Collision::IsColliding(mCollision, player->GetCollision())) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
                 mIsHit = true;
                 player->TakeDamage(mAttack);
                 StartDeadAnimation();
@@ -239,7 +279,11 @@ void Bullet::Update(const float deltaTime)
     SetLocalPosition2D(localPosi);
     SetWorldPosition2D(newPosi);
 
+<<<<<<< HEAD
     //DEBUG_HELPER.DrawCollision(mCollision);
+=======
+    DEBUG_HELPER.DrawCollision(mCollision);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     ANIM_M.Update(this);
 
@@ -254,11 +298,19 @@ void Bullet::Draw(const float deltaTime)
     
     //ダミー処理
     if (mVisible && mCurrent_gHandle == -2) {
+<<<<<<< HEAD
         auto collision = GetCollision<Collision::Circle>();
         auto localPosi = GetLocalPosition2D();
         int x = static_cast<int>(localPosi.x);
         int y = static_cast<int>(localPosi.y);
         int r = static_cast<int>(collision->mRadius);
+=======
+
+        auto localPosi = GetLocalPosition2D();
+        int x = static_cast<int>(localPosi.x);
+        int y = static_cast<int>(localPosi.y);
+        int r = static_cast<int>(mCollision.mRadius);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
         if(mOwnerType==CharacterType::PLAYER){
             auto color = GetColor(255,255,0);
@@ -349,9 +401,14 @@ void Bullet::SetStatus(float speed, float attack, float lifeTime,int reflectionM
 
 void Bullet::SetWorldPosition2D(Vector2D<float> worldPosition)
 {
+<<<<<<< HEAD
     auto collision = GetCollision<Collision::Circle>();
     Actor::SetWorldPosition2D(worldPosition);
     collision->mCenter = worldPosition;
+=======
+    Actor::SetWorldPosition2D(worldPosition);
+    mCollision.mCenter = worldPosition;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void Bullet::ApplyDrawOffset(Vector2D<float> offset)

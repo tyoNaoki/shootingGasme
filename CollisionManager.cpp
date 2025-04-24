@@ -363,10 +363,17 @@ bool CollisionManager::PushBackFromOut(Vector2D<float>& position, Collision::Rec
 
 bool CollisionManager::IsCollidingCharacter(std::shared_ptr<CharacterBase> self, std::shared_ptr<CharacterBase> target)
 {
+<<<<<<< HEAD
 	auto rect1 = self->GetCollision<Collision::Rect>();
 	auto rect2 = target->GetCollision<Collision::Rect>();
 	
 	return Collision::IsColliding(*rect1,*rect2);
+=======
+	auto rect1 = self->GetCollision();
+	auto rect2 = target->GetCollision();
+	
+	return Collision::IsColliding(rect1, rect2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void CollisionManager::PushBackActor(const Vector2D<float>& oldPosition, Vector2D<float>& newPosition, Collision::Rect& newCollision, const Collision::Rect& otherCollision)

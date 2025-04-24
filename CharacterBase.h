@@ -12,10 +12,25 @@ class CharacterBase :
     public Actor,public std::enable_shared_from_this<CharacterBase>
 {
 public:
+<<<<<<< HEAD
     CharacterBase();
 
     ~CharacterBase();
 
+=======
+    CharacterBase(Collision::Rect collision);
+
+    ~CharacterBase();
+
+    std::shared_ptr<Component>GetComponent(int idx);
+    std::shared_ptr<Component>GetComponent(std::string name);
+    std::vector<std::shared_ptr<Component>>GetComponents();
+
+    void AddComponent(std::shared_ptr<Component> component,int idx);
+    void RemoveComponent(int idx);
+    void InitComponents();
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     virtual void Init(CharacterType ct,std::string typeName, int id, Vector2D<float>localPosition, Vector2D<float> worldPosition, float rotation, bool isVisible) = 0;
 
     virtual void Reset(int id, Vector2D<float>localPosition, Vector2D<float> worldPosition, float rotation, bool isVisible) = 0;
@@ -53,6 +68,11 @@ public:
     void AddKnockBack(Vector2D<float> direction, float strength, float knockBackTime);
 
     void KnockBack(float deltaTime);
+<<<<<<< HEAD
+=======
+    
+    const Collision::Rect& GetCollision() const;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     bool IsKnockBack();
 
@@ -86,5 +106,12 @@ private:
     float mCurrentKnockBackTime = 0.0f;
 
     float mKnockBackStrength = 0.0f;
+<<<<<<< HEAD
+=======
+
+    Collision::Rect mCollision;
+
+    std::vector<std::shared_ptr<Component>> mComponents;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 };
 

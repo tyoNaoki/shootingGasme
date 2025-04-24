@@ -45,12 +45,15 @@ void Actor::SetOldWorldPosition2D(Vector2D<float> worldPosition)
     mWorldOldPosition = worldPosition;
 }
 
+<<<<<<< HEAD
 void Actor::SetCollision(std::shared_ptr<Collision::Shape> collision)
 {
     mActorCollision = collision;
 }
 
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 void Actor::SetGridIndex(int index)
 {
     mGridIndex = index;
@@ -206,14 +209,20 @@ bool Actor::IsActive() const
 {
     return mActive;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 void Actor::SetActive(bool active)
 {
     mActive = active;
 }
 
+<<<<<<< HEAD
 ComponentManager& Actor::GetComponentManager()
 {
     return mComponentManager;
 }
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420

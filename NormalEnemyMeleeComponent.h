@@ -1,9 +1,17 @@
 #pragma once
+<<<<<<< HEAD
 #include "WeaponComponent.h"
 #include <functional>
 
 // 通常敵の近接攻撃を制御するコンポーネントクラス
 class NormalEnemyMeleeComponent : public WeaponComponent {
+=======
+#include "Component.h"
+#include <functional>
+
+// 通常敵の近接攻撃を制御するコンポーネントクラス
+class NormalEnemyMeleeComponent : public Component {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 public:
     //キャラクターの所有者を初期化
     NormalEnemyMeleeComponent(std::shared_ptr<CharacterBase> owner);

@@ -59,8 +59,13 @@ void ItemBase::Update(const float deltaTime)
 		if(length <= mChaseDistance){
 			ChaseMovement(deltaTime, player);
 			mIsChase = true;
+<<<<<<< HEAD
 			auto collision = player->GetCollision<Collision::Rect>();
 			if(length <= collision->mSize.x && length <= collision->mSize.y && !IsTaked()){
+=======
+			
+			if(length <= player->GetCollision().mSize.x && length <= player->GetCollision().mSize.y && !IsTaked()){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 				mIsTaked = true;
 				GetItemBonus();
 

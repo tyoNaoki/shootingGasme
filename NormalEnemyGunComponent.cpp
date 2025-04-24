@@ -2,7 +2,11 @@
 #include "ActorManager.h"
 #include "PlayerCharacter.h"
 
+<<<<<<< HEAD
 NormalEnemyGunComponent::NormalEnemyGunComponent(std::shared_ptr<CharacterBase> owner) :WeaponComponent(owner)
+=======
+NormalEnemyGunComponent::NormalEnemyGunComponent(std::shared_ptr<CharacterBase> owner) :Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//初期化
 	mComponentName = "NormalEnemyGunComponent";
@@ -60,9 +64,15 @@ void NormalEnemyGunComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
 void NormalEnemyGunComponent::FireBullet(std::shared_ptr<Actor> owner, float targetRot)
 {
 	//弾スポーン
+<<<<<<< HEAD
 	auto bullet = ACTOR_M.GetBullet(mBulletName.c_str(), owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
 	//弾をアクティブに
 	if (!bullet) {
+=======
+	auto bullet = ACTOR_M.GetBullet(mBulletName, owner->GetActorType(), owner->GetLocalPosition2D(), owner->GetWorldPosition2D(), targetRot, true);
+	//弾をアクティブに
+	if (!ACTOR_M.RegistObject(bullet)) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		DEBUG_HELPER.Add("EnemyBullet is generate error", 1.0f);
 		return;
 	}

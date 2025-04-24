@@ -30,7 +30,11 @@ public:
     //ダメージのクールタイムが過ぎているかどうか
     bool IsDamage(std::shared_ptr<CharacterBase>&enemy);
 
+<<<<<<< HEAD
     void HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy,Collision::Circle& circle, float knockBackStrength, float attack,bool hasContinuousDamage);
+=======
+    void HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy, const Collision::Circle& circle, float knockBackStrength, float attack,bool hasContinuousDamage);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
 private:
     int mCurrent_gHandle = -1;

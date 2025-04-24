@@ -17,6 +17,7 @@ BulletFactory::~BulletFactory()
 
 std::shared_ptr<Actor> BulletFactory::CreateObject(std::string name)
 {
+<<<<<<< HEAD
     if(mBullet_Index.find(name) == mBullet_Index.end()) return nullptr;
 
     Singleton<GraphicManager>::get_instance().CreateGraphic(name);
@@ -45,6 +46,31 @@ std::shared_ptr<Actor> BulletFactory::CreateObject(std::string name)
         auto bullet = std::make_shared<Bullet>(Vector2D<float>(0, 0), Vector2D<float>(15, 15));
         bullet->SetCollision(std::make_shared<Collision::Circle>(Vector2D<float>(), 65));
         return bullet;
+=======
+    //äeíeÇ≤Ç∆ÇÃçÏê¨èàóù
+    if (name == "PlayerBullet") {
+        Collision::Circle bulletCollision(Vector2D<float>(),13);
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<Bullet>(bulletCollision,Vector2D<float>(0,0), Vector2D<float>(1.0, 1.0));
+    }
+
+    if (name == "PlayerReflectionBullet") {
+        Collision::Circle bulletCollision(Vector2D<float>(), 26);
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<Bullet>(bulletCollision, Vector2D<float>(0, 0), Vector2D<float>(1.0, 1.0));
+    }
+
+    if (name == "EnemyBullet") {
+        Collision::Circle bulletCollision(Vector2D<float>(), 11);
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<Bullet>(bulletCollision,Vector2D<float>(0,0),Vector2D<float>(1.5,1.5));
+    }
+
+    if (name == "BossBullet") {
+        Collision::Circle bulletCollision(Vector2D<float>(), 65);
+        Singleton<GraphicManager>::get_instance().CreateGraphic(name);
+        return std::make_shared<Bullet>(bulletCollision, Vector2D<float>(0,0), Vector2D<float>(15, 15));
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     }
 
     return nullptr;

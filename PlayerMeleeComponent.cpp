@@ -10,7 +10,11 @@
 #include "CharacterBase.h"
 #include "WeaponStatus.h"
 
+<<<<<<< HEAD
 PlayerMeleeComponent::PlayerMeleeComponent(std::shared_ptr<CharacterBase> owner) :WeaponComponent(owner)
+=======
+PlayerMeleeComponent::PlayerMeleeComponent(std::shared_ptr<CharacterBase> owner) :Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//初期化
 	mComponentName = "PlayerMeleeComponent";
@@ -60,7 +64,11 @@ void PlayerMeleeComponent::Update(const float deltaTime)
 		bool isHit = false;
 		for (auto& x : nearEnemies) {
 			//命中
+<<<<<<< HEAD
 			if (Collision::IsColliding(attackRange,*x->GetCollision<Collision::Rect>())) {
+=======
+			if (Collision::IsColliding(attackRange, x->GetCollision())) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 				isHit = true;
 				//敵までの角度をノックバックとして取得
 				float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), x->GetWorldPosition2D());
@@ -69,7 +77,11 @@ void PlayerMeleeComponent::Update(const float deltaTime)
 			}
 		}
 		//ボスとの衝突判定
+<<<<<<< HEAD
 		if(ACTOR_M.IsSpawnBoss()&&Collision::IsColliding(attackRange,*ACTOR_M.GetCurrentBossEnemy()->GetCollision<Collision::Rect>())){
+=======
+		if(ACTOR_M.IsSpawnBoss()&&Collision::IsColliding(attackRange,ACTOR_M.GetCurrentBossEnemy()->GetCollision())){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			//ダメージ処理
 			//ボスはノックバック無効
 			ACTOR_M.GetCurrentBossEnemy()->TakeDamage(attack);

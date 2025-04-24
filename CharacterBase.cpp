@@ -2,7 +2,11 @@
 #include "GraphicManager.h"
 #include "Component.h"
 
+<<<<<<< HEAD
 CharacterBase::CharacterBase():Actor()
+=======
+CharacterBase::CharacterBase(Collision::Rect collision):mCollision(collision),Actor()
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     mDrawOffset = Vector2D<int>(0,0);
     //Singleton<GraphicManager>::get_instance().CreateGraphic(name);
@@ -10,6 +14,57 @@ CharacterBase::CharacterBase():Actor()
 
 CharacterBase::~CharacterBase()
 {
+<<<<<<< HEAD
+=======
+    for(auto &x:mComponents){
+         x = nullptr;
+    }
+    mComponents.clear();
+}
+
+std::shared_ptr<Component> CharacterBase::GetComponent(int idx)
+{
+    if(mComponents.size()!=0||mComponents.size()>idx){
+        return mComponents[idx];
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<Component> CharacterBase::GetComponent(std::string name)
+{
+    for(auto&x:mComponents){
+        if(x->GetName()==name){
+            return x;
+        }
+    }
+    return nullptr;
+}
+
+std::vector<std::shared_ptr<Component>> CharacterBase::GetComponents()
+{
+    return mComponents;
+}
+
+void CharacterBase::AddComponent(std::shared_ptr<Component> component,int idx)
+{
+    mComponents.insert(mComponents.begin()+idx,component);
+}
+
+void CharacterBase::RemoveComponent(int idx)
+{
+    if (idx >= 0 && idx < mComponents.size()) {
+        mComponents.erase(mComponents.begin() + idx);
+    }
+}
+
+
+void CharacterBase::InitComponents()
+{
+    for(auto&x:mComponents){
+        x->Init();
+    }
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void CharacterBase::Update(const float deltaTime)
@@ -17,7 +72,13 @@ void CharacterBase::Update(const float deltaTime)
     SetVelocity(Vector2D<float>(0,0));
     mIsMove = false;
     //if (cur_vel.y > ) 
+<<<<<<< HEAD
     GetComponentManager().UpdateComponents(deltaTime);
+=======
+    for(auto&x : mComponents){
+        x->Update(deltaTime);
+    }
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //被弾方向にキャラを移動させる
     if (IsKnockBack()) {
@@ -46,8 +107,12 @@ void CharacterBase::Draw(const float deltaTime)
 
     //ダミー処理
     if(mVisible && mCurrent_gHandle == -2){
+<<<<<<< HEAD
         auto collision = std::dynamic_pointer_cast<Collision::Rect>(GetCollision());
         Vector2D<float> size = collision->mSize / 2;
+=======
+        Vector2D<float> size = GetCollision().mSize / 2;
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         auto map = scene->GetMap();
         
         auto localPosi = map->GetLocalFromWorldPosition(GetWorldPosition2D());
@@ -104,16 +169,25 @@ void CharacterBase::SetPosition2D(Vector2D<float> localP)
 
 void CharacterBase::SetWorldPosition2D(Vector2D<float> worldP)
 {
+<<<<<<< HEAD
     auto collision = GetCollision<Collision::Rect>();
     Actor::SetWorldPosition2D(worldP);
     collision->mLeftTop = worldP - (collision->mSize / 2);
+=======
+    Actor::SetWorldPosition2D(worldP);
+    mCollision.mLeftTop = worldP - (mCollision.mSize / 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void CharacterBase::SetWorldPosition2D(Vector2D<float> worldP, bool isMove)
 {
     Actor::SetWorldPosition2D(worldP);
+<<<<<<< HEAD
     auto collision = GetCollision<Collision::Rect>();
     collision->mLeftTop = worldP - (collision->mSize / 2);
+=======
+    mCollision.mLeftTop = worldP - (mCollision.mSize / 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     mIsMove = isMove;
 }
 
@@ -237,6 +311,14 @@ float CharacterBase::GetScore()
     return mScore;
 }
 
+<<<<<<< HEAD
+=======
+const Collision::Rect& CharacterBase::GetCollision() const
+{
+    return mCollision;
+}
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 bool CharacterBase::IsKnockBack()
 {
     return mKnockBack;

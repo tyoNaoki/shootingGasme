@@ -3,7 +3,11 @@
 #include "ActorManager.h"
 #include "PlayerCharacter.h"
 
+<<<<<<< HEAD
 NormalEnemyB::NormalEnemyB() : NormalEnemyBase()
+=======
+NormalEnemyB::NormalEnemyB(Collision::Rect rect) : NormalEnemyBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     //初期アニメーション設定
     mStartAnimStateName = "Flight";
@@ -23,7 +27,11 @@ void NormalEnemyB::Init(CharacterType ct, std::string name, int id, Vector2D<flo
 
     std::shared_ptr<NormalEnemyBase> self = std::static_pointer_cast<NormalEnemyBase>(shared_from_this());
     //射撃追加
+<<<<<<< HEAD
     GetComponentManager().AddComponent<NormalEnemyGunComponent>(2,self);
+=======
+    AddComponent(std::make_shared<NormalEnemyGunComponent>(self), 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void NormalEnemyB::Update(const float deltaTime)

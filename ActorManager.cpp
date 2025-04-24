@@ -15,12 +15,44 @@
 #include "HealItem.h"
 #include <random>
 #include "EnemyFactory.h"
+<<<<<<< HEAD
 #include <functional>
 #include "ObjectPoolManager.h"
 
 bool ActorManager::Init()
 {
 	Singleton<ObjectPoolManager>().get_instance().Init();
+=======
+
+bool ActorManager::Init()
+{
+	//登録
+	initializePool(CharacterType::PLAYER, "PlayerCharacter", 1);
+
+	initializePool(CharacterType::BOSS, "BossEnemyA", 1);
+
+	initializePool(CharacterType::ENEMY,"NormalEnemyA", enemyPoolSize);
+
+	initializePool(CharacterType::ENEMY, "NormalEnemyB", enemyBPoolSize);
+
+	initializePool(CharacterType::ENEMY, "NormalEnemyC", enemyCPoolSize);
+
+	initializePool(CharacterType::ITEM, "LevelUpItem",itemPoolSize);
+
+	initializePool(CharacterType::ITEM, "HealItem", itemPoolSize);
+
+	initializePool(CharacterType::BULLET, "PlayerBullet", playerbulletPoolSize);
+
+	initializePool(CharacterType::BULLET, "PlayerReflectionBullet", playerReflectionbulletPoolSize);
+
+	initializePool(CharacterType::BULLET, "EnemyBullet", bulletPoolSize);
+
+	initializePool(CharacterType::BULLET, "BossBullet", bossBulletPoolSize);
+
+	initializePool(CharacterType::LASER,"Laser",laserPoolSize);
+
+	initializePool(CharacterType::BOMB,"PlayerBomb",bombPoolSize);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
 	mInitialize = true;
 	return true;
@@ -28,11 +60,42 @@ bool ActorManager::Init()
 
 bool ActorManager::End()
 {
+<<<<<<< HEAD
 	//念のため、null,それぞれの配列の中身を空にする
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	mPlayer = nullptr;
 	mBoss = nullptr;
 
 	mActiveEnemies.clear();
+<<<<<<< HEAD
+=======
+
+	for (auto& pair : mEnemyPools) {
+		while (!pair.second.empty()) {
+			pair.second.pop();
+		}
+	}
+
+	mEnemyPools.clear();
+
+	for (auto& pair : mItemPools) {
+		while (!pair.second.empty()) {
+			pair.second.pop();
+		}
+	}
+
+	mItemPools.clear();
+
+	for (auto& pair : mBulletPools) {
+		while (!pair.second.empty()) {
+			pair.second.pop();
+		}
+	}
+
+	mBulletPools.clear();
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	mActiveItems.clear();
 	mActiveBullets.clear();
 	return true;
@@ -40,6 +103,7 @@ bool ActorManager::End()
 
 bool ActorManager::Reset()
 {
+<<<<<<< HEAD
 	//それぞれの配列のオブジェクトを非アクティブにする
 	auto &obj_M = Singleton<ObjectPoolManager>().get_instance();
 
@@ -60,6 +124,23 @@ bool ActorManager::Reset()
 	}
 
 	//全て空にする
+=======
+	for(auto &x:mActiveEnemies){
+		x->SetActive(false);
+		mEnemyPools[x->GetTypeName()].push(x);
+	}
+
+	for (auto& x : mActiveItems) {
+		x->SetActive(false);
+		mItemPools[x->GetTypeName()].push(x);
+	}
+
+	for (auto& x : mActiveBullets) {
+		x->SetActive(false);
+		mBulletPools[x->GetTypeName()].push(x);
+	}
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	mActiveEnemies.clear();
 	mActiveItems.clear();
 	mActiveBullets.clear();
@@ -69,6 +150,7 @@ bool ActorManager::Reset()
 	return true;
 }
 
+<<<<<<< HEAD
 std::shared_ptr<Actor> ActorManager::Get(CharacterType ct,const char* typeName)
 {
 	auto pool = Singleton<ObjectPoolManager>::get_instance().GetPool(NameToCharacterType(ct));
@@ -76,10 +158,223 @@ std::shared_ptr<Actor> ActorManager::Get(CharacterType ct,const char* typeName)
 	if (!pool) return nullptr;
 
 	return pool->OnGet(typeName);
+=======
+void ActorManager::initializePool(const CharacterType ct,const std::string typeName, int size)
+{
+	std::shared_ptr<PlayerCharacter> player = nullptr;
+	std::shared_ptr<CharacterBase>enemy = nullptr;
+	std::shared_ptr<ItemBase>item = nullptr;
+	std::shared_ptr<Bullet>bullet = nullptr;
+	std::shared_ptr<Laser>laser = nullptr;
+	std::shared_ptr<Bomb>bomb = nullptr;
+	std::shared_ptr<BossBase>boss = nullptr;
+	switch (ct)
+	{
+		case CharacterType::ENEMY:
+			for (int i = 0; i < size; ++i) {
+				enemy = Singleton<EnemyFactory>::get_instance().CreateObject(typeName);
+				enemy->SetActive(false);
+				mEnemyPools[typeName].push(enemy);
+			}
+			break;
+		case CharacterType::ITEM:
+			for (int i = 0; i < size; ++i) {
+				item = std::static_pointer_cast<ItemBase>(Singleton<ItemFactory>::get_instance().CreateObject(typeName));
+				item->SetActive(false);
+				mItemPools[typeName].push(item);
+			}
+			break;
+		case CharacterType::BULLET:
+			for (int i = 0; i < size; ++i) {
+				bullet = std::static_pointer_cast<Bullet>(Singleton<BulletFactory>::get_instance().CreateObject(typeName));
+				bullet->SetActive(false);
+				mBulletPools[typeName].push(bullet);
+			}
+			break;
+		case CharacterType::LASER:
+			for (int i = 0; i < size; ++i) {
+				laser = std::static_pointer_cast<Laser>(Singleton<LaserFactory>::get_instance().CreateObject(typeName));
+				laser->SetActive(false);
+				mLaserPools[typeName].push(laser);
+			}
+			break;
+		case CharacterType::BOMB:
+			for (int i = 0; i < size; ++i) {
+				bomb = std::static_pointer_cast<Bomb>(Singleton<BombFactory>::get_instance().CreateObject(typeName));
+				bomb->SetActive(false);
+				mBombPools[typeName].push(bomb);
+			}
+			break;
+		case CharacterType::PLAYER:
+			player = std::dynamic_pointer_cast<PlayerCharacter>(Singleton<PlayerFactory>::get_instance().CreateObject(typeName));
+			if (player) {
+				player->SetActive(false);
+				mPlayer = player;
+			}
+			break;
+		case CharacterType::BOSS:
+			boss = std::dynamic_pointer_cast<BossBase>(Singleton<BossFactory>::get_instance().CreateObject(typeName));
+			if (boss) {
+				boss->SetActive(false);
+				mBoss = boss;
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+std::shared_ptr<CharacterBase> ActorManager::getFromPool(CharacterType ct,std::string typeName, std::queue<std::shared_ptr<CharacterBase>>& pool,const Vector2D<float>&localPosition,const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	auto& f = Singleton<EnemyFactory>::get_instance();
+
+	if (pool.empty()) {
+		DEBUG_HELPER.Add("CharacterBase Pool is Empty", 5.0f,GetColor(255,0,0));
+		auto enemy = f.CreateObject(typeName);
+		if(!enemy){return nullptr;}
+		int id = f.CreateID(typeName);
+		enemy->Init(ct,typeName,id,localPosition,spawnWorldPosition,rotation,isVisible);
+		return enemy;
+	}else {
+		auto enemy = pool.front();
+		pool.pop();
+		int id = f.CreateID(typeName);
+		if(!enemy->IsInitialize()){
+			enemy->Init(ct, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}else{
+			enemy->Reset(id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+
+		return enemy;
+	}
+}
+
+std::shared_ptr<ItemBase> ActorManager::getFromPool(CharacterType ct, std::string typeName, std::queue<std::shared_ptr<ItemBase>>& pool, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	auto& f = Singleton<ItemFactory>::get_instance();
+
+	if (pool.empty()) {
+		DEBUG_HELPER.Add("ItemBase Pool is Empty", 5.0f, GetColor(255, 0, 0));
+		auto item = std::dynamic_pointer_cast<ItemBase>(f.CreateObject(typeName));
+		if(!item){
+			return nullptr;
+		}
+		int id = f.CreateID(typeName);
+		item->Init(ct, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		return item;
+	}
+	else {
+		auto item = pool.front();
+		pool.pop();
+		int id = f.CreateID(typeName);
+		if (!item->IsInitialize()) {
+			item->Init(ct, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		else {
+			item->Reset(id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+
+		return item;
+	}
+
+	return std::shared_ptr<ItemBase>();
+}
+
+std::shared_ptr<Bullet> ActorManager::getFromPool(CharacterType ct,CharacterType ownerType,std::string typeName, std::queue<std::shared_ptr<Bullet>>& pool, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	auto& f = Singleton<BulletFactory>::get_instance();
+
+	if (pool.empty()) {
+		DEBUG_HELPER.Add("Bullet Pool is Empty",5.0f, GetColor(255, 0, 0));
+		auto bullet = std::dynamic_pointer_cast<Bullet>(f.CreateObject(typeName));
+		if(!bullet){
+			return nullptr;
+		}
+		int id = f.CreateID(typeName);
+		bullet->Init(ct,ownerType,typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		return bullet;
+	}
+	else {
+		auto item = pool.front();
+		pool.pop();
+		int id = f.CreateID(typeName);
+		if (!item->IsInitialize()) {
+			item->Init(ct,ownerType,typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		else {
+			item->Reset(ownerType,id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+
+		return item;
+	}
+
+	return std::shared_ptr<Bullet>();
+}
+
+std::shared_ptr<Laser> ActorManager::getFromPool(CharacterType ct, std::shared_ptr<CharacterBase> owner, std::string typeName, std::queue<std::shared_ptr<Laser>>& pool, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	auto& f = Singleton<LaserFactory>::get_instance();
+
+	if (pool.empty()) {
+		DEBUG_HELPER.Add("Laser Pool is Empty", 5.0f, GetColor(255, 0, 0));
+		auto laser = std::dynamic_pointer_cast<Laser>(f.CreateObject(typeName));
+		if (!laser) {
+			return nullptr;
+		}
+		int id = f.CreateID(typeName);
+		laser->Init(ct, owner, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		return laser;
+	}
+	else {
+		auto laser = pool.front();
+		pool.pop();
+		int id = f.CreateID(typeName);
+		if (!laser->IsInitialize()) {
+			laser->Init(ct, owner, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		else {
+			laser->Reset(owner, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		return laser;
+	}
+
+	return std::shared_ptr<Laser>();
+}
+
+std::shared_ptr<Bomb> ActorManager::getFromPool(CharacterType ct, CharacterType ownerType, std::string typeName, std::queue<std::shared_ptr<Bomb>>& pool, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	auto& f = Singleton<BombFactory>::get_instance();
+
+	if (pool.empty()) {
+		DEBUG_HELPER.Add("Bomb Pool is Empty", 5.0f, GetColor(255, 0, 0));
+		auto bomb = std::dynamic_pointer_cast<Bomb>(f.CreateObject(typeName));
+		if (!bomb) {
+			return nullptr;
+		}
+		int id = f.CreateID(typeName);
+		bomb->Init(ct, ownerType, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		return bomb;
+	}
+	else {
+		auto bomb = pool.front();
+		pool.pop();
+		int id = f.CreateID(typeName);
+		if (!bomb->IsInitialize()) {
+			bomb->Init(ct, ownerType, typeName, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		else {
+			bomb->Reset(ownerType, id, localPosition, spawnWorldPosition, rotation, isVisible);
+		}
+		return bomb;
+	}
+
+	return std::shared_ptr<Bomb>();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 std::shared_ptr<CharacterBase> ActorManager::GetPlayer(const std::string& typeName, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
 {
+<<<<<<< HEAD
 	//作成されてない場合、その場で作成する
 	if(!mPlayer) 
 	{
@@ -92,11 +387,17 @@ std::shared_ptr<CharacterBase> ActorManager::GetPlayer(const std::string& typeNa
 	//ID発行
 	int id = Singleton<PlayerFactory>::get_instance().CreateID(typeName);
 	//初期化、リセット処理
+=======
+	if (!mPlayer) { return nullptr; }
+
+	int id = Singleton<PlayerFactory>::get_instance().CreateID(typeName);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	if(!mPlayer->IsInitialize()){
 		mPlayer->Init(CharacterType::PLAYER, typeName, id, localPosition, spawnWorldPosition, 90, true);
 	}else{
 		mPlayer->Reset(id,localPosition,spawnWorldPosition,rotation,isVisible);
 	}
+<<<<<<< HEAD
 
 	mIsSpawnPlayer = true;
 
@@ -125,10 +426,20 @@ std::shared_ptr<CharacterBase> ActorManager::GetEnemy(const char* typeName,const
 	enemy->SetActive(true);
 
 	return enemy;
+=======
+	
+	return mPlayer;
+}
+
+std::shared_ptr<CharacterBase> ActorManager::GetEnemy(const std::string& typeName,const Vector2D<float>&localPosition,const Vector2D<float>&spawnWorldPosition, const float rotation, bool isVisible)
+{
+	return getFromPool(CharacterType::ENEMY,typeName,mEnemyPools[typeName],localPosition,spawnWorldPosition,rotation,isVisible);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 std::shared_ptr<CharacterBase> ActorManager::GetBossEnemy(const std::string& typeName, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
 {
+<<<<<<< HEAD
 	//作成されてない場合、その場で作成する
 	if (!mBoss) 
 	{
@@ -143,11 +454,18 @@ std::shared_ptr<CharacterBase> ActorManager::GetBossEnemy(const std::string& typ
 	int id = Singleton<BossFactory>::get_instance().CreateID(typeName);
 
 	//初期化、リセット処理
+=======
+	if (!mBoss) { return nullptr; }
+
+	int id = Singleton<BossFactory>::get_instance().CreateID(typeName);
+
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 	if (!mBoss->IsInitialize()) {
 		mBoss->Init(CharacterType::BOSS, typeName, id, localPosition, spawnWorldPosition, 90, true);
 	}else {
 		mBoss->Reset(id, localPosition, spawnWorldPosition, rotation, isVisible);
 	}
+<<<<<<< HEAD
 
 	mIsSpawnBoss = true;
 	mBoss->SetActive(true);
@@ -235,6 +553,30 @@ std::shared_ptr<Bomb> ActorManager::GetBomb(const char* typeName, CharacterType 
 	mActiveBombs.push_back(bomb);
 	bomb->SetActive(true);
 	return bomb;
+=======
+	
+	return mBoss;
+}
+
+std::shared_ptr<ItemBase> ActorManager::GetItem(const std::string& typeName, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	return getFromPool(CharacterType::ITEM, typeName, mItemPools[typeName], localPosition, spawnWorldPosition, rotation, isVisible);
+}
+
+std::shared_ptr<Bullet> ActorManager::GetBullet(const std::string& typeName,CharacterType ownerType,const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	return getFromPool(CharacterType::BULLET,ownerType,typeName, mBulletPools[typeName], localPosition, spawnWorldPosition, rotation, isVisible);
+}
+
+std::shared_ptr<Laser> ActorManager::GetLaser(const std::string& typeName, std::shared_ptr<CharacterBase>owner, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	return getFromPool(CharacterType::LASER, owner, typeName, mLaserPools[typeName], localPosition, spawnWorldPosition, rotation, isVisible);
+}
+
+std::shared_ptr<Bomb> ActorManager::GetBomb(const std::string& typeName, CharacterType ownerType, const Vector2D<float>& localPosition, const Vector2D<float>& spawnWorldPosition, const float rotation, bool isVisible)
+{
+	return getFromPool(CharacterType::BOMB, ownerType, typeName, mBombPools[typeName], localPosition, spawnWorldPosition, rotation, isVisible);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 std::string ActorManager::ChoiceDropItem(const std::string& enemyTypeName)
@@ -270,6 +612,7 @@ std::string ActorManager::ChoiceDropItem(const std::string& enemyTypeName)
 	return std::string();
 }
 
+<<<<<<< HEAD
 void ActorManager::ReturnPool(std::shared_ptr<Actor> obj)
 {
 	auto pool = Singleton<ObjectPoolManager>().get_instance().GetPool(NameToCharacterType(obj->GetActorType()));
@@ -298,6 +641,36 @@ const char* ActorManager::NameToCharacterType(CharacterType ct)
 		break;
 	}
 	return "";
+=======
+void ActorManager::ReturnEnemy(std::shared_ptr<CharacterBase> enemy)
+{
+	enemy->SetActive(false);
+	mEnemyPools[enemy->GetTypeName()].push(enemy);
+}
+
+void ActorManager::ReturnItem(std::shared_ptr<ItemBase> item)
+{
+	item->SetActive(false);
+	mItemPools[item->GetTypeName()].push(item);
+}
+
+void ActorManager::ReturnBullet(std::shared_ptr<Bullet> bullet)
+{
+	bullet->SetActive(false);
+	mBulletPools[bullet->GetTypeName()].push(bullet);
+}
+
+void ActorManager::ReturnLaser(std::shared_ptr<Laser> laser)
+{
+	laser->SetActive(false);
+	mLaserPools[laser->GetTypeName()].push(laser);
+}
+
+void ActorManager::ReturnBomb(std::shared_ptr<Bomb> bomb)
+{
+	bomb->SetActive(false);
+	mBombPools[bomb->GetTypeName()].push(bomb);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 void ActorManager::Update(const float deltaTime)
@@ -342,7 +715,11 @@ void ActorManager::Update(const float deltaTime)
 				continue;
 			}
 
+<<<<<<< HEAD
 			//現在のコリジョンのグリッド更新
+=======
+			//現在のコリジョンの現在グリッドの更新
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			COLLISION_M.UpdateGridIndex((*itr));
 
 			itr++;
@@ -351,7 +728,11 @@ void ActorManager::Update(const float deltaTime)
 			if((*itr)->IsDead()){
 				auto itemName = ChoiceDropItem((*itr)->GetTypeName());
 				if(itemName!="None"){
+<<<<<<< HEAD
 					auto item = GetItem(itemName.c_str(), (*itr)->GetLocalPosition2D(), (*itr)->GetWorldPosition2D(), (*itr)->GetRotation(), true);
+=======
+					auto item = GetItem(itemName, (*itr)->GetLocalPosition2D(), (*itr)->GetWorldPosition2D(), (*itr)->GetRotation(), true);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 					if (item) {
 						//各アイテム初期化処理
 						if (item->GetTypeName() == "LevelUpItem") {//経験値
@@ -360,13 +741,21 @@ void ActorManager::Update(const float deltaTime)
 						if (item->GetTypeName() == "HealItem") {//回復アイテム
 							std::static_pointer_cast<HealItem>(item)->SetHeal((*itr)->GetLevel(), (*itr)->GetTypeName());
 						}
+<<<<<<< HEAD
+=======
+						//ドロップアイテム登録でアクティブ状態にする
+						RegistObject(item);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 					}
 				}
 				//プレイヤーにスコア加算
 				STATUS.AddScore((int)(*itr)->GetScore());
 				STATUS.AddCount((*itr)->GetActorType());
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			//念のため、コリジョンの現在座標消去
 			COLLISION_M.RemoveIndex((*itr)->GetGridIndex(), *itr);
 
@@ -374,7 +763,11 @@ void ActorManager::Update(const float deltaTime)
 			(*itr)->SetWorldPosition2D(Vector2D<float>(0,0));
 
 			// 非アクティブになった敵をプールに戻す
+<<<<<<< HEAD
 			ReturnPool(*itr);
+=======
+			ReturnEnemy(*itr);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			itr = mActiveEnemies.erase(itr); 
 		}
 	}
@@ -405,7 +798,11 @@ void ActorManager::Update(const float deltaTime)
 			itr++;
 		}else{
 			//非アクティブなら専用のデータに格納
+<<<<<<< HEAD
 			ReturnPool(*itr);
+=======
+			ReturnItem(*itr);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			itr = mActiveItems.erase(itr);
 		}
 	}
@@ -419,7 +816,11 @@ void ActorManager::Update(const float deltaTime)
 		}
 		else {
 			//非アクティブなら専用のデータに格納
+<<<<<<< HEAD
 			ReturnPool(*itr);
+=======
+			ReturnBullet(*itr);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			itr = mActiveBullets.erase(itr);
 		}
 	}
@@ -433,7 +834,11 @@ void ActorManager::Update(const float deltaTime)
 		}
 		else {
 			//非アクティブなら専用のデータに格納
+<<<<<<< HEAD
 			ReturnPool(*itr);
+=======
+			ReturnLaser(*itr);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			itr = mActiveLasers.erase(itr);
 		}
 	}
@@ -447,7 +852,11 @@ void ActorManager::Update(const float deltaTime)
 		}
 		else {
 			//非アクティブなら専用のデータに格納
+<<<<<<< HEAD
 			ReturnPool(*itr);
+=======
+			ReturnBomb(*itr);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 			itr = mActiveBombs.erase(itr);
 		}
 	}
@@ -541,19 +950,163 @@ void ActorManager::PlayerTakeHeal(float heal)
 	mPlayer->TakeHeal(heal);
 }
 
+<<<<<<< HEAD
 int ActorManager::GetActorCount()
 {
 	return (int)mActiveEnemies.size();
+=======
+bool ActorManager::ContainsEnemyTypeName(const std::string& typeName)
+{
+	auto it = mEnemyPools.find(typeName);
+	return it!=mEnemyPools.end();
+}
+
+bool ActorManager::ContainsItemTypeName(const std::string& typeName)
+{
+	auto it = mItemPools.find(typeName);
+	return it != mItemPools.end();
+}
+
+bool ActorManager::ContainsBulletTypeName(const std::string& typeName)
+{
+	auto it = mBulletPools.find(typeName);
+	return it != mBulletPools.end();
+}
+
+bool ActorManager::RegistObject(std::shared_ptr<CharacterBase> chara)
+{
+	if (!chara) { return false; }
+
+	
+
+	//初期化終わっているか
+	if(!chara->IsInitialize()){
+		return false;
+	}
+
+	//プレイヤーならスポーンフラグを立てる
+	auto charaType = chara->GetActorType();
+	if(charaType == CharacterType::PLAYER){
+		mIsSpawnPlayer = true;
+	}
+	//敵なら、アクティブのデータに追加
+	if(charaType == CharacterType::ENEMY){
+		mActiveEnemies.push_back(chara);
+	}
+
+	//ボスなら、スポーンフラグを立てて、アクティブ状態に設定
+	if(charaType == CharacterType::BOSS){
+		mIsSpawnBoss = true;
+		chara->SetActive(true);
+		return true;
+	}
+
+	//現在のコリジョンの座標を衝突判定用のグリッドに登録する
+	COLLISION_M.AddCharacter(chara->GetWorldPosition2D(), chara);
+
+	chara->SetActive(true);
+	return true;
+}
+bool ActorManager::RegistObject(std::shared_ptr<ItemBase> item)
+{
+	if (!item) { return false; }
+
+	//初期化終わっているか
+	if (!item->IsInitialize()) {
+		return false;
+	}
+
+	//弾丸以外なら
+	if (item->GetActorType() != CharacterType::ITEM) {
+		return false;
+	}
+	//アクティブ状態のデータに格納,アクティブに設定
+	mActiveItems.push_back(item);
+	item->SetActive(true);
+
+	return true;
+}
+bool ActorManager::RegistObject(std::shared_ptr<Bullet> bullet)
+{
+	if(!bullet){return false;}
+
+	//初期化終わっているか
+	if (!bullet->IsInitialize()) {
+		return false;
+	}
+	//弾以外なら
+	if (bullet->GetActorType() != CharacterType::BULLET) {
+		return false;
+	}
+	//アクティブ状態のデータに格納,アクティブに設定
+	mActiveBullets.push_back(bullet);
+	bullet->SetActive(true);
+	return true;
+}
+
+bool ActorManager::RegistObject(std::shared_ptr<Laser> laser)
+{
+	if (!laser) { return false; }
+
+	//初期化終わっているか
+	if (!laser->IsInitialize()) {
+		return false;
+	}
+	//レーザー以外なら
+	if (laser->GetActorType() != CharacterType::LASER) {
+		return false;
+	}
+
+	//アクティブ状態のデータに格納,アクティブに設定
+	mActiveLasers.push_back(laser);
+	laser->SetActive(true);
+
+	return true;
+}
+
+bool ActorManager::RegistObject(std::shared_ptr<Bomb> bomb)
+{
+	if (!bomb) { return false; }
+
+	//初期化終わっているか
+	if (!bomb->IsInitialize()) {
+		return false;
+	}
+	//爆弾以外なら
+	if (bomb->GetActorType() != CharacterType::BOMB) {
+		return false;
+	}
+
+	//アクティブ状態のデータに格納,アクティブに設定
+	mActiveBombs.push_back(bomb);
+	bomb->SetActive(true);
+
+	return true;
+}
+
+
+int ActorManager::GetActorCount()
+{
+	return mActiveEnemies.size();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 int ActorManager::GetItemCount()
 {
+<<<<<<< HEAD
 	return (int)mActiveItems.size();
+=======
+	return mActiveItems.size();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 int ActorManager::GetBulletCount()
 {
+<<<<<<< HEAD
 	return (int)mActiveBullets.size();
+=======
+	return mActiveBullets.size();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 }
 
 ActorManager::ActorManager()
@@ -565,4 +1118,7 @@ ActorManager::~ActorManager()
 	End();
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420

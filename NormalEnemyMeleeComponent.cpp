@@ -11,7 +11,11 @@
 #include "PlayerCharacter.h"
 #include "WeaponStatus.h"
 
+<<<<<<< HEAD
 NormalEnemyMeleeComponent::NormalEnemyMeleeComponent(std::shared_ptr<CharacterBase> owner):WeaponComponent(owner)
+=======
+NormalEnemyMeleeComponent::NormalEnemyMeleeComponent(std::shared_ptr<CharacterBase> owner):Component(owner)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
 	//初期化
 	mComponentName = "NormalEnemyMeleeComponent";
@@ -47,8 +51,12 @@ void NormalEnemyMeleeComponent::Update(const float deltaTime)
 	bool isHit = false;
 
 	//近接攻撃の衝突判定
+<<<<<<< HEAD
 	auto collision = player->GetCollision<Collision::Rect>();
 	if(Collision::IsColliding(attackRange,*collision)){
+=======
+	if(Collision::IsColliding(attackRange,player->GetCollision())){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 		isHit =true;
 		//プレイヤーまでの角度をノックバック角度に設定
 		float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), player->GetWorldPosition2D());

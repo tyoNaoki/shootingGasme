@@ -14,7 +14,11 @@
 #include "UIText.h"
 #include "CollisionManager.h"
 
+<<<<<<< HEAD
 PlayerCharacter::PlayerCharacter():CharacterBase()
+=======
+PlayerCharacter::PlayerCharacter(Collision::Rect rect):CharacterBase(rect)
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 {
     mDrawOffset = Vector2D<float>(-70,-45);
     mDrawExtendSize = Vector2D<float>(1.5,1.5);
@@ -79,7 +83,11 @@ void PlayerCharacter::Reset(int id, Vector2D<float>localPosition, Vector2D<float
     mMoveSpeed = status.moveSpeed;
 
     //コンポーネントのステータスリセット
+<<<<<<< HEAD
     GetComponentManager().InitComponents();
+=======
+    InitComponents();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //初期装備にリセット
     ResetPlayerComponents();
@@ -168,36 +176,59 @@ void PlayerCharacter::Update(const float deltaTime)
 
     //衝突検知//
     auto newPosi = GetWorldPosition2D();
+<<<<<<< HEAD
     auto newCollisionPosi = GetCollision<Collision::Rect>();
+=======
+    auto newCollisionPosi = GetCollision();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //マップとの当たり判定管理
     auto map = scene->GetMap();
     auto& cm = Singleton<CollisionManager>::get_instance();
 
     //マップ外にいた場合、中に戻す
+<<<<<<< HEAD
     if(cm.PushBackFromOut(newPosi,*newCollisionPosi,map)){
+=======
+    if(cm.PushBackFromOut(newPosi,newCollisionPosi,map)){
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         std::string message = "Player is out";
         dh.Add(message);
     }
 
     //静的障害物と接触していた場合、押し戻し処理を実行
+<<<<<<< HEAD
     bool isColliding = cm.PushBackFromWalls(newPosi, *newCollisionPosi, map);
+=======
+    bool isColliding = cm.PushBackFromWalls(newPosi, newCollisionPosi, map);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
 
     //ボスとの当たり判定
     auto boss = ACTOR_M.GetCurrentBossEnemy();
     if(ACTOR_M.IsSpawnBoss() && boss->IsActive() && !boss->IsDead()){
         if(!boss->IsState(BossState::Move)){
+<<<<<<< HEAD
             if (newCollisionPosi->HandleCollision(*boss->GetCollision())) {
                 auto rect2 = boss->GetCollision<Collision::Rect>();
                 Collision::PushBackRect(*newCollisionPosi, *rect2);
                 newPosi = newCollisionPosi->mLeftTop + (newCollisionPosi->mSize / 2);
+=======
+            if (Collision::IsColliding(newCollisionPosi, boss->GetCollision())) {
+                auto rect2 = boss->GetCollision();
+                Collision::PushBackRect(newCollisionPosi, rect2);
+                newPosi = newCollisionPosi.mLeftTop + (newCollisionPosi.mSize / 2);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
                 isColliding = true;
             }
         }
     }
 
     //デバッグ用コリジョン描画
+<<<<<<< HEAD
     //dh.DrawCollision(newCollisionPosi, 0.0f, isColliding);
+=======
+    dh.DrawCollision(newCollisionPosi, 0.0f, isColliding);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     
     map->calcMapPosition(newPosi);
     
@@ -270,7 +301,11 @@ void PlayerCharacter::LevelUp()
 void PlayerCharacter::WeaponLevelUp(const std::string componentName)
 {
     //武器ステータス更新
+<<<<<<< HEAD
     auto comp = std::dynamic_pointer_cast<WeaponComponent>(GetComponentManager().GetComponent(componentName));
+=======
+    auto comp = GetComponent(componentName);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     if(comp){
         comp->SetStatus(STATUS.GetCurrentWeaponStatus(componentName));
     }
@@ -352,7 +387,10 @@ void PlayerCharacter::AddPlayerComponents(std::shared_ptr<PlayerCharacter>self)
         {std::make_shared<PlayerThrowBombComponent>(self), 3,false},
         {std::make_shared<PlayerReflectionGunComponent>(self), 4,false}
     };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     //各コンポーネントに対応した強化、入手報酬などを追加、更新
     for (auto& info : components) {
         info.component->SetEnable(info.isEnable);
@@ -363,6 +401,7 @@ void PlayerCharacter::AddPlayerComponents(std::shared_ptr<PlayerCharacter>self)
             mStartEnableComponentList.push_back(info.index);
         }
         //コンポーネント追加
+<<<<<<< HEAD
         GetComponentManager().AddComponent(info.component, info.index);
     }
 }
@@ -371,6 +410,15 @@ void PlayerCharacter::AddPlayerComponents(std::shared_ptr<PlayerCharacter>self)
 void PlayerCharacter::ResetPlayerComponents()
 {
     auto components = GetComponentManager().GetComponents();
+=======
+        AddComponent(info.component, info.index);
+    }
+}
+
+void PlayerCharacter::ResetPlayerComponents()
+{
+    auto components = GetComponents();
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     for (auto& component : components) {
         component->SetEnable(false); // 全てのコンポーネントを一旦無効化
     }
@@ -384,7 +432,11 @@ void PlayerCharacter::ResetPlayerComponents()
 
 void PlayerCharacter::EnablePlayerComponent(const std::string componentName)
 {
+<<<<<<< HEAD
     auto comp = GetComponentManager().GetComponent(componentName);
+=======
+    auto comp = GetComponent(componentName);
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
     if(!comp) {
         return;
     }

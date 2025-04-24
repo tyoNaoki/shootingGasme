@@ -212,10 +212,17 @@ bool Bomb::IsDamage(std::shared_ptr<CharacterBase>& enemy)
     return false;
 }
 
+<<<<<<< HEAD
 void Bomb::HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy,Collision::Circle& circle, float knockBackStrength, float attack,bool hasContinuousDamage)
 {
     //–½’†
     if (!enemy->GetCollision()->HandleCollision(circle)) {
+=======
+void Bomb::HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy, const Collision::Circle& circle, float knockBackStrength, float attack,bool hasContinuousDamage)
+{
+    //–½’†
+    if (!Collision::IsColliding(circle, enemy->GetCollision())) {
+>>>>>>> 1b517a8c9311f4690511d76cf319c9a675cc9420
         return;
     }
 
