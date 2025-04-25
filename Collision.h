@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "Vector2D.h"
+#include <functional>
 
 class Actor;
 
@@ -13,7 +14,15 @@ namespace Collision{
 	public:
 		virtual ~Shape() = default;
 
-		virtual bool HandleCollision(Collision::Shape& shape) = 0;
+		virtual bool IsHit(Collision::Shape& shape) = 0;
+
+		void SetCollisionCallback(const std::function<void(std::shared_ptr<Actor>)>& callback);
+
+		void HandleCollision(std::shared_ptr<Actor>hitActor);
+
+	private:
+		std::function<void(std::shared_ptr<Actor>)> mCollisionCallback; // 衝突時のコールバック関数
+
 	};
 
 	class Line : public Shape{
@@ -24,7 +33,7 @@ namespace Collision{
 		Line(Vector2D<float>start, Vector2D<float>end) : mStart(start), mEnd(end) {}
 		Line() : mStart(Vector2D<float>()), mEnd(Vector2D<float>()) {}
 
-		bool HandleCollision(Collision::Shape& shape)override;
+		bool IsHit(Collision::Shape& shape)override;
 	};
 
 	class Rect : public Shape{
@@ -47,7 +56,7 @@ namespace Collision{
 			};
 		}
 
-		bool HandleCollision(Collision::Shape& shape) override;
+		bool IsHit(Collision::Shape& shape) override;
 	};
 
 	class RotatedRect : public Shape{
@@ -60,7 +69,7 @@ namespace Collision{
 
 		std::vector<Vector2D<float>> GetVertices();
 
-		bool HandleCollision(Collision::Shape& shape)override;
+		bool IsHit(Collision::Shape& shape)override;
 
 		//Vector2D<float>GetTopMiddle();
 		//Vector2D<float>GetBottomMiddle();
@@ -73,7 +82,7 @@ namespace Collision{
 		Circle(Vector2D<float>center, float radius) : mCenter(center), mRadius(radius) {}
 		Circle() :mCenter(), mRadius() {}
 
-		bool HandleCollision(Collision::Shape& shape)override;
+		bool IsHit(Collision::Shape& shape)override;
 	};
 
 	RotatedRect CalculateAttackRange(const Vector2D<float>& position, float attackWidth, float attackHeight, float angle);

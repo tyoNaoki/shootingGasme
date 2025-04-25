@@ -187,7 +187,7 @@ void PlayerCharacter::Update(const float deltaTime)
     auto boss = ACTOR_M.GetCurrentBossEnemy();
     if(ACTOR_M.IsSpawnBoss() && boss->IsActive() && !boss->IsDead()){
         if(!boss->IsState(BossState::Move)){
-            if (newCollisionPosi->HandleCollision(*boss->GetCollision())) {
+            if (newCollisionPosi->IsHit(*boss->GetCollision())) {
                 auto rect2 = boss->GetCollision<Collision::Rect>();
                 Collision::PushBackRect(*newCollisionPosi, *rect2);
                 newPosi = newCollisionPosi->mLeftTop + (newCollisionPosi->mSize / 2);

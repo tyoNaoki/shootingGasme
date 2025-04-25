@@ -462,7 +462,7 @@ void GameScene::testQuadTree()
 	quad.Cleanup();
 	for(auto actor : ACTOR_M.GetActiveEnemies())
 	{
-		quad.Push(actor.get());
+		quad.Push(actor);
 	}
 
 	quad.HitTest();

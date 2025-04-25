@@ -157,6 +157,11 @@ void NormalEnemyBase::Update(const float deltaTime)
         DEBUG_HELPER.Add(message);
     }
 
+    auto localPosi = scene->GetMap()->GetLocalFromWorldPosition(newPosi);
+
+    //座標更新
+    SetLocalPosition2D(localPosi);
+    SetWorldPosition2D(newPosi);
     
     //コリジョンの一番長い状態を距離に設定
     float dis = newCollisionPosi->mSize.x >= newCollisionPosi->mSize.y ? newCollisionPosi->mSize.x : newCollisionPosi->mSize.y;
@@ -164,19 +169,12 @@ void NormalEnemyBase::Update(const float deltaTime)
     if (nearActors.size() > 0) {
         for (auto& x : nearActors) {
             //衝突時、更新前の座標への方向に衝突分、新しい座標を戻して返す
-            if (newCollisionPosi->HandleCollision(*x->GetCollision())) {
-                auto rect2 = x->GetCollision<Collision::Rect>();
-                Collision::PushBackRect(*newCollisionPosi, *rect2);
-                newPosi = newCollisionPosi->mLeftTop + (newCollisionPosi->mSize / 2);
+            if (newCollisionPosi->IsHit(*x->GetCollision())) {
+                //衝突処理
+                GetCollision()->HandleCollision(x);
             }
         }
     }
-
-    auto localPosi = scene->GetMap()->GetLocalFromWorldPosition(newPosi);
-
-    //座標更新
-    SetLocalPosition2D(localPosi);
-    SetWorldPosition2D(newPosi);
 
     std::string preActionName = GetCurrentAnimState()->GetActionName();
 

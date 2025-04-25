@@ -4,6 +4,7 @@
 #include "Actor.h"
 #include <string>
 
+
 namespace Collision{
 	RotatedRect CalculateAttackRange(const Vector2D<float>& position, float attackWidth, float attackHeight, float angle)
 	{
@@ -373,7 +374,7 @@ namespace Collision{
 		return bottomMiddle;
 	}
 	*/
-	bool Line::HandleCollision(Collision::Shape& shape)
+	bool Line::IsHit(Collision::Shape& shape)
 	{
 		if (auto rect = dynamic_cast<Collision::Rect*>(&shape))
 		{
@@ -381,7 +382,7 @@ namespace Collision{
 		}
 		return false;
 	}
-	bool Rect::HandleCollision(Collision::Shape& shape)
+	bool Rect::IsHit(Collision::Shape& shape)
 	{
 		if (auto rect = dynamic_cast<Collision::Rect*>(&shape))
 		{
@@ -399,7 +400,7 @@ namespace Collision{
 		return false;
 	}
 
-	bool RotatedRect::HandleCollision(Collision::Shape& shape)
+	bool RotatedRect::IsHit(Collision::Shape& shape)
 	{
 		if (auto rect = dynamic_cast<Collision::Rect*>(&shape))
 		{
@@ -409,7 +410,7 @@ namespace Collision{
 		return false;
 	}
 
-	bool Circle::HandleCollision(Collision::Shape& shape)
+	bool Circle::IsHit(Collision::Shape& shape)
 	{
 		if (auto rect = dynamic_cast<Collision::Rect*>(&shape))
 		{
@@ -422,5 +423,17 @@ namespace Collision{
 		}
 
 		return false;
+	}
+	void Shape::SetCollisionCallback(const std::function<void(std::shared_ptr<Actor>)>& callback)
+	{
+		mCollisionCallback = callback;;
+	}
+
+	void Shape::HandleCollision(std::shared_ptr<Actor>hitActor)
+	{
+		if(mCollisionCallback)
+		{
+			mCollisionCallback(hitActor);
+		}
 	}
 }

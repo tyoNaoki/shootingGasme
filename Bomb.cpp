@@ -215,7 +215,7 @@ bool Bomb::IsDamage(std::shared_ptr<CharacterBase>& enemy)
 void Bomb::HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy,Collision::Circle& circle, float knockBackStrength, float attack,bool hasContinuousDamage)
 {
     //–½’†
-    if (!enemy->GetCollision()->HandleCollision(circle)) {
+    if (!enemy->GetCollision()->IsHit(circle)) {
         return;
     }
 

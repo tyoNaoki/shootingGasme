@@ -58,15 +58,23 @@ public:
 		return out;
 	}
 
-	
+	template <typename T,typename U>
+	T SafeDivide(T value, U num) const {
+		return (value == 0) ? static_cast<T>(0) : static_cast<T>(static_cast<double>(value) / num);
+	}
 
-
-	template<typename U>
-	Vector2D<T> operator/(U num)const {
+	template <typename U>
+	Vector2D<T> operator/(U num) const {
 		if (num == 0) {
 			throw std::range_error("Divided by zero.");
 		}
-		Vector2D<T> out(static_cast<T>(static_cast<double>(x) / num), static_cast<T>(static_cast<double>(y) / num));
+
+		if (!this)
+		{
+			throw std::runtime_error("Invalid this object.");
+		}
+
+		Vector2D<T> out(SafeDivide(x, num), SafeDivide(y, num));
 		return out;
 	}
 
@@ -75,7 +83,8 @@ public:
 		if (num.x == 0 || num.y ==0) {
 			throw std::range_error("Divided by zero.");
 		}
-		Vector2D<T> out(static_cast<T>(static_cast<double>(x) / num.x), static_cast<T>(static_cast<double>(y) / num.y));
+
+		Vector2D<T> out(SafeDivide(x, num.x), SafeDivide(y, num.y));
 		return out;
 	}
 
@@ -84,8 +93,11 @@ public:
 		if (num == 0) {
 			throw std::range_error("Divided by zero.");
 		}
-		x /= num;
-		y /= num;
+
+		Vector2D<T> out(SafeDivide(x, num), SafeDivide(y, num));
+
+		x = out.x;
+		y = out.y;
 		return *this;
 	}
 
@@ -97,8 +109,11 @@ public:
 		if (num.y == 0) {
 			throw std::range_error("Divided by zero.");
 		}
-		x /= num.x;
-		y /= num.y;
+
+		Vector2D<T> out(SafeDivide(x, num.x), SafeDivide(y, num.y));
+
+		x = out.x;
+		y = out.y;
 		return *this;
 	}
 

@@ -85,13 +85,13 @@ void Bullet::Update(const float deltaTime)
 
     //消失アニメーション更新
     if(mIsFinish){
+
         //DEBUG_HELPER.DrawCollision(&GetCollision());
         SetLocalPosition2D(GetLocalFromWorldPosi(GetWorldPosition2D()));
         ANIM_M.Update(this);
         //現在のアニメーション画像更新
         Singleton<GraphicManager>::get_instance().updateHandle(deltaTime, mCurrent_gHandle, mCurrent_AnimFrame, mCurrent_AnimFrame_adjust, GetTypeName(), GetCurrentAnimState()->GetActionName());
         return;
-
     }
 
     //生存時間が０秒以下
@@ -165,10 +165,13 @@ void Bullet::Update(const float deltaTime)
     if(mOwnerType == CharacterType::PLAYER){
         //周囲の敵検索
         auto enemies = COLLISION_M.GetNearCharacters(newPosi, collision->mRadius, mIgnoreCharas);
-        if(enemies.size()!=0 || ACTOR_M.IsSpawnBoss()){
-            for (auto& x : enemies) {
+
+        if(enemies.size()!= 0 || ACTOR_M.IsSpawnBoss()){
+
+            for (auto& x : enemies){
+
                 //衝突しない
-                if (!collision->HandleCollision(*x->GetCollision())) {
+                if (!collision->IsHit(*x->GetCollision())) {
                     continue;
                 }
 
@@ -186,11 +189,12 @@ void Bullet::Update(const float deltaTime)
                 if(!IsPenetratingHit(x)){
                     continue;
                 }
-
-                mIsHit = true;
+                
                 //弾の現在座標からヒットした敵の座標までの角度で敵をノックバックさせる
                 float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), x->GetWorldPosition2D());
                 x->TakeDamage(mAttack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
+                mIsHit = true;
+
                 //貫通のクールタイム設定
                 mHitCountEnemies[x->GetName()] = mPenetrationCoolTime;
                 //現在の貫通回数
@@ -199,10 +203,9 @@ void Bullet::Update(const float deltaTime)
             //ボス用処理
             if (ACTOR_M.IsSpawnBoss()) {
                 auto boss = ACTOR_M.GetCurrentBossEnemy();
-                if(collision->HandleCollision(*boss->GetCollision())){
+                if(collision->IsHit(*boss->GetCollision())){
                     if (IsFinish(boss)) {
                         boss->TakeDamage(mAttack);
-                        //SetActive(false);
                         mIsHit = true;
                         StartDeadAnimation();
                         return;
@@ -224,7 +227,7 @@ void Bullet::Update(const float deltaTime)
         //他キャラの処理
         auto player = ACTOR_M.GetCurrentPlayer();
         if(player&&player->IsActive()){
-            if (collision->HandleCollision(*player->GetCollision())) {
+            if (collision->IsHit(*player->GetCollision())) {
                 mIsHit = true;
                 player->TakeDamage(mAttack);
                 StartDeadAnimation();
@@ -384,6 +387,7 @@ bool Bullet::IsFinish(std::shared_ptr<CharacterBase> target)
     //貫通弾ではない、貫通回数が最大数に達している
     return (!mIsPenetration || !CanPenetratingOnCurrentCount() && IsPenetratingHit(target));
 }
+\
 
 bool Bullet::IsPenetratingHit(std::shared_ptr<CharacterBase>target)
 {
@@ -405,4 +409,8 @@ bool Bullet::IsPenetratingHit(std::shared_ptr<CharacterBase>target)
 bool Bullet::CanPenetratingOnCurrentCount()
 {
    return mPenetrationCurrentCount < mPenetrationMaxCount;
+}
+
+void Bullet::ProcessDamage(std::shared_ptr<Actor> target, float attack, float shock, float penetrationCoolTime)
+{
 }

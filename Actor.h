@@ -15,6 +15,7 @@ class Collision::Rect;
 
 enum class CharacterType { PLAYER, ENEMY, BULLET,LASER,BOMB, ITEM,BOSS,EMPTY };
 
+
 class Actor
 {
 public:

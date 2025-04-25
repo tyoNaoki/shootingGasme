@@ -39,7 +39,7 @@ public:
     /*
      * オブジェクトを四分木に登録する
      */
-    void Push(Actor* obj)
+    void Push(std::shared_ptr<Actor> obj)
     {
         const auto id = GetCellID(obj);
         this->cell[id].push_back(obj);
@@ -59,21 +59,22 @@ private:
     /*
      * 深さdepthでz値がz_valueを持つノードに登録されたオブジェクトに対して衝突判定を行う
      */
-    void HitTest(uint64_t depth, uint64_t z_value, std::vector<Actor*>& stack)
+    void HitTest(uint64_t depth, uint64_t z_value, std::vector<std::weak_ptr<Actor>>& stack)
     {
         const uint64_t id = GetCellID(depth, z_value);
-        const std::vector<Actor*>& lst = cell[id];
+        const std::vector<std::weak_ptr<Actor>>& lst = cell[id];
         const uint64_t lst_size = lst.size();
 
         // 衝突判定をしていく
         for (int i = 0; i < lst_size; i++) {
-            //auto c1 = lst[i]->GetCollision();
+            auto c1 = lst[i].lock()->GetCollision();
 
             // スタックとノード
             for (int j = 0; j < stack.size(); j++) {
                 //衝突
+                /*
                 if (Collision::IsColliding(lst[i],stack[j])) {
-                    /*
+                    
                     //Collision::PushBackRect(c1, c2);
                     auto newPosi = c1.mLeftTop + (c1.mSize / 2);
                     auto localPosi = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(newPosi);
@@ -83,16 +84,23 @@ private:
 
                     DEBUG_HELPER.DrawCollision(c1);
                     DEBUG_HELPER.DrawCollision(c2);
-                    */
+                    
+                }
+                */
+                auto actor = stack[j].lock();
+                if(c1->IsHit(*actor->GetCollision()))
+                {
+                    c1->HandleCollision(actor);
                 }
             }
+
 
             // ノード内同士
             for (int j = i + 1; j < lst_size; j++) {
                 //衝突
+                /*
                 if (Collision::IsColliding(lst[i], lst[j])) {
                     
-                    /*
                     Collision::PushBackRect(lst[i],lst[j]);
                     auto newPosi = c1.mLeftTop + (c1.mSize / 2);
                     auto localPosi = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(newPosi);
@@ -102,9 +110,10 @@ private:
 
                     DEBUG_HELPER.DrawCollision(c1);
                     DEBUG_HELPER.DrawCollision(c2);
-                    */
+                    
                     
                 }
+                */
             }
         }
 
@@ -134,12 +143,12 @@ public:
      */
     void HitTest()
     {
-        std::vector<Actor*> stack;
+        std::vector<std::weak_ptr<Actor>> stack;
         this->HitTest(0, 0, stack);
     }
 
 private:
-    std::vector<Actor*> cell[sum_of_tree(MAX_D)]; // tree of vector<T*>
+    std::vector<std::weak_ptr<Actor>> cell[sum_of_tree(MAX_D)]; // tree of vector<T*>
 
     // 深さとz値からノード番号を得る
     static constexpr uint64_t GetCellID(uint64_t depth, uint64_t z_value)
@@ -220,10 +229,10 @@ private:
         return offset[L] + (z >> (msb_pos << 1));
     }
 
-    uint64_t GetCellID(Actor* actor)
+    uint64_t GetCellID(std::shared_ptr<Actor> actor)
     {
         /*
-        if(actor->GetActorType()==CharacterType::ENEMY)
+        if(auto rect = actor->GetCollision<Collision::Rect>())
         {
             CharacterBase* chara = dynamic_cast<CharacterBase*>(actor);
 
@@ -234,6 +243,7 @@ private:
             return GetCellID(c[0].x, c[0].y, c[2].x, c[2].y);
         }
         */
+        
         return -1;
     }
 };

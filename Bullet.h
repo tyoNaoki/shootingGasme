@@ -4,6 +4,13 @@
 
 class CharacterBase;
 
+enum class BulletTYPE
+{
+    NormalBullet,
+    PrenetratingBullet,
+    ReflectionBullet
+};
+
 class Bullet :
     public Actor
 {
@@ -52,6 +59,8 @@ private:
     bool IsPenetratingHit(std::shared_ptr<CharacterBase>target);
 
     bool CanPenetratingOnCurrentCount();
+
+    void ProcessDamage(std::shared_ptr<Actor> target, float attack, float shock, float penetrationCoolTime);
 
     CharacterType mOwnerType = CharacterType::EMPTY;
 
