@@ -221,8 +221,9 @@ void Bomb::HitCheck(float deltaTime,std::shared_ptr<CharacterBase> enemy,Collisi
 
     if (IsDamage(enemy)) {//多段ヒットのクールタイムチェック
         //ダメージ処理
+        enemy->TakeDamage(attack);
         float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), enemy->GetWorldPosition2D());
-        enemy->TakeDamage(attack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), knockBackStrength,0.4f);
+        enemy->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), knockBackStrength, 0.4f);
         mHitCountEnemies[enemy->GetName()] = mHitCoolTime;
     }else{
         if(hasContinuousDamage){//持続ダメージ型のみクールタイム更新

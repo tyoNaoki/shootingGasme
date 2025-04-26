@@ -30,8 +30,9 @@ void BossTackleComponent::Update(const float deltaTime)
 	bool isHit = COLLISION_M.IsCollidingCharacter(owner, mPlayer);
 	if(isHit){
 		//自分からプレイヤーまでの角度をノックバックとして、プレイヤーに与える
+		mPlayer->TakeDamage(mTackleDamage);
 		float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), mPlayer->GetWorldPosition2D());
-		mPlayer->TakeDamage(mTackleDamage, Vector2D<float>(cos(targetRadian), sin(targetRadian)), mTackleKnockBack, 0.5f);
+		mPlayer->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mTackleKnockBack, 0.5f);
 		mCurrentTime = mTackleCoolTime;
 	}
 }

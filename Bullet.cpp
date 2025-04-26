@@ -106,6 +106,7 @@ void Bullet::Update(const float deltaTime)
             SetRotation((float)Vector2D<float>::GetLookAtAngle(GetWorldPosition2D(), mHomingTarget->GetWorldPosition2D()));
         }
     }
+
     //角度から進行ベクトルを計算
     double rad = Vector2D<float>::GetRadiansFromDegrees(GetRotation());
     auto unitVec = Vector2D<float>::GetUnitVectorByRadian(rad);
@@ -175,30 +176,7 @@ void Bullet::Update(const float deltaTime)
                     continue;
                 }
 
-                //貫通弾ではない場合、その場で消失。
-                //貫通弾の場合、雑魚一回のみダメージ、ボス多段ヒット
-                if(IsFinish(x)){
-                    float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), x->GetWorldPosition2D());
-                    x->TakeDamage(mAttack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
-                    mIsHit = true;
-                    StartDeadAnimation();
-                    return;
-                }
-
-                //貫通ダメージが入らない
-                if(!IsPenetratingHit(x)){
-                    continue;
-                }
-                
-                //弾の現在座標からヒットした敵の座標までの角度で敵をノックバックさせる
-                float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), x->GetWorldPosition2D());
-                x->TakeDamage(mAttack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
-                mIsHit = true;
-
-                //貫通のクールタイム設定
-                mHitCountEnemies[x->GetName()] = mPenetrationCoolTime;
-                //現在の貫通回数
-                mPenetrationCurrentCount++;
+                HandleBulletHit(x);
             }
             //ボス用処理
             if (ACTOR_M.IsSpawnBoss()) {
@@ -312,6 +290,45 @@ void Bullet::FinishDeadAnimation()
     SetActive(false);
 }
 
+void Bullet::HandleBulletHit(std::shared_ptr<CharacterBase>target)
+{
+    //貫通弾ではない場合、その場で消失。
+                //貫通弾の場合、雑魚一回のみダメージ、ボス多段ヒット
+    if (IsFinish(target)) {
+        target->TakeDamage(mAttack);
+
+        if(target->GetActorType()==CharacterType::ENEMY)//雑魚敵にはノックバックをつける
+        {
+            float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), target->GetWorldPosition2D());
+            target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
+        }
+
+        mIsHit = true;
+        StartDeadAnimation();
+        return;
+    }
+
+    //貫通ダメージが入らない
+    if (!IsPenetratingHit(target)) {
+        return;
+    }
+
+    //弾の現在座標からヒットした敵の座標までの角度で敵をノックバックさせる
+    target->TakeDamage(mAttack);
+    if (target->GetActorType() == CharacterType::ENEMY)//雑魚敵にはノックバックをつける
+    {
+        float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), target->GetWorldPosition2D());
+        target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
+    }
+
+    mIsHit = true;
+
+    //貫通のクールタイム設定
+    mHitCountEnemies[target->GetName()] = mPenetrationCoolTime;
+    //現在の貫通回数
+    mPenetrationCurrentCount++;
+}
+
 void Bullet::SetStatus(float speed,float attack,bool IsPenetration,int penetrationMaxCount)
 {
     //ステータス設定
@@ -387,7 +404,7 @@ bool Bullet::IsFinish(std::shared_ptr<CharacterBase> target)
     //貫通弾ではない、貫通回数が最大数に達している
     return (!mIsPenetration || !CanPenetratingOnCurrentCount() && IsPenetratingHit(target));
 }
-\
+
 
 bool Bullet::IsPenetratingHit(std::shared_ptr<CharacterBase>target)
 {

@@ -16,9 +16,9 @@ void BulletObjectPool::OnCreate(const char* name, int count)
 {
 	for (int i = 0; i < count; i++)
 	{
-		auto enemy = Singleton<BulletFactory>::get_instance().CreateObject(name);
-		enemy->SetActive(false);
-		pool[name].push(enemy);
+		auto bullet = Singleton<BulletFactory>::get_instance().CreateObject(name);
+		bullet->SetActive(false);
+		pool[name].push(bullet);
 	}
 }
 

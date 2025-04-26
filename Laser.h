@@ -35,6 +35,8 @@ public:
     bool IsHit();
 
 private:
+    void AddLaserKnockBack(std::shared_ptr<CharacterBase>target,float knockBackStrength,float knockBackTime);
+
     bool mIsHit = false; // ヒットフラグ
     bool mIsInitialize = false; // 初期化フラグ
 

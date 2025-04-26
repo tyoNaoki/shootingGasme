@@ -31,6 +31,8 @@ public:
     void StartDeadAnimation()override;
     void FinishDeadAnimation()override;
 
+    void HandleBulletHit(std::shared_ptr<CharacterBase>target);
+
     //�ђʒe
     void SetStatus(float speed,float attack,bool IsPenetration,int penetrationMaxCount);
 

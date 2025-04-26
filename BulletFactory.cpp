@@ -25,7 +25,6 @@ std::shared_ptr<Actor> BulletFactory::CreateObject(std::string name)
     if (name == "PlayerBullet") {
         auto bullet = std::make_shared<Bullet>(Vector2D<float>(0, 0), Vector2D<float>(1.0, 1.0));
         bullet->SetCollision(std::make_shared<Collision::Circle>(Vector2D<float>(), 13));
-        
         return bullet;
     }
 

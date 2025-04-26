@@ -62,10 +62,12 @@ void PlayerMeleeComponent::Update(const float deltaTime)
 			//命中
 			if (Collision::IsColliding(attackRange,*x->GetCollision<Collision::Rect>())) {
 				isHit = true;
-				//敵までの角度をノックバックとして取得
-				float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), x->GetWorldPosition2D());
 				//ダメージ処理
-				x->TakeDamage(attack,Vector2D<float>(cos(targetRadian),sin(targetRadian)),meleeShock,0.2f);
+				x->TakeDamage(attack);
+
+				//ノックバック
+				float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), x->GetWorldPosition2D());
+				x->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), meleeShock, 0.2f);
 			}
 		}
 		//ボスとの衝突判定
@@ -74,6 +76,7 @@ void PlayerMeleeComponent::Update(const float deltaTime)
 			//ボスはノックバック無効
 			ACTOR_M.GetCurrentBossEnemy()->TakeDamage(attack);
 		}
+
 		//近接エフェクト描画
 		DEBUG_HELPER.DrawCollision(attackRange, 0.2f, isHit);
 		DrawMelee(owner,attackRange);

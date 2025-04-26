@@ -25,12 +25,12 @@ void EnemyObjectPool::OnCreate(const char* enemyName,int count)
 				Collision::PushBackRect(*rect1,*rect2);
 				auto newPosi = rect1->mLeftTop + (rect1->mSize / 2);
 				auto localPosi = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(newPosi);
+
 				//À•WXV
 				enemy->SetLocalPosition2D(localPosi);
 				enemy->SetWorldPosition2D(newPosi);
 			}
 		});
-		
 
 		enemy->SetActive(false);
 		pool[enemyName].push(enemy);

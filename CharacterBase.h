@@ -40,7 +40,7 @@ public:
 
     virtual float GetMoveSpeed() const;
 
-    virtual void TakeDamage(float damage, Vector2D<float>direction = Vector2D<float>(), float strength = 0.0f, float knockBackTime = -1.0f);
+    virtual void TakeDamage(float damage);
 
     void StartDeadAnimation()override;
 

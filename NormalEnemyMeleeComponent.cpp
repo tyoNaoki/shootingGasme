@@ -50,11 +50,15 @@ void NormalEnemyMeleeComponent::Update(const float deltaTime)
 	auto collision = player->GetCollision<Collision::Rect>();
 	if(Collision::IsColliding(attackRange,*collision)){
 		isHit =true;
+		
+		//ダメージ処理
+		player->TakeDamage(attack);
+
 		//プレイヤーまでの角度をノックバック角度に設定
 		float targetRadian = Vector2D<float>::GetLookAtRadian(owner->GetWorldPosition2D(), player->GetWorldPosition2D());
-		//ダメージ処理
-		player->TakeDamage(attack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), meleeShock, 0.2f);
+		player->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), meleeShock, 0.2f);
 	}
+
 	//デバッグコリジョン表示
 	DEBUG_HELPER.DrawCollision(attackRange, 0.2f, isHit);
 	//近接エフェクト描画

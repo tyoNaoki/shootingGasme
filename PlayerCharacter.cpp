@@ -226,31 +226,6 @@ bool PlayerCharacter::IsInitialize()
     return mInitialize;
 }
 
-void PlayerCharacter::TakeDamage(float damage, Vector2D<float>direction, float strength, float knockBackTime)
-{
-    //死んでいるか
-    if(IsDead()){
-        return;
-    }
-    //ダメージ
-    mHP -= damage;
-
-    //死亡アニメーション
-    if (mHP <= 0){
-        mHP = 0;
-        StartDeadAnimation();
-        return;
-    }
-
-    //ノックバックがある場合、開始処理
-    if(strength > 0.0f){
-        AddKnockBack(direction,strength,knockBackTime);
-    }
-
-    //ダメージアニメーション
-    DamageAnimation();
-}
-
 void PlayerCharacter::StartLevelUp(int levelUpCount)
 {
     //レベルアップの報酬選択開始

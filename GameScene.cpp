@@ -272,7 +272,7 @@ void GameScene::Update(const float deltaTime)
 	}
 
 	//領域四分木分割
-	//testQuadTree();
+	
 
 	//ポーズ
 	if (IsPaused()) {
@@ -348,7 +348,7 @@ void GameScene::Update(const float deltaTime)
 	DEBUG_HELPER.Add("EnemyHP is " + std::to_string(debugHp));
 
 	//各オブジェクトの座標や各コンポーネントの更新
-	am.Update(deltaTime); 
+	am.Update(deltaTime);
 
 	//ゲーム内時間更新
 	mCurrentGameTime += deltaTime; 
@@ -458,8 +458,9 @@ void GameScene::SpawnBoss()
 
 void GameScene::testQuadTree()
 {
-	auto quad = QuadTree<3>();
+	auto quad = QuadTree<6>();
 	quad.Cleanup();
+
 	for(auto actor : ACTOR_M.GetActiveEnemies())
 	{
 		quad.Push(actor);

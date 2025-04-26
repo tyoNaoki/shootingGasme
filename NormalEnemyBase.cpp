@@ -163,6 +163,7 @@ void NormalEnemyBase::Update(const float deltaTime)
     SetLocalPosition2D(localPosi);
     SetWorldPosition2D(newPosi);
     
+    
     //ƒRƒŠƒWƒ‡ƒ“‚Ìˆê”Ô’·‚¢ó‘Ô‚ð‹——£‚ÉÝ’è
     float dis = newCollisionPosi->mSize.x >= newCollisionPosi->mSize.y ? newCollisionPosi->mSize.x : newCollisionPosi->mSize.y;
     auto nearActors = COLLISION_M.DetectionNearCharacters(newPosi, *newCollisionPosi, dis, mCharaToIgnores);
@@ -175,6 +176,7 @@ void NormalEnemyBase::Update(const float deltaTime)
             }
         }
     }
+    
 
     std::string preActionName = GetCurrentAnimState()->GetActionName();
 

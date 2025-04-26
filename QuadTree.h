@@ -67,11 +67,12 @@ private:
 
         // 衝突判定をしていく
         for (int i = 0; i < lst_size; i++) {
-            auto c1 = lst[i].lock()->GetCollision();
+            auto actor1 = lst[i].lock();
 
             // スタックとノード
             for (int j = 0; j < stack.size(); j++) {
                 //衝突
+                
                 /*
                 if (Collision::IsColliding(lst[i],stack[j])) {
                     
@@ -87,10 +88,12 @@ private:
                     
                 }
                 */
-                auto actor = stack[j].lock();
-                if(c1->IsHit(*actor->GetCollision()))
+                
+                auto actor2 = stack[j].lock();
+                if(actor1->GetCollision()->IsHit(*actor2->GetCollision()))
                 {
-                    c1->HandleCollision(actor);
+                    actor1->GetCollision()->HandleCollision(actor2);
+                    //actor2->GetCollision()->HandleCollision(actor1);
                 }
             }
 
@@ -98,6 +101,14 @@ private:
             // ノード内同士
             for (int j = i + 1; j < lst_size; j++) {
                 //衝突
+                auto actor2 = lst[j].lock();
+                if (actor1->GetCollision()->IsHit(*actor2->GetCollision()))
+                {
+                    actor1->GetCollision()->HandleCollision(actor2);
+                    //actor2->GetCollision()->HandleCollision(actor1);
+                    
+                }
+
                 /*
                 if (Collision::IsColliding(lst[i], lst[j])) {
                     
@@ -231,19 +242,87 @@ private:
 
     uint64_t GetCellID(std::shared_ptr<Actor> actor)
     {
-        /*
         if(auto rect = actor->GetCollision<Collision::Rect>())
         {
-            CharacterBase* chara = dynamic_cast<CharacterBase*>(actor);
-
-            if(!chara) return -1;
-
-            auto left = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(chara->GetCollision().mLeftTop);
-            auto c = Collision::Rect(left, chara->GetCollision().mSize).GetVertices();
+            auto left = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(rect->mLeftTop);
+            auto c = Collision::Rect(left,rect->mSize).GetVertices();
             return GetCellID(c[0].x, c[0].y, c[2].x, c[2].y);
         }
-        */
         
         return -1;
     }
+    /*
+    void ResolveCollision(std::shared_ptr<Actor> actor1, std::shared_ptr<Actor> actor2) {
+        // 押し出し処理
+        auto rect1 = actor1->GetCollision<Collision::Rect>();
+        auto rect2 = actor2->GetCollision<Collision::Rect>();
+
+        Collision::PushBackRect(*rect1, *rect2);
+        auto newPosi = rect1->mLeftTop + (rect1->mSize / 2);
+        auto localPosi = SCENE_M.GetCurrentScene()->GetMap()->GetLocalFromWorldPosition(newPosi);
+
+        actor1->SetLocalPosition2D(localPosi);
+        actor1->SetWorldPosition2D(newPosi);
+
+        // 再度衝突チェックを行う
+        for (auto& otherActor : allActors) { 
+            if (otherActor == actor1 || otherActor == actor2) continue;
+            if (actor1->GetCollision()->IsHit(*otherActor->GetCollision())) {
+                ResolveCollision(actor1, otherActor); // 再帰的に押し出し処理を実行
+            }
+        }
+    }
+    */
+
+    std::vector<std::weak_ptr<Actor>> SortByPriority(const std::vector<std::weak_ptr<Actor>>& actors) {
+        std::vector<std::shared_ptr<Actor>> sortedActors;
+        for (auto& weakActor : actors) {
+            if (auto actor = weakActor.lock()) {
+                sortedActors.push_back(actor);
+            }
+        }
+
+        // 質量や優先度でソート
+        /*
+        std::sort(sortedActors.begin(), sortedActors.end(), [](const std::shared_ptr<Actor>& a, const std::shared_ptr<Actor>& b) {
+            return a->GetCollision<Collision::Rect>()->mSize > b->GetCollision<Collision::Rect>()->mSize; // 質量が大きい順
+            });
+            */
+
+        return std::vector<std::weak_ptr<Actor>>(sortedActors.begin(), sortedActors.end());
+    }
+
+    void ResolveCollisionWithLimit(std::shared_ptr<Actor> actor1, std::shared_ptr<Actor> actor2, int maxAttempts) {
+        int attempts = 0;
+        while (actor1->GetCollision()->IsHit(*actor2->GetCollision())) {
+            //ResolveCollision(actor1, actor2);
+            attempts++;
+
+            if (attempts >= maxAttempts) {
+                //std::cerr << "Collision resolution exceeded max attempts." << std::endl;
+                break; // 試行上限に達したら中断
+            }
+        }
+    }
+
+    /*
+    #pragma omp parallel for
+    for (int i = 0; i < lst.size(); ++i) {
+        auto actor1 = lst[i].lock();
+        if (!actor1) {
+            continue;
+        }
+
+        for (int j = i + 1; j < lst.size(); ++j) {
+            auto actor2 = lst[j].lock();
+            if (!actor2) {
+                continue;
+            }
+
+            if (actor1->GetCollision()->IsHit(*actor2->GetCollision())) {
+                ResolveCollision(actor1, actor2);
+            }
+        }
+    }
+    */
 };

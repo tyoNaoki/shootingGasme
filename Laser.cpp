@@ -81,19 +81,12 @@ void Laser::Update(const float deltaTime)
         //Hit
         auto collision = player->GetCollision<Collision::Rect>();
         if(mCurrentTime <= 0.0f&&Collision::IsColliding(mRotRect,*collision)){
-            //レーザーのノックバック角度をレーザーの照射位置からプレイヤーまでの角度とレーザーの照射角度との差分で計算、設定する
-            float laserRot = GetRotation();
-            float targetRot = (float)Vector2D<float>::GetLookAtAngle(GetWorldPosition2D(),player->GetWorldPosition2D());
-            float diff = Vector2D<float>::AngleDiff(laserRot,targetRot);
-            float targetRadian = 0;
-            if(diff > 0){
-                targetRadian = Vector2D<float>::GetRadiansFromDegrees(laserRot - 20.0f);
-            }else{
-                targetRadian = Vector2D<float>::GetRadiansFromDegrees(laserRot + 20.0f);
-            }
             //ダメージ処理
-            ACTOR_M.GetCurrentPlayer()->TakeDamage(mAttack, Vector2D<float>(cos(targetRadian), sin(targetRadian)), mKnockBackStrength,mknockBackTime);
+            player->TakeDamage(mAttack);
+            //ノックバック
+            AddLaserKnockBack(player,mKnockBackStrength,mknockBackTime);
 
+            //無敵時間設定
             mCurrentTime = mInvincibilityTime;
             mIsHit = true;
         }else if(mCurrentTime>0.0f){
@@ -147,6 +140,24 @@ void Laser::Draw(const float deltaTime)
 bool Laser::IsHit()
 {
     return mIsHit;
+}
+
+void Laser::AddLaserKnockBack(std::shared_ptr<CharacterBase> target,float knockBackStrength,float knockBackTime)
+{
+    //レーザーのノックバック角度をレーザーの照射位置からプレイヤーまでの角度とレーザーの照射角度との差分で計算、設定する
+    float laserRot = GetRotation();
+    float targetRot = (float)Vector2D<float>::GetLookAtAngle(GetWorldPosition2D(), target->GetWorldPosition2D());
+    float diff = Vector2D<float>::AngleDiff(laserRot, targetRot);
+    float targetRadian = 0;
+
+    if (diff > 0) {
+        targetRadian = Vector2D<float>::GetRadiansFromDegrees(laserRot - 20.0f);
+    }
+    else {
+        targetRadian = Vector2D<float>::GetRadiansFromDegrees(laserRot + 20.0f);
+    }
+
+    target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), knockBackStrength, knockBackTime);
 }
 
 void Laser::SetStatus(float laserWidth,float speed,float attack, float knockBackStrength, float knockBackTime)

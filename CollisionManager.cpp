@@ -159,7 +159,6 @@ const std::vector<std::shared_ptr<CharacterBase>> CollisionManager::DetectionNea
 	}
 
 	//近くに除外するキャラがいた場合、グリッドから除外するキャラとして変数で保存
-	float tempDis = dis * dis;
 	std::vector<std::shared_ptr<CharacterBase>>Ignores;
 	std::vector<int>IgnoresIndex;
 	for(auto &x:characterToIgnores){

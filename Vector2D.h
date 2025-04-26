@@ -161,6 +161,18 @@ public:
 		return *this;
 	}
 
+	template <typename U>
+	bool operator > (Vector2D<U>num) {
+		
+		return this->Length_Square() > num->Length_Square();
+	}
+
+	template <typename U>
+	bool operator < (Vector2D<U>num) {
+
+		return this->Length_Square() < num->Length_Square();
+	}
+
 	//	template <typename T2> operator Vector2D<T2>(); //Vector2D‚ÌƒLƒƒƒXƒg
 
 	Vector2D<int> ToInt(){

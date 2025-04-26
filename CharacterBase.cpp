@@ -122,7 +122,7 @@ float CharacterBase::GetMoveSpeed() const
     return 1.0f;
 }
 
-void CharacterBase::TakeDamage(float damage, Vector2D<float>direction, float strength, float knockBackTime)
+void CharacterBase::TakeDamage(float damage)
 {
     if(IsDead()){return;}
     //HPを減らす
@@ -140,10 +140,6 @@ void CharacterBase::TakeDamage(float damage, Vector2D<float>direction, float str
         return;
     }
 
-    //衝撃があるなら、ノックバック付与
-    if (strength > 0.0f) {
-        AddKnockBack(direction,strength,knockBackTime);
-    }
     //被ダメージアニメーション
     DamageAnimation();
 }

@@ -20,9 +20,6 @@ public:
     // 初期化済みか確認する関数
     bool IsInitialize() override;
 
-    // ダメージ処理関数
-    void TakeDamage(float damage, Vector2D<float> direction = Vector2D<float>(), float strength = 0.0f, float knockBackTime = -1.0f) override;
-
     // レベルアップ開始関数
     void StartLevelUp(int levelUpCount);
     // レベルアップ処理関数
