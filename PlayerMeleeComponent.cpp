@@ -30,7 +30,7 @@ void PlayerMeleeComponent::Init()
 
 void PlayerMeleeComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = GetWeaponOwner();
 
 	if (!IsEnable() || !owner->IsActive() || owner->IsDead()) { return; }
 	//クールタイムが終わっているか

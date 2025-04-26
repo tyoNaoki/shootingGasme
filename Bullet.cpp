@@ -107,6 +107,8 @@ void Bullet::Update(const float deltaTime)
         }
     }
 
+    UpdatePenetratingHitCoolTimes(deltaTime);
+
     //角度から進行ベクトルを計算
     double rad = Vector2D<float>::GetRadiansFromDegrees(GetRotation());
     auto unitVec = Vector2D<float>::GetUnitVectorByRadian(rad);
@@ -138,7 +140,7 @@ void Bullet::Update(const float deltaTime)
         //反射フラグがったている場合
         if(refrection){
             //反射回数が最大に達していた場合、消去処理
-            if(mReflectionMaxCount<mReflectionCurrentCount + 1){
+            if (mReflectionMaxCount < mReflectionCurrentCount + 1) {
                 StartDeadAnimation();
                 return;
             }
@@ -151,10 +153,13 @@ void Bullet::Update(const float deltaTime)
     }
 
     SetVelocity(moveVel);
+    Vector2D<float>localPosi = scene->GetMap()->GetLocalFromWorldPosition(newPosi);
+    //座標更新
+    SetLocalPosition2D(localPosi);
+    SetWorldPosition2D(newPosi);
 
     //マップ外にいた場合、消失
-    if (!COLLISION_M.IsBulletInMap(newPosi,scene->GetMap())) {
-        auto localPosi = GetLocalFromWorldPosi(newPosi);
+    if (!COLLISION_M.IsBulletInMap(GetWorldPosition2D(),scene->GetMap())) {
         std::string message = "Bullet is out";
         DEBUG_HELPER.Add(message);
         SetActive(false);
@@ -172,32 +177,15 @@ void Bullet::Update(const float deltaTime)
             for (auto& x : enemies){
 
                 //衝突しない
-                if (!collision->IsHit(*x->GetCollision())) {
-                    continue;
+                if (collision->IsHit(*x->GetCollision())) {
+                    HandleBulletHit(x);
                 }
-
-                HandleBulletHit(x);
             }
             //ボス用処理
             if (ACTOR_M.IsSpawnBoss()) {
                 auto boss = ACTOR_M.GetCurrentBossEnemy();
                 if(collision->IsHit(*boss->GetCollision())){
-                    if (IsFinish(boss)) {
-                        boss->TakeDamage(mAttack);
-                        mIsHit = true;
-                        StartDeadAnimation();
-                        return;
-                    }
-
-                    if (IsPenetratingHit(boss)) {
-                        mIsHit = true;
-
-                        boss->TakeDamage(mAttack);
-                        mHitCountEnemies[boss->GetName()] = mPenetrationCoolTime;
-                        mPenetrationCurrentCount++;
-                    }else{
-                        mHitCountEnemies[boss->GetName()] -= deltaTime;
-                    }
+                    HandleBulletHit(boss);
                 }
             }
         }
@@ -206,19 +194,11 @@ void Bullet::Update(const float deltaTime)
         auto player = ACTOR_M.GetCurrentPlayer();
         if(player&&player->IsActive()){
             if (collision->IsHit(*player->GetCollision())) {
-                mIsHit = true;
-                player->TakeDamage(mAttack);
-                StartDeadAnimation();
+                HandleBulletHit(player);
                 return;
             }
         }
     }
-
-    Vector2D<float>localPosi = scene->GetMap()->GetLocalFromWorldPosition(newPosi);
-
-    //座標更新
-    SetLocalPosition2D(localPosi);
-    SetWorldPosition2D(newPosi);
 
     //DEBUG_HELPER.DrawCollision(mCollision);
 
@@ -293,16 +273,9 @@ void Bullet::FinishDeadAnimation()
 void Bullet::HandleBulletHit(std::shared_ptr<CharacterBase>target)
 {
     //貫通弾ではない場合、その場で消失。
-                //貫通弾の場合、雑魚一回のみダメージ、ボス多段ヒット
+    //貫通弾の場合、雑魚一回のみダメージ、ボス多段ヒット
     if (IsFinish(target)) {
-        target->TakeDamage(mAttack);
-
-        if(target->GetActorType()==CharacterType::ENEMY)//雑魚敵にはノックバックをつける
-        {
-            float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), target->GetWorldPosition2D());
-            target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
-        }
-
+        ProcessDamage(target);
         mIsHit = true;
         StartDeadAnimation();
         return;
@@ -313,13 +286,7 @@ void Bullet::HandleBulletHit(std::shared_ptr<CharacterBase>target)
         return;
     }
 
-    //弾の現在座標からヒットした敵の座標までの角度で敵をノックバックさせる
-    target->TakeDamage(mAttack);
-    if (target->GetActorType() == CharacterType::ENEMY)//雑魚敵にはノックバックをつける
-    {
-        float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), target->GetWorldPosition2D());
-        target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
-    }
+    ProcessDamage(target);
 
     mIsHit = true;
 
@@ -363,7 +330,6 @@ void Bullet::SetStatus(float speed, float attack, float lifeTime,int reflectionM
     mIsPenetration = true;
     mPenetrationMaxCount = 999;
     mIsReflection = true;
-    mReflectionMaxCount = reflectionMaxCount;
     mLifeTime = lifeTime;
 }
 
@@ -428,6 +394,33 @@ bool Bullet::CanPenetratingOnCurrentCount()
    return mPenetrationCurrentCount < mPenetrationMaxCount;
 }
 
-void Bullet::ProcessDamage(std::shared_ptr<Actor> target, float attack, float shock, float penetrationCoolTime)
+void Bullet::ProcessDamage(std::shared_ptr<CharacterBase> target)
 {
+    target->TakeDamage(mAttack);
+
+    if (target->GetActorType() == CharacterType::ENEMY)//雑魚敵にはノックバックをつける
+    {
+        //弾の現在座標からヒットした敵の座標までの角度で敵をノックバックさせる
+        float targetRadian = (float)Vector2D<float>::GetLookAtRadian(GetWorldPosition2D(), target->GetWorldPosition2D());
+        target->AddKnockBack(Vector2D<float>(cos(targetRadian), sin(targetRadian)), mShock, 0.2f);
+    }
+}
+
+void Bullet::UpdatePenetratingHitCoolTimes(const float deltaTime)
+{
+    for (auto it = mHitCountEnemies.begin(); it != mHitCountEnemies.end(); )
+    {
+        // クールタイムを減少
+        it->second -= deltaTime;
+
+        // クールタイムが0.0f以下なら要素を削除
+        if (it->second <= 0.0f)
+        {
+            it = mHitCountEnemies.erase(it); 
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }

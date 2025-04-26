@@ -12,7 +12,7 @@
 void PlayerMovementComponent::Update(const float deltaTime)
 {
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "PlayerMovementComponent::Update");
-	auto owner = GetOwner();
+	auto owner = mMovementOwner.lock();
 
 	//ˆÚ“®
 	if(owner && owner->IsActive() && !owner->IsKnockBack()){

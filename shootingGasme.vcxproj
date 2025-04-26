@@ -242,6 +242,7 @@
     <ClCompile Include="PlayerReflectionGunComponent.cpp" />
     <ClCompile Include="PlayerThrowBombComponent.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="ReflectionBulletMovement.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SelectUIRect.cpp" />
@@ -358,6 +359,7 @@
     <ClInclude Include="PlayerReflectionGunComponent.h" />
     <ClInclude Include="PlayerThrowBombComponent.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="ReflectionBulletMovement.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SelectUIRect.h" />

@@ -1,8 +1,9 @@
 #pragma once
 #include "WeaponComponent.h"
+#include "Vector2D.h"
 
 // 爆弾を投げるプレイヤーのコンポーネントクラス
-class PlayerThrowBombComponent : public WeaponComponent {
+class PlayerThrowBombComponent : public WeaponComponent{
 public:
     // コンストラクタ：キャラクターの所有者を初期化
     PlayerThrowBombComponent(std::shared_ptr<CharacterBase> owner);

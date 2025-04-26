@@ -116,6 +116,8 @@ void PlayerCharacter::Reset(int id, Vector2D<float>localPosition, Vector2D<float
 
 void PlayerCharacter::Update(const float deltaTime)
 {
+    if (!IsActive()) return;
+
     //デバッグ
     auto& dh = Singleton<DebugHelper>::get_instance();
     auto scene = Singleton<SceneManager>::get_instance().GetCurrentScene();

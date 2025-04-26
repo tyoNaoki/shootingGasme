@@ -4,7 +4,7 @@
 
 class CharacterBase;
 
-enum class BulletTYPE
+enum class BulletType
 {
     NormalBullet,
     PrenetratingBullet,
@@ -62,9 +62,15 @@ private:
 
     bool CanPenetratingOnCurrentCount();
 
-    void ProcessDamage(std::shared_ptr<Actor> target, float attack, float shock, float penetrationCoolTime);
+    void ProcessDamage(std::shared_ptr<CharacterBase> target);
+
+    void UpdatePenetratingHitCoolTimes(const float deltaTime);
 
     CharacterType mOwnerType = CharacterType::EMPTY;
+
+    BulletType mBulletType = BulletType::NormalBullet;
+
+    std::shared_ptr<Component>mCurrentMovement;
 
     std::vector<std::weak_ptr<CharacterBase>>mIgnoreCharas;
 

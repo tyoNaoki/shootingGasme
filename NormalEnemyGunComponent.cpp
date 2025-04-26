@@ -18,7 +18,7 @@ void NormalEnemyGunComponent::Init()
 
 void NormalEnemyGunComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = GetWeaponOwner();
 	auto player = ACTOR_M.GetCurrentPlayer();
 
 	if (!owner->IsActive()||!player ||!player->IsActive()) { return; }

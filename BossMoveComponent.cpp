@@ -8,24 +8,24 @@ BossMoveComponent::BossMoveComponent(std::shared_ptr<CharacterBase> owner) :Comp
 {
 	mComponentName = "BossMoveComponent";
 	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
-	mPlayer =ACTOR_M.GetCurrentPlayer();
 	mMap = SCENE_M.GetCurrentScene()->GetMap();
 };
 
 void BossMoveComponent::Update(const float deltaTime)
 {
 	auto owner = mBossOwner.lock();
+	auto player= ACTOR_M.GetCurrentPlayer();
 
 	if(!owner||!owner->IsActive()||owner->IsDead()){return;}
 
-	if(!mPlayer||!mPlayer->IsActive()||mPlayer->IsDead()){return;}
+	if(!player ||!player->IsActive()|| player->IsDead()){return;}
 	//角度設定
-	owner->SetRotation(Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), mPlayer->GetWorldPosition2D()));
+	owner->SetRotation(Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), player->GetWorldPosition2D()));
 
 	//動いていないなら
 	if(!mIsMove){
 		//目的地をランダムに設定して、移動フラグをたてる
-		mNextPosition = GetRandomMovePosition(100);
+		mNextPosition = GetRandomMovePosition(player->GetWorldPosition2D(),100);
 		mIsMove = true;
 	}
 	//目的地にたどり着いたか
@@ -39,13 +39,13 @@ void BossMoveComponent::Update(const float deltaTime)
 	Move(deltaTime, owner);
 }
 
-Vector2D<float> BossMoveComponent::GetRandomMovePosition(const float radius)
+Vector2D<float> BossMoveComponent::GetRandomMovePosition(const Vector2D<float>center,const float radius)
 {
 	int width, height;
 	GetWindowSize(&width, &height);
 	int maxCount = 10;
 
-	auto centerLocation = mPlayer->GetWorldPosition2D();
+	auto centerLocation = center;
     for (int count = 0; count < maxCount; count++) {
 
         // 0から2πまでのランダムな角度を生成

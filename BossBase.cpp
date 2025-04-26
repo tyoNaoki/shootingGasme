@@ -74,12 +74,15 @@ void BossBase::Reset(int id, Vector2D<float> localPosition, Vector2D<float> worl
 
 void BossBase::Update(const float deltaTime)
 {
+    if (!IsActive()) return;
+
     auto scene = Singleton<SceneManager>::get_instance().GetCurrentScene();
     if (!scene) { return; }
-
+    
     if(!mTakeKnockBack){
         mKnockBack = false;
     }
+
     //コンポーネント更新
     CharacterBase::Update(deltaTime);
 

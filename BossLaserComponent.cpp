@@ -1,16 +1,15 @@
 #include "BossLaserComponent.h"
-#include "BossBase.h"
 #include "ActorManager.h"
 #include "PlayerCharacter.h"
 #include "StatusManager.h"
 #include "CollisionManager.h"
 #include "SoundManager.h"
+#include "BossBase.h"
 
 BossLaserComponent::BossLaserComponent(std::shared_ptr<CharacterBase> owner) : WeaponComponent(owner)
 {
 	mComponentName = "BossLaserComponent";
 	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
-	mPlayer = ACTOR_M.GetCurrentPlayer();
 	SetStatus(STATUS.GetCurrentWeaponStatus(mComponentName));
 	mCurState = BossLaserState::SetUp;
 }
@@ -18,9 +17,10 @@ BossLaserComponent::BossLaserComponent(std::shared_ptr<CharacterBase> owner) : W
 void BossLaserComponent::Update(const float deltaTime)
 {
 	auto owner = mBossOwner.lock();
+	auto player = ACTOR_M.GetCurrentPlayer();
 
 	if (!owner || !owner->IsActive() || owner->IsDead() ||
-		!mPlayer || !mPlayer->IsActive() || mPlayer->IsDead()) {
+		!player || !player->IsActive() || player->IsDead()) {
 		return;
 	}
 
@@ -34,7 +34,7 @@ void BossLaserComponent::Update(const float deltaTime)
 		}
 		//アラート状態
 		if(mCurState == BossLaserState::Alert){
-			auto lookRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), mPlayer->GetWorldPosition2D());
+			auto lookRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), player->GetWorldPosition2D());
 			owner->SetRotation(lookRot);
 			//アラートの時、現在の画像をすこし点滅させる
 			if(IsPlayAlertBlend(deltaTime)){
@@ -48,6 +48,7 @@ void BossLaserComponent::Update(const float deltaTime)
 
 	//クールタイムが終わっている
 	float targetRot = 0.0f;
+	
 	switch (mCurState)
 	{
 	//発射前の警告準備
@@ -62,9 +63,9 @@ void BossLaserComponent::Update(const float deltaTime)
 		//アラートを切る
 		owner->SetAlert(false);
 		//自分からプレイヤーまでの角度取得
-		targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), mPlayer->GetWorldPosition2D());
+		targetRot = Vector2D<float>::GetLookAtAngle(owner->GetWorldPosition2D(), player->GetWorldPosition2D());
 		//レーザー発射
-		FireLaser(GetOwner(), targetRot);
+		FireLaser(owner, targetRot);
 		//クールタイム設定
 		mCurrentTime = mFireTime;
 		//レーザー発射状態に遷移

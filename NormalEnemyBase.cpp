@@ -95,6 +95,8 @@ void NormalEnemyBase::Update(const float deltaTime)
     auto scene = Singleton<SceneManager>::get_instance().GetCurrentScene();
     if (!scene) { return; }
 
+    if (!IsActive()) return;
+
     //éÄÇÒÇ≈Ç¢ÇÈèÍçá
     if (mIsDead) {
         //DEBUG_HELPER.DrawCollision(GetCollision());

@@ -41,7 +41,7 @@ public:
 	bool IsCharacterInMap(Vector2D<float>& position, Collision::Rect& rect, std::shared_ptr<Map>map);
 
 	//マップ内にいるかどうか
-	bool IsBulletInMap(Vector2D<float>& position,std::shared_ptr<Map>map);
+	bool IsBulletInMap(const Vector2D<float>& position,std::shared_ptr<Map>map);
 
 	//マップの外にいるかどうか
 	bool PushBackFromWalls(Vector2D<float>& worldP, Collision::Rect& rect, std::shared_ptr<Map>map);

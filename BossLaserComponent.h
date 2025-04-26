@@ -8,6 +8,7 @@ enum class BossLaserState {
 };
 
 class PlayerCharacter;
+class CharacterBase;
 class BossBase;
 
 class BossLaserComponent :
@@ -38,8 +39,6 @@ private:
     void FinishLaser();
 
     std::vector<std::shared_ptr<Laser>>lasers;
-
-    std::shared_ptr<PlayerCharacter>mPlayer;
     std::weak_ptr<BossBase>mBossOwner;
 
     float mCurrentTime = 0.0f;

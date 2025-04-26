@@ -287,7 +287,7 @@ bool CollisionManager::IsCharacterInMap(Vector2D<float>& position, Collision::Re
 		rect.RightBottom().y >(mapWorldSize.y));
 }
 
-bool CollisionManager::IsBulletInMap(Vector2D<float>& position, std::shared_ptr<Map> map)
+bool CollisionManager::IsBulletInMap(const Vector2D<float>& position, std::shared_ptr<Map> map)
 {
 	//ƒ}ƒbƒv“à‚É‚¢‚é‚©
 	auto mapWorldSize = map->GetMapSize() * map->GetCellSize();

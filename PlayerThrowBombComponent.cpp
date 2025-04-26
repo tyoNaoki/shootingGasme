@@ -20,7 +20,7 @@ void PlayerThrowBombComponent::Init()
 
 void PlayerThrowBombComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = GetWeaponOwner();
 
 	if (!IsEnable() || !owner->IsActive() || owner->IsDead()) { return; }
 

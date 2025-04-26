@@ -2,7 +2,7 @@
 #include "WeaponComponent.h"
 
 // 反射銃を扱うプレイヤーのコンポーネントクラス
-class PlayerReflectionGunComponent : public WeaponComponent {
+class PlayerReflectionGunComponent : public WeaponComponent{
 public:
     // コンストラクタ：キャラクターの所有者を初期化
     PlayerReflectionGunComponent(std::shared_ptr<CharacterBase> owner);

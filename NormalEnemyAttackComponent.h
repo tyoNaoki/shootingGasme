@@ -2,7 +2,7 @@
 #include "WeaponComponent.h"
 
 //雑魚敵のプレイヤー衝突時のダメージを与えるコンポーネントクラス
-class NormalEnemyAttackComponent : public WeaponComponent {
+class NormalEnemyAttackComponent : public WeaponComponent{
 public:
     // コンストラクタ：キャラクターの所有者を初期化
     NormalEnemyAttackComponent(std::shared_ptr<CharacterBase> owner);

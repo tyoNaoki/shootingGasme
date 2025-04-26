@@ -4,6 +4,7 @@
 class Bullet;
 class PlayerCharacter;
 class BossBase;
+class CharacterBase;
 
 class BossGunComponent :
     public WeaponComponent
@@ -23,6 +24,7 @@ private:
     float mHomingTime = 0.0f;
     float mFireTime = 3.0f;
     float mCurrentTime = 0.0f;
+    std::weak_ptr<BossBase>mBossOwner;
 
     bool mIsHoming = false;
 
@@ -32,6 +34,5 @@ private:
     const std::string soundName = "BossFireBulletSound";
 
     std::shared_ptr<PlayerCharacter>mPlayer;
-    std::weak_ptr<BossBase>mBossOwner;
 };
 

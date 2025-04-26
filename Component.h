@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
-#include "CharacterBase.h"
-#include "WeaponStatus.h"
+#include <string>
+
+class Actor;
 
 class Component {
 public:
-	//
-	Component(std::shared_ptr<CharacterBase> owner) : mOwner(owner) {}
+	Component(std::shared_ptr<Actor> owner) : mOwner(owner) {}
 
 	virtual void Init(){;}
 	virtual void Update(const float deltaTime) = 0; 
@@ -19,11 +19,11 @@ public:
 	std::string GetName(){return mComponentName;};
 
 protected:
-	std::shared_ptr<CharacterBase> GetOwner() const { return mOwner.lock(); } 
+	std::shared_ptr<Actor> GetOwner() const { return mOwner.lock(); } 
 	std::string mComponentName;
 	
 private:
-	std::weak_ptr<CharacterBase> mOwner;
+	std::weak_ptr<Actor> mOwner;
 
 	bool mIsEnable = true;
 };

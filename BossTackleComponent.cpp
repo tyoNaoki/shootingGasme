@@ -1,15 +1,15 @@
 #include "BossTackleComponent.h"
-#include "BossBase.h"
 #include "ActorManager.h"
 #include "PlayerCharacter.h"
 #include "StatusManager.h"
 #include "CollisionManager.h"
+#include "BossBase.h"
 
 BossTackleComponent::BossTackleComponent(std::shared_ptr<CharacterBase> owner):WeaponComponent(owner)
 {
 	mComponentName = "BossTackleComponent";
-	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
 	mPlayer = ACTOR_M.GetCurrentPlayer();
+	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
 	SetStatus(STATUS.GetCurrentWeaponStatus(mComponentName));
 }
 

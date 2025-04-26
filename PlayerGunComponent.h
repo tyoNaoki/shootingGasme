@@ -17,6 +17,12 @@ public:
     void SetStatus(std::shared_ptr<WeaponStatus> status) override;
 
 private:
+    bool CanShoot(const std::shared_ptr<CharacterBase>owner,std::shared_ptr<CharacterBase>&target);
+
+    void Shoot(const std::shared_ptr<CharacterBase>owner,const std::shared_ptr<CharacterBase>target);
+
+    std::shared_ptr<CharacterBase>FindNearEnemy(const std::shared_ptr<CharacterBase>owner,const std::vector<std::shared_ptr<CharacterBase>> nearEnemies);
+
     float mAttack = 0.0f; // UŒ‚—Í
     float mShotRate = 0.2f; // ”­Ë‘¬“x
     bool mIsPenetration = false; // ŠÑ’Ê‚Ì—L–³

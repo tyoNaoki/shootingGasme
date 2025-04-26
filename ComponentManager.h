@@ -2,8 +2,7 @@
 #include <vector>
 #include <memory>
 #include <string>
-
-class Component;
+#include "Component.h"
 
 class ComponentManager
 {

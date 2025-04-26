@@ -21,7 +21,7 @@ void NormalEnemyAttackComponent::Init()
 
 void NormalEnemyAttackComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = GetWeaponOwner();
 	auto player = Singleton<ActorManager>::get_instance().GetCurrentPlayer();
 	if(owner && player && owner->IsActive()){
 		//UŒ‚Õ“Ë”»’è

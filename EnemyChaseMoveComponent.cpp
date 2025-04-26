@@ -5,7 +5,7 @@
 
 void EnemyChaseMoveComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = mMoveOwner.lock();
 	auto player = Singleton<ActorManager>::get_instance().GetCurrentPlayer();
 	auto& dh = Singleton<DebugHelper>::get_instance();
 

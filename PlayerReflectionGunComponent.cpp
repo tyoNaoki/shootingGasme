@@ -18,7 +18,7 @@ void PlayerReflectionGunComponent::Init()
 
 void PlayerReflectionGunComponent::Update(const float deltaTime)
 {
-	auto owner = GetOwner();
+	auto owner = GetWeaponOwner();
 
 	if (!IsEnable() || !owner->IsActive() || owner->IsDead()) { return; }
 

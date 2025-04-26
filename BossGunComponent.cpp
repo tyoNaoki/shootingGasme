@@ -7,7 +7,7 @@
 BossGunComponent::BossGunComponent(std::shared_ptr<CharacterBase> owner) : WeaponComponent(owner)
 {
 	mComponentName = "BossGunComponent";
-	mBossOwner = std::dynamic_pointer_cast<BossBase>(GetOwner());
+	mBossOwner = std::dynamic_pointer_cast<BossBase>(owner);
 	Init();
 }
 

@@ -5,7 +5,7 @@
 #include <random>
 
 //雑魚敵の銃を扱うコンポーネントクラス
-class NormalEnemyGunComponent : public WeaponComponent {
+class NormalEnemyGunComponent : public WeaponComponent{
 public:
     // キャラクターの所有者を初期化
     NormalEnemyGunComponent(std::shared_ptr<CharacterBase> owner);
