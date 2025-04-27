@@ -33,12 +33,12 @@ private:
     const std::string mSlowSound = "FireBulletSound"; // スローサウンド
 
     const Vector2D<float> mDefaultBombSize = Vector2D<float>(6.1, 6.1); // デフォルトの爆弾サイズ
+    float mDefaultExplosionRange;
+    float mDefaultExplosionTime;
 
     const float mThrowRangeMin = 200.0f; // 最小投擲距離
 
     float mCurrentTime = 0.0f; // 現在の時間
-    float mDefaultExplosionRange; // デフォルトの爆発範囲
-    float mDefaultExplosionTime; // デフォルトの爆発時間
     const float defaultPlaySpeed = 1.0f; // デフォルトのプレイスピード
 };
 

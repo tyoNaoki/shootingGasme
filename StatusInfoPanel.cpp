@@ -47,9 +47,9 @@ void StatusInfoPanel::SetStatusInfo()
 	auto meleeStatus = std::static_pointer_cast<MeleeWeaponStatus>(STATUS.GetCurrentWeaponStatus("PlayerMeleeComponent"));
 	auto gunStatus = std::static_pointer_cast<GunWeaponStatus>(STATUS.GetCurrentWeaponStatus("PlayerGunComponent"));
 	infoList[0] = "Ž©•ª‚Ì‘Ì—Í : " + std::to_string(static_cast<int>(playerStatus.hp));
-	float dps = std::floor(CalculateDPS(meleeStatus->mAttack, meleeStatus->mSwingSpeed) * 100.0f) / 100.0f;
+	float dps = std::floor(CalculateDPS(meleeStatus->mAttack, meleeStatus->mSwingSpeed.GetValue()) * 100.0f) / 100.0f;
 	infoList[1] = "Ž©•ª‚Ì‹ßÚDPS : " + std::to_string(dps);
-	dps = std::floor(CalculateDPS(gunStatus->mAttack, gunStatus->mShotRate) * 100.0f) / 100.0f;
+	dps = std::floor(CalculateDPS(gunStatus->mAttack, gunStatus->mShotRate.GetValue()) * 100.0f) / 100.0f;
 	infoList[2] = "Ž©•ª‚ÌŽËŒ‚DPS : " + std::to_string(dps);
 
 	int i = 3;

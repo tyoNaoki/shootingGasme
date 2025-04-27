@@ -12,9 +12,9 @@ void ItemObjectPool::OnCreate(const char* name, int count)
 {
 	for (int i = 0; i < count; i++)
 	{
-		auto enemy = Singleton<ItemFactory>::get_instance().CreateObject(name);
-		enemy->SetActive(false);
-		pool[name].push(enemy);
+		auto item = Singleton<ItemFactory>::get_instance().CreateObject(name);
+		item->SetActive(false);
+		pool[name].push(item);
 	}
 }
 

@@ -713,5 +713,8 @@
     <ClInclude Include="ReflectionBulletMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BulletStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

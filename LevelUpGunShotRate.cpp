@@ -13,10 +13,10 @@ void LevelUpGunShotRate::Apply() const
 	//•ŠíUŒ‚—Í‹­‰»
 	if (!status) { return; }
 	//”­ŽË‚Ü‚Å‚ÌŠÔŠu‚ð’Z‚­‚·‚é
-	status->mShotRate -= mLevelUpValue;
+	status->mShotRate.SetValue(status->mShotRate.GetValue() - mLevelUpValue);
 
 	//Å’á’l‚É‚È‚Á‚½ê‡A‘I‘ð•ñVƒŠƒXƒg‚©‚çœ‚­
-	if (status->mShotRate <= status->mMinShotRate) {
+	if (!status->mShotRate.CanPowerUp(status->mShotRate.GetValue() - mLevelUpValue)) {
 		STATUS.RemoveReward(GetName());
 	}
 

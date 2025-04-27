@@ -73,8 +73,8 @@ void NormalEnemyMeleeComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
 	//ステータス設定
 	auto meleeStatus = std::dynamic_pointer_cast<MeleeWeaponStatus>(status);
 	attack = meleeStatus->mAttack;
-	meleeSpeed = meleeStatus->mSwingSpeed;
-	meleeWidthRange = meleeStatus->mWidthRange;
+	meleeSpeed = meleeStatus->mSwingSpeed.GetValue();
+	meleeWidthRange = meleeStatus->mWidthRange.GetValue();
 	meleeHeightRange = meleeStatus->mHeightRange;
 }
 

@@ -5,16 +5,20 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include "BulletStatus.h"
+#include "StatusManager.h"
 
+struct StatusValue;
 
 class WeaponStatus {
 public:
 	float mAttack;
 	float mDefaultAttack;
 	
-	WeaponStatus(float attack) : mAttack(attack),mDefaultAttack(attack) {}
+	//çUåÇóÕÇÃÇ›ì¡Ç…ã≠âªâÒêîêßå¿Çì¸ÇÍÇ»Ç¢
+	WeaponStatus(float attack) : mAttack(attack),mDefaultAttack(mAttack){}
 	virtual ~WeaponStatus() = default;
-	virtual void Reset() { mAttack = mDefaultAttack; }
+	virtual void Reset() { mAttack = mDefaultAttack;}
 };
 
 class TackleWeaponStatus : public WeaponStatus {
@@ -39,20 +43,21 @@ public:
 
 class MeleeWeaponStatus : public WeaponStatus {
 public:
-	float mSwingSpeed;
-	float mWidthRange;
+	StatusValue mSwingSpeed;
+	StatusValue mWidthRange;
 	float mHeightRange;
-	float mDefaultSwingSpeed;
-	float mDefaultWidthRange;
-	float mMinSwingSpeed;
 
-	MeleeWeaponStatus(float attack,float swingSpeed,float widthRange,float heightRange,float minSwingSpeed) : mSwingSpeed(swingSpeed),mWidthRange(widthRange),mHeightRange(heightRange),mDefaultSwingSpeed(swingSpeed),mDefaultWidthRange(widthRange),mMinSwingSpeed(minSwingSpeed),WeaponStatus(attack) {}
-	void Reset() override { WeaponStatus::Reset(); mSwingSpeed = mDefaultSwingSpeed;mWidthRange = mDefaultWidthRange; }
+	MeleeWeaponStatus(float attack, StatusValue swingSpeed, StatusValue widthRange,float heightRange) : mSwingSpeed(swingSpeed),mWidthRange(widthRange),mHeightRange(heightRange),WeaponStatus(attack) {}
+	void Reset() override {
+		WeaponStatus::Reset();
+		mSwingSpeed.ResetToDefault();
+		mWidthRange.ResetToDefault();
+	}
 };
 
 class GunWeaponStatus : public WeaponStatus{
 public:
-	float mShotRate;
+	StatusValue mShotRate;
 	float mBulletSpeed;
 	float mLockOnRange = 0.0f;
 	bool mDefaultIsPenetration = false;
@@ -62,30 +67,28 @@ public:
 	float mHomingTime = 3.0f;
 	int mPenetrationMaxCount = 0;
 	int mReflectionMaxCount = 0;
-	float mDefaultShotRate;
 	float mDefaultBulletSpeed;
 	int mDefaultPenetrationMaxCount = 0;
 	int mDefaultReflectionMaxCount = 0;
-	float mMinShotRate;
 	float mMaxBulletSpeed;
 	int mMaxPenetrationMaxCount = 2;
 	int mMaxReflectionMaxCount = 5;
 
 	//îÒä—í èe
-	GunWeaponStatus(float attack, float shotRate,float bulletSpeed,float lockOnRange,float minShotRate,float maxBulletSpeed) : mShotRate(shotRate),mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange),mDefaultShotRate(shotRate),mDefaultBulletSpeed(bulletSpeed),mMinShotRate(minShotRate),mMaxBulletSpeed(maxBulletSpeed),WeaponStatus(attack) {}
+	GunWeaponStatus(float attack, StatusValue shotRate,float bulletSpeed,float lockOnRange,float maxBulletSpeed) : mShotRate(shotRate),mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange),mDefaultBulletSpeed(bulletSpeed),mMaxBulletSpeed(maxBulletSpeed),WeaponStatus(attack) {}
 
 	//ä—í èe
-	GunWeaponStatus(float attack, float shotRate, float bulletSpeed,float lockOnRange,int penetrationMaxCount,int maxPenetrationMaxCount,float minShotRate, float maxBulletSpeed) : mShotRate(shotRate), mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange),mIsPenetration(true), mDefaultIsPenetration(true),mPenetrationMaxCount(penetrationMaxCount),mMaxPenetrationMaxCount(maxPenetrationMaxCount),mDefaultShotRate(shotRate), mDefaultBulletSpeed(bulletSpeed), mMinShotRate(minShotRate), mMaxBulletSpeed(maxBulletSpeed), WeaponStatus(attack) {}
+	GunWeaponStatus(float attack, StatusValue shotRate, float bulletSpeed,float lockOnRange,int penetrationMaxCount,int maxPenetrationMaxCount, float maxBulletSpeed) : mShotRate(shotRate), mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange),mIsPenetration(true), mDefaultIsPenetration(true),mPenetrationMaxCount(penetrationMaxCount),mMaxPenetrationMaxCount(maxPenetrationMaxCount),mDefaultBulletSpeed(bulletSpeed), mMaxBulletSpeed(maxBulletSpeed), WeaponStatus(attack) {}
 
 	//ÉzÅ[É~ÉìÉOèe
-	GunWeaponStatus(float attack, float shotRate, float bulletSpeed,bool isHoming,float homingTime,float minShotRate, float maxBulletSpeed) : mShotRate(shotRate), mBulletSpeed(bulletSpeed),mDefaultShotRate(shotRate), mDefaultBulletSpeed(bulletSpeed),mIsHoming(isHoming),mHomingTime(homingTime), mMinShotRate(minShotRate), mMaxBulletSpeed(maxBulletSpeed), WeaponStatus(attack) {}
+	GunWeaponStatus(float attack, StatusValue shotRate, float bulletSpeed,bool isHoming,float homingTime, float maxBulletSpeed) : mShotRate(shotRate), mBulletSpeed(bulletSpeed),mDefaultBulletSpeed(bulletSpeed),mIsHoming(isHoming),mHomingTime(homingTime), mMaxBulletSpeed(maxBulletSpeed), WeaponStatus(attack) {}
 
 	//îΩéÀèe
-	GunWeaponStatus(float attack, float shotRate, float bulletSpeed,float lockOnRange,int reflectionMaxCount,float minShotRate,float maxBulletSpeed,int maxReflectionMaxCount) :mIsReflection(true),mShotRate(shotRate), mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange), mDefaultShotRate(shotRate), mDefaultBulletSpeed(bulletSpeed),mDefaultReflectionMaxCount(reflectionMaxCount),mMinShotRate(minShotRate), mMaxBulletSpeed(maxBulletSpeed),mMaxReflectionMaxCount(maxReflectionMaxCount), WeaponStatus(attack) {}
+	GunWeaponStatus(float attack, StatusValue shotRate, float bulletSpeed,float lockOnRange,int reflectionMaxCount,float maxBulletSpeed,int maxReflectionMaxCount) :mIsReflection(true),mShotRate(shotRate), mBulletSpeed(bulletSpeed),mLockOnRange(lockOnRange), mDefaultBulletSpeed(bulletSpeed),mDefaultReflectionMaxCount(reflectionMaxCount),mMaxBulletSpeed(maxBulletSpeed),mMaxReflectionMaxCount(maxReflectionMaxCount), WeaponStatus(attack) {}
 
 	void Reset() override {
 		WeaponStatus::Reset();
-		mShotRate = mDefaultShotRate;
+		mShotRate.ResetToDefault();
 		mBulletSpeed = mDefaultBulletSpeed;
 
 		//ç≈èâÇ©ÇÁä—í íeÇÃèÍçáÅAä—í ÇÕÉfÉtÉHÉãÉgíl
@@ -103,29 +106,23 @@ public:
 
 class BombWeaponStatus : public WeaponStatus {
 public:
-	float mThrowRate;
+	StatusValue mThrowRate;
 	float mThrowRange;
-	float mKnockBackStrength;
-	float mExplosionRange;
-	float mTimeToExplode;
-	float mExplosionTime;
-	float mMinThrowRate;
-	float mDefaultThrowRate;
-	float mDefaultTimeToExplode;
-	float mDefaultExplosionTime;
-	float mDefaultExplosionRange;
-	float mDefaultKnockBackStrength;
+	StatusValue mKnockBackStrength;
+	StatusValue mExplosionRange;
+	StatusValue mTimeToExplode;
+	StatusValue mExplosionTime;
 	bool mHasContinuousDamage;
 
-	BombWeaponStatus(float attack,float throwRate,float throwRange,float knockBackStrength,float explosionRange,float timeToExplode,float explosionTime,float minThrowRate, bool hasContinuousDamage):mThrowRate(throwRate), mThrowRange(throwRange),mKnockBackStrength(knockBackStrength),mExplosionRange(explosionRange),mTimeToExplode(timeToExplode),mExplosionTime(explosionTime), mMinThrowRate(minThrowRate),mDefaultKnockBackStrength(knockBackStrength),mDefaultThrowRate(throwRate),mDefaultTimeToExplode(timeToExplode),mDefaultExplosionTime(explosionTime),mDefaultExplosionRange(explosionRange),mHasContinuousDamage(hasContinuousDamage),WeaponStatus(attack){}
+	BombWeaponStatus(float attack, StatusValue throwRate,float throwRange, StatusValue knockBackStrength, StatusValue explosionRange, StatusValue timeToExplode, StatusValue explosionTime,bool hasContinuousDamage):mThrowRate(throwRate), mThrowRange(throwRange),mKnockBackStrength(knockBackStrength),mExplosionRange(explosionRange),mTimeToExplode(timeToExplode),mExplosionTime(explosionTime),mHasContinuousDamage(hasContinuousDamage),WeaponStatus(attack){}
 
 	void Reset() override {
 		WeaponStatus::Reset();
-		mKnockBackStrength = mDefaultKnockBackStrength;
-		mThrowRate = mDefaultThrowRate;
-		mTimeToExplode = mDefaultTimeToExplode;
-		mExplosionTime = mDefaultExplosionTime;
-		mExplosionRange = mDefaultExplosionRange;
+		mKnockBackStrength.ResetToDefault();
+		mThrowRate.ResetToDefault();
+		mTimeToExplode.ResetToDefault();
+		mExplosionTime.ResetToDefault();
+		mExplosionRange.ResetToDefault();
 		mHasContinuousDamage = false;
 	}
 };

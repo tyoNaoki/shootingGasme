@@ -16,9 +16,9 @@ void LevelUpBombAddContinuous::Apply() const
 	//一度の爆発の威力変更
 	status->mAttack = status->mAttack/(status->mDefaultAttack/newAttack);
 	//ノックバックを0に変更
-	status->mKnockBackStrength = 0.0f;
+	status->mKnockBackStrength.SetValue(0.0f);
 	//爆発時間を大きい値に設定
-	status->mExplosionTime = newExplosionTime;
+	status->mExplosionTime.SetValue(newExplosionTime);
 
 	//レベルアップ時の報酬選択から除く
 	STATUS.RemoveReward(GetName());

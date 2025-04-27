@@ -1,5 +1,6 @@
 #include "BombObjectPool.h"
 #include "BombFactory.h"
+#include "Bomb.h"
 
 void BombObjectPool::Init()
 {
@@ -10,7 +11,7 @@ void BombObjectPool::OnCreate(const char* name, int count)
 {
 	for (int i = 0; i < count; i++)
 	{
-		auto bomb = Singleton<BombFactory>::get_instance().CreateObject(name);
+		auto bomb = std::static_pointer_cast<Bomb>(Singleton<BombFactory>::get_instance().CreateObject(name));
 		bomb->SetActive(false);
 		pool[name].push(bomb);
 	}

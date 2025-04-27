@@ -1,4 +1,5 @@
 #include "StatusManager.h"
+#include "WeaponStatus.h"
 #include "LevelUpHP.h"
 #include <random>
 #include "LevelUpGetReflectionGun.h"
@@ -46,56 +47,52 @@ StatusManager::StatusManager(){
 
 	//敵強化近接武器
 	attack = 50.0f;
-	float swingSpeed = 5.0f;
-	float widthRange = 100.0f;
+	StatusValue swingSpeed = 5.0f;
+	StatusValue widthRange = 100.0f;
 	float heightRange = 200.0f;
-	mCurrentWeaponStatuses["NormalEnemyMeleeComponent"] = std::make_shared<MeleeWeaponStatus>(attack, swingSpeed, widthRange, heightRange, 0);
+	mCurrentWeaponStatuses["NormalEnemyMeleeComponent"] = std::make_shared<MeleeWeaponStatus>(attack, swingSpeed, widthRange, heightRange);
 
 	//プレイヤー近接武器
 	attack = 40.0f;
-	swingSpeed = 0.6f;
-	float minSwingSpeed = 0.41f;
+	swingSpeed = StatusValue(0.6f,0.4f);
 	widthRange = 50.0f;
 	heightRange = 150.0f;
-	mCurrentWeaponStatuses["PlayerMeleeComponent"] = std::make_shared<MeleeWeaponStatus>(attack, swingSpeed,widthRange,heightRange,minSwingSpeed);
+	mCurrentWeaponStatuses["PlayerMeleeComponent"] = std::make_shared<MeleeWeaponStatus>(attack, swingSpeed,widthRange,heightRange);
 
 	//プレイヤー銃
 	attack = 10.0f;
 	float bulletSpeed = 800.0f;
-	float shotRate = 0.5f;
+	StatusValue shotRate = StatusValue(0.5f,0.2f);
 	float lockOnRange = 600.0f;
 	float maxBulletSpeed = 2000.0f;
-	float minShotRate = 0.21f;
-	mCurrentWeaponStatuses["PlayerGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed, lockOnRange,minShotRate,maxBulletSpeed);
+	mCurrentWeaponStatuses["PlayerGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed, lockOnRange,maxBulletSpeed);
 
 	//プレイヤー反射銃
 	attack = 30.0f;
 	bulletSpeed = 200.0f;
-	shotRate = 2.0f;
+	shotRate = StatusValue(2.0f,0.9f);
 	lockOnRange = 800.0f;
 	int reflectionMaxCount = 1;
 	maxBulletSpeed = 600.0f;
-	minShotRate = 0.91f;
 	int maxReflectionMaxCount = 4;
-	mCurrentWeaponStatuses["PlayerReflectionGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate,bulletSpeed,lockOnRange, reflectionMaxCount,minShotRate,maxBulletSpeed,maxReflectionMaxCount);
+	mCurrentWeaponStatuses["PlayerReflectionGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate,bulletSpeed,lockOnRange, reflectionMaxCount,maxBulletSpeed,maxReflectionMaxCount);
 
 	//プレイヤー爆弾投げ
 	attack = 150.0f;
-	float throwRate = 1.3f;
-	float explosionTime = 0.5f;
-	float timeToExplode = 1.0f;
-	float knockBackStrength = 10.0f;
+	StatusValue throwRate = StatusValue(1.3f,1.0f);
+	StatusValue explosionTime = 0.5f;
+	StatusValue timeToExplode = 1.0f;
+	StatusValue knockBackStrength = (10.0f,0.0f);
 	float throwRange = 300.0f;
-	float explosionRange = 100.0f;
-	float minThrowRate = 1.1f;
-	mCurrentWeaponStatuses["PlayerThrowBombComponent"] = std::make_shared<BombWeaponStatus>(attack,throwRate,throwRange,knockBackStrength,explosionRange,timeToExplode,explosionTime, minThrowRate,false);
+	StatusValue explosionRange = 100.0f;
+	mCurrentWeaponStatuses["PlayerThrowBombComponent"] = std::make_shared<BombWeaponStatus>(attack,throwRate,throwRange,knockBackStrength,explosionRange,timeToExplode,explosionTime,false);
 
 	//敵銃
 	attack = 5.0f;
 	bulletSpeed = 200.0f;
 	shotRate = 2.0f;
 	lockOnRange = 800.0f;
-	mCurrentWeaponStatuses["NormalEnemyGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed,lockOnRange, 0, 0);
+	mCurrentWeaponStatuses["NormalEnemyGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed,lockOnRange,0);
 
 	//ボスの体当たり
 	attack = 20.0f;
@@ -118,7 +115,7 @@ StatusManager::StatusManager(){
 	bulletSpeed = 150.0f;
 	shotRate = 2.0f;
 	float homingTime = 5.0f;
-	mCurrentWeaponStatuses["BossGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed,homingTime, 0, 0);
+	mCurrentWeaponStatuses["BossGunComponent"] = std::make_shared<GunWeaponStatus>(attack, shotRate, bulletSpeed,true,homingTime,bulletSpeed);
 
 	//mItemStatuses
 	//経験値(初期値、敵レベルに応じた追加経験値)

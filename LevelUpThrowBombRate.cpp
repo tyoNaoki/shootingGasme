@@ -13,10 +13,11 @@ void LevelUpThrowBombRate::Apply() const
 	
 	if (!status) { return; }
 	//ボムの投げる間隔を短くする
-	status->mThrowRate -= mLevelUpValue;
+	//武器強化
+	status->mThrowRate.AddValue(-mLevelUpValue);
 
 	//最低値になった場合、選択報酬リストから除く
-	if (status->mThrowRate <= status->mMinThrowRate) {
+	if (status->mThrowRate.CanPowerUp(status->mThrowRate.GetValue() - mLevelUpValue)) {
 		STATUS.RemoveReward(GetName());
 	}
 	//武器ステータス更新

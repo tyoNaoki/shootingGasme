@@ -83,7 +83,7 @@ void PlayerReflectionGunComponent::SetStatus(std::shared_ptr<WeaponStatus> statu
 	//ステータス設定
 	auto gunStatus = std::dynamic_pointer_cast<GunWeaponStatus>(status);
 	mAttack = gunStatus->mAttack;
-	mShotRate = gunStatus->mShotRate;
+	mShotRate = gunStatus->mShotRate.GetValue();
 	mReflectionCount = gunStatus->mReflectionMaxCount;
 	mBulletLifeTime = 10.0f;
 	mLockOnRange = gunStatus->mLockOnRange;

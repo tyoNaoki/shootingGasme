@@ -1,12 +1,76 @@
+#ifndef STATUSMANAGER_H
+#define STATUSMANAGER_H
+
 #pragma once
 #include "Singleton.h"
 #include <unordered_map>
-#include "WeaponStatus.h"
 #include "CharacterBase.h"
 
 #define STATUS Singleton<StatusManager>::get_instance()
 
 class LevelUpBonus;
+class WeaponStatus;
+
+struct StatusValue {
+
+	float mCurrentValue;
+	float mPowerUpMaxValue;
+	float mDefaultValue;
+
+public:
+	StatusValue(float defaultValue, float maxValue = 0)
+		: mCurrentValue(defaultValue), mPowerUpMaxValue(maxValue), mDefaultValue(defaultValue) {}
+
+	StatusValue() = default;
+
+	void ResetToDefault() {
+		mCurrentValue = mDefaultValue;
+	}
+
+	float GetValue(){return mCurrentValue;}
+
+	float GetDefaultValue(){return mDefaultValue;}
+
+	void SetValue(float value){
+		mCurrentValue = ClampMaxAndMin(value);
+	}
+
+	void AddValue(float value){
+		mCurrentValue = ClampMaxAndMin(mCurrentValue + value);
+	}
+
+	StatusValue& operator =(const float value) {
+		mCurrentValue = value; 
+		mDefaultValue = value;
+		mPowerUpMaxValue = value;
+		return *this; 
+	}
+
+	bool CanPowerUp(const float value)
+	{
+		if (mDefaultValue > mPowerUpMaxValue)
+		{
+			return value >= mPowerUpMaxValue;
+		}
+		else
+		{
+			return value <= mPowerUpMaxValue;
+		}
+	}
+
+private:
+
+	float ClampMaxAndMin(float value) {
+		if(mDefaultValue > mPowerUpMaxValue)
+		{
+			return max(value,mPowerUpMaxValue);
+		}
+		else
+		{
+			return min(value,mPowerUpMaxValue);
+		}
+	}
+};
 
 struct DropItem {
 	//ドロップ品の名前
@@ -215,3 +279,4 @@ private:
 	BossEnemyStatus mCurrentBossStatus;
 };
 
+#endif // STATUSMANAGER_H

@@ -62,17 +62,17 @@ void PlayerThrowBombComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
     //ステータス設定
     auto bombStatus = std::dynamic_pointer_cast<BombWeaponStatus>(status);
     mAttack = bombStatus->mAttack;
-    mThrowRate = bombStatus->mThrowRate;
-    mExplosionTime = bombStatus->mExplosionTime;
-    mTimeToExplode = bombStatus->mTimeToExplode;
-    mKnockBackStrength = bombStatus->mKnockBackStrength;
+    mThrowRate = bombStatus->mThrowRate.GetValue();
+    mExplosionTime = bombStatus->mExplosionTime.GetValue();
+    mTimeToExplode = bombStatus->mTimeToExplode.GetValue();
+    mKnockBackStrength = bombStatus->mKnockBackStrength.GetValue();
     mThrowRange = bombStatus->mThrowRange;
-    mExplosionRange = bombStatus->mExplosionRange;
+    mExplosionRange = bombStatus->mExplosionRange.GetValue();
     mHasContinuousDamage = bombStatus->mHasContinuousDamage;
 
     //初期ステータス設定
-    mDefaultExplosionRange = bombStatus->mDefaultExplosionRange;
-    mDefaultExplosionTime = bombStatus->mDefaultExplosionTime;
+    mDefaultExplosionRange = bombStatus->mExplosionRange.GetDefaultValue();
+    mDefaultExplosionTime = bombStatus->mExplosionTime.GetDefaultValue();
 }
 
 Vector2D<float> PlayerThrowBombComponent::CalcRandomSlowPosition(std::shared_ptr<CharacterBase>owner, float radius, std::shared_ptr<Map> map)

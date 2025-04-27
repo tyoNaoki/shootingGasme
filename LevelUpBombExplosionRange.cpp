@@ -12,7 +12,7 @@ void LevelUpBombExplosionRange::Apply() const
 	auto status = std::dynamic_pointer_cast<BombWeaponStatus>(STATUS.GetCurrentWeaponStatus(GetTag()));
 
 	//武器強化
-	status->mExplosionRange += mLevelUpValue;
+	status->mExplosionRange.SetValue(status->mExplosionRange.GetValue() + mLevelUpValue);
 	//レベルアップ時の報酬選択から除く
 	STATUS.RemoveReward(GetName());
 

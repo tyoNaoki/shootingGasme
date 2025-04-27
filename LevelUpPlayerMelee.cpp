@@ -1,6 +1,7 @@
 #include "LevelUpPlayerMelee.h"
 #include "StatusManager.h"
 #include "ActorManager.h"
+#include "WeaponStatus.h"
 
 LevelUpPlayerMelee::LevelUpPlayerMelee(std::string tag,RewardType type, float plusValue, std::string name, std::string description):LevelUpBonus(tag,type,name,description),mPlusValue(plusValue)
 {

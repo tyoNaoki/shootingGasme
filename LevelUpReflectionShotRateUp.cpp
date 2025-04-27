@@ -11,11 +11,11 @@ void LevelUpReflectionShotRateUp::Apply() const
 {
 	auto status = std::dynamic_pointer_cast<GunWeaponStatus>(STATUS.GetCurrentWeaponStatus(GetTag()));
 	//武器強化
-	status->mShotRate -= mLevelUpValue;
+	status->mShotRate.AddValue(-mLevelUpValue);
 
 	//最低値になった場合、選択報酬リストから除く
-	if (status->mShotRate <= status->mMinShotRate) {
-		STATUS.RemoveReward(GetName());
+	if(status->mShotRate.CanPowerUp(status->mShotRate.GetValue() - mLevelUpValue)){
+		STATUS.RemoveReward(GetName()); 
 	}
 	//武器ステータス更新
 	STATUS.UpdateWeaponStatus(GetTag(), status);

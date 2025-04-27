@@ -102,11 +102,11 @@ void PlayerMeleeComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
 	//ステータス設定
 	auto meleeStatus = std::dynamic_pointer_cast<MeleeWeaponStatus>(status);
 	attack = meleeStatus->mAttack;
-	meleeSpeed = meleeStatus->mSwingSpeed;
-	if(meleeWidthRange+1 < meleeStatus->mWidthRange){
+	meleeSpeed = meleeStatus->mSwingSpeed.GetValue();
+	if(meleeWidthRange+1 < meleeStatus->mWidthRange.GetValue()){
 		mIsWidth = true;
 	}
-	meleeWidthRange = meleeStatus->mWidthRange;
+	meleeWidthRange = meleeStatus->mWidthRange.GetValue();
 	meleeHeightRange = meleeStatus->mHeightRange;
 }
 

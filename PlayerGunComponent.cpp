@@ -41,7 +41,7 @@ void PlayerGunComponent::SetStatus(std::shared_ptr<WeaponStatus> status)
 	//ステータス設定
 	auto gunStatus = std::dynamic_pointer_cast<GunWeaponStatus>(status);
 	mAttack = gunStatus->mAttack;
-	mShotRate = gunStatus->mShotRate;
+	mShotRate = gunStatus->mShotRate.GetValue();
 	mBulletSpeed = gunStatus->mBulletSpeed;
 	mLockOnRange = gunStatus->mLockOnRange;
 	mIsPenetration = gunStatus->mIsPenetration;
